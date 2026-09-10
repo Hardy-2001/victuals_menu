@@ -1,0 +1,215 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{{ product.name }} — Premium Technical Specifications</title>
+    
+    <!-- 🎨 STATIC LINKS: Direct connections to your clean standalone layout style sheets -->
+    <link rel="stylesheet" href="{% static 'modern/css/gym_style.css' %}">
+    <link rel="stylesheet" href="{% static 'modern/css/gym_detail.css' %}">
+</head>
+<body style="background-color: #fcfcfc;">
+
+    <!-- 🎯 MASTER EXPANDABLE APP CANVAS HOUSING WRAPPER CONTAINER -->
+    <div class="gym-detail-canvas">
+
+        <div class="gym-detail-wrapper">
+            
+            <!-- 📸 LEFT SIDE: ACCENT IMAGE DISPLAY VIEWPORT -->
+            <div class="gym-detail-image-viewport">
+                <a href="/modern/{{ store.custom_slug }}/" class="gym-detail-back-btn">← Return to Store</a>
+                
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% else %}
+                    <div style="font-size:64px; color:#cbd5e1;">🏋️‍♂️</div>
+                {% endif %}
+            </div>
+
+                        <!-- 📝 RIGHT SIDE: SPECIFICATIONS & METRICS VALUE DATA DETAILS -->
+            <div class="gym-detail-info-pane">
+                <div class="gym-detail-manufacturer-lbl">
+                    {% if product.brand_or_manufacturer %}{{ product.brand_or_manufacturer }}{% else %}PROFESSIONAL SERIES{% endif %}
+                </div>
+
+                <h1 class="gym-detail-headline-title">{{ product.name }}</h1>
+
+                <span class="gym-detail-spec-lbl">
+                    Pack / Size Spec: {% if product.unit_specification %}{{ product.unit_specification }}{% else %}Commercial Unit Configuration{% endif %}
+                </span>
+
+                <!-- 💵 PRICING & QUANTITY COUNTERS SELECTION ROW -->
+                <div class="gym-detail-pricing-row">
+                    <span class="gym-detail-price-text">₦{{ product.price }}</span>
+
+                    <!-- ➕ RECTANGLE METRICS QUANTITY WEIGHT SELECT COUNTER -->
+                    <div class="gym-inline-qty-picker">
+                        <button class="gym-inline-qty-btn" onclick="adjustFitnessPurchaseQty(-1)">-</button>
+                        <span class="gym-inline-qty-display" id="fitnessQtyDisplay">1</span>
+                        <button class="gym-inline-qty-btn" onclick="adjustFitnessPurchaseQty(1)">+</button>
+                    </div>
+                </div>
+
+                <div class="description-header-lbl">Item Overview Details</div>
+                <p class="description-paragraph-text">
+                    {% if product.description %}
+                        {{ product.description }}
+                    {% else %}
+                        Premium biomechanically certified commercial-grade fitness inventory stock module. Fully engineered for high-intensity commercial club environments, warehouse safety tested, and ready for immediate freight dispatch delivery routes.
+                    {% endif %}
+                </p>
+
+                <!-- 🎯 FIXED WORKFLOW ACTION BUTTON: Registers quantities locally instead of firing instant external applications -->
+                <button class="gym-detail-commit-btn" onclick="confirmAndAddFitnessItemToCartBag()">
+                    Confirm to Add to Bag
+                </button>
+            </div>
+
+        </div>
+
+        <!-- 🛒 RELATED PRODUCTS MATRICES SHELF BLOCK (3 TARGET TILES) -->
+        {% if related_products %}
+        <div class="gym-related-showcase-section" style="grid-column: span 2; border-top: 1px solid #e5e7eb; padding: 40px; background-color: #fafafa; width: 100%;">
+            <h3 style="font-size: 14px; font-weight: 800; text-transform: uppercase; color: #9ca3af; letter-spacing: 0.05em; margin-bottom: 24px; text-align: left;">
+                Related Fitness Equipment & Products
+            </h3>
+
+            <div class="gym-related-3column-deck" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%;">
+                {% for item in related_products %}
+                    <!-- Tapping a related product tile routes straight into its own detail specifications viewport window -->
+                    <a href="/modern/{{ store.custom_slug }}/product/{{ item.id }}/" style="text-decoration: none; color: inherit; background: #ffffff; border: 1px solid #f3f4f6; border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; padding-bottom: 12px; transition: transform 0.2s;">
+
+                        <!-- Thumbnail Frame -->
+                        <div style="width: 100%; aspect-ratio: 1.2 / 1; display: flex; align-items: center; justify-content: center; padding: 12px; background: #ffffff; border-bottom: 1px solid #f9fafb;">
+                            {% if item.image %}
+                                <img src="{{ item.image.url }}" alt="{{ item.name }}" style="max-width: 100%; max-height: 140px; object-fit: contain;">
+                            {% else %}
+                                <div style="font-size: 32px; color: #cbd5e1;">🏋️‍♂️</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Metadata Labels Pane -->
+                        <div style="padding: 12px; text-align: left; display: flex; flex-direction: column; gap: 4px;">
+                            <div style="font-size: 13px; font-weight: 700; color: #1f2937; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                {{ item.name }}
+                            </div>
+                            <div style="font-size: 13px; font-weight: 800; color: #0284c7; font-family: monospace;">
+                                ₦{{ item.price }}
+                            </div>
+                            <span style="font-size: 10px; font-weight: 800; color: #ea580c; text-transform: uppercase; margin-top: 4px;">View Details →</span>
+                        </div>
+
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+            <!-- 🏙️ MASTER CORPORATE MIDNIGHT-BLACK STORE FOOTER -->
+    <footer class="premium-corporate-footer">
+        <div class="footer-master-flex-grid">
+
+            <!-- Left Side: Contact Information Core -->
+            <div class="footer-left-contacts-pane">
+                <a href="/modern/{{ store.custom_slug }}/" class="footer-nav-root-link">Home</a>
+                <h3 class="footer-section-headline">CONTACT US</h3>
+
+                <div class="footer-contact-data-row">📞 {{ store.footer_phone }}</div>
+                <div class="footer-contact-data-row">📍 {{ store.footer_address }}</div>
+
+                <!-- 📲 SOCIAL NETWORKS LIVE CONNECTIONS BLOCK (INCLUDES FACEBOOK!) -->
+                <div class="footer-social-networks-rail">
+                    {% if store.instagram_username %}
+                        <a href="https://instagram.com{{ store.instagram_username }}" target="_blank" class="social-glyph-link" title="Instagram">📸</a>
+                    {% endif %}
+                    {% if store.facebook_username %}
+                        <a href="https://facebook.com{{ store.facebook_username }}" target="_blank" class="social-glyph-link" title="Facebook">👥</a>
+                    {% endif %}
+                    {% if store.tiktok_username %}
+                        <a href="https://tiktok.com@{{ store.tiktok_username }}" target="_blank" class="social-glyph-link" title="TikTok">🎵</a>
+                    {% endif %}
+                    {% if store.whatsapp_link_number %}
+                        <a href="https://wa.me{{ store.whatsapp_link_number }}" target="_blank" class="social-glyph-link" title="WhatsApp">💬</a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Right Side: Newsletter Subscription Board Chassis -->
+                        <!-- Right Side: Newsletter Subscription Board Chassis -->
+            <div class="footer-right-subscribe-pane">
+                <h3 class="footer-section-headline">SIGN UP FOR DISCOUNTS & UPDATES</h3>
+                <div class="footer-newsletter-form">
+                    <!-- 🎯 FIXED: Removed readonly property completely so clients can now type into this input block! -->
+                    <input type="text" id="footerNewsletterInput" class="footer-newsletter-input" placeholder="Enter your phone number or email address">
+                    <button class="footer-subscribe-action-btn" onclick="submitStoreNewsletterSubscription()">Subscribe</button>
+                </div>
+
+                <div class="footer-utility-link-row">
+                    <!-- 🎯 FIXED: Removed Return Policy. Sits cleanly redirecting to your upcoming dynamic standalone page link -->
+                    <a href="/modern/{{ store.custom_slug }}/about/" class="footer-sub-text-link">About Us</a>
+                </div>
+            </div>
+
+
+        </div>
+    </footer>
+
+    </div>
+
+
+        <!-- 🔮 QUANTITY MATHS, SESSION CART MEMORY SYNC & DYNAMIC REDIRECTS -->
+    <script>
+        let currentFitnessQty = 1;
+        // Check maximum stock threshold boundary if provided by the catalog database
+        const fallbackMaxStockValue = {% if product.stock_count %}{{ product.stock_count }}{% else %}150{% endif %};
+
+        function adjustFitnessPurchaseQty(amount) {
+            currentFitnessQty += amount;
+            // Prevent numbers from dipping below 1 or exceeding warehouse capabilities
+            if (currentFitnessQty < 1) currentFitnessQty = 1;
+            if (currentFitnessQty > fallbackMaxStockValue) currentFitnessQty = fallbackMaxStockValue;
+
+            // Render the update instantly on the screen counter
+            document.getElementById('fitnessQtyDisplay').innerText = currentFitnessQty;
+        }
+
+        // 🎯 FIXED WORKFLOW ACTION ENGINE: Saves item, confirms, and returns to main shelves automatically
+        function confirmAndAddFitnessItemToCartBag() {
+            const rawItemName = "{{ product.name }}";
+            const priceValueUnit = {{ product.price }};
+
+            // Step A: Safely retrieve any active items sitting inside the unified shopping bag storage memory
+            let existingStorageData = localStorage.getItem('grocery_cart_storage');
+            let gymShoppingBagArray = existingStorageData ? JSON.parse(existingStorageData) : [];
+
+            // Step B: FIXED LOOKUP KEY - Removed the broken variable handle cleanly!
+            let existingIdx = gymShoppingBagArray.findIndex(item => item.name === rawItemName);
+
+            if (existingIdx > -1) {
+                // Accumulate the newly specified quantity increment multiplier parameters cleanly
+                gymShoppingBagArray[existingIdx].quantity += currentFitnessQty;
+            } else {
+                // Append the brand new product matrix row node properties into the registry track
+                gymShoppingBagArray.push({
+                    name: rawItemName,
+                    price: priceValueUnit,
+                    quantity: currentFitnessQty
+                });
+            }
+
+            // Step C: Lock the updated state back inside the local storage core array track
+            localStorage.setItem('grocery_cart_storage', JSON.stringify(gymShoppingBagArray));
+
+            // Step D: Inform the user with a crisp e-commerce feedback alert before moving viewports
+            alert(`⚡ Cart Confirmed! Added ${currentFitnessQty} items into your bag. Returning to storefront...`);
+
+            // Step E: 🚀 AUTOMATIC HOME REDIRECT - Guides them straight back onto your main widescreen layout catalog!
+            window.location.href = "/modern/{{ store.custom_slug }}/";
+        }
+    </script>
+
+
+</body>
+</html>

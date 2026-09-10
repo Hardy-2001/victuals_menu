@@ -1,0 +1,440 @@
+/* 🔮 PLATFORM CORE GLASS-PRISM DESIGN SYSTEM MAPPING ROWS */
+:root {
+    --glass-bg: rgba(10, 10, 16, 0.7);
+    --glass-border: rgba(0, 204, 255, 0.15);
+    --matrix-blue: #00ccff;
+    --neon-glow: rgba(0, 204, 255, 0.3);
+    --dark-void: #050508;
+
+    /* 🟢 EXTRA 5 COLOR TOKENS: Added cleanly for your 10-theme switching network slider! */
+    --matrix-green: #39ff14;     /* State 1: Active Terminal Neon Green */
+    --citadel-purple: #9d00ff;   /* State 2: Overload Deep Purple Accent */
+    --cyber-amber: #ff6b00;      /* State 3: Overclock Burning Orange */
+    --tactical-red: #ff0055;     /* State 4: Security Firewall Red Alerts */
+    --quantum-pink: #ff00ff;     /* State 5: Hyperdrive Data Flux Fuchsia */
+}
+
+/* 🪐 Main Body Framework (UPDATED WITH FIX) */
+body, #container {
+    background-color: var(--dark-void) !important;
+    background-image: radial-gradient(circle at 50% 50%, #0c1020 0%, var(--dark-void) 80%) !important;
+    color: #e4e4e7 !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+
+    /* 🟢 THE ABSOLUTE SCROLLBAR SWITCHES: */
+    overflow-y: auto !important;   /* Forces vertical scrolling to open smoothly! */
+    overflow-x: hidden !important; /* Prevents any ugly horizontal layout wobbling */
+    height: auto !important;       /* Lets the screen panel grow naturally with your data fields */
+    min-height: 100vh !important;
+}
+
+/* 🛡️ Header Navigation Bar Matrix */
+#header {
+    background: var(--glass-bg) !important;
+    backdrop-filter: blur(14px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(180%) !important;
+    border-bottom: 1px solid var(--glass-border) !important;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4) !important;
+}
+
+#branding h1 a, #user-tools a {
+    color: var(--matrix-blue) !important;
+    text-shadow: 0 0 8px var(--neon-glow) !important;
+    font-family: 'Courier New', Courier, monospace !important;
+    font-weight: 700 !important;
+}
+
+/* 📊 Content Cards and Module Blocks (Glassprism Boxes) */
+.module, .card, .change-form, .results, #changelist {
+    background: rgba(15, 15, 25, 0.5) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5) !important;
+    overflow: hidden !important;
+}
+
+.module h2, .module caption {
+    background: rgba(0, 204, 255, 0.08) !important;
+    color: var(--matrix-blue) !important;
+    border-bottom: 1px solid var(--glass-border) !important;
+    font-family: 'Courier New', Courier, monospace !important;
+    letter-spacing: 1px !important;
+    text-transform: uppercase !important;
+}
+
+/* 🎛️ Input Tables and Rows Selection */
+table thead th {
+    background: rgba(10, 10, 14, 0.8) !important;
+    color: #a1a1aa !important;
+    border-bottom: 2px solid var(--glass-border) !important;
+}
+
+tr.row1, tr.row2 {
+    background: transparent !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03) !important;
+    transition: all 0.2s ease !important;
+}
+
+tr.row1:hover, tr.row2:hover {
+    background: rgba(0, 204, 255, 0.03) !important;
+    color: #fff !important;
+}
+
+
+
+
+
+
+/* 📥 Input Fields Form Elements */
+input[type="text"], input[type="password"], input[type="email"], select, textarea {
+    background: #0b0b10 !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 6px !important;
+    color: #fff !important;
+    padding: 10px !important;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none !important;
+    border-color: var(--matrix-blue) !important;
+    box-shadow: 0 0 8px var(--matrix-blue) !important;
+}
+
+/* 🚀 Premium Navigation Buttons Buttons */
+.submit-row input, input[type="submit"], .button {
+    background: transparent !important;
+    border: 1px solid var(--matrix-blue) !important;
+    color: var(--matrix-blue) !important;
+    border-radius: 6px !important;
+    font-family: 'Courier New', Courier, monospace !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    transition: all 0.25s ease !important;
+    cursor: pointer !important;
+}
+
+.submit-row input:hover, input[type="submit"]:hover {
+    background: var(--matrix-blue) !important;
+    color: #050508 !important;
+    box-shadow: 0 0 15px var(--matrix-blue) !important;
+}
+
+.submit-row input.default {
+    background: rgba(0, 204, 255, 0.1) !important;
+    box-shadow: inset 0 0 5px var(--neon-glow) !important;
+}
+
+/* 🔒 HIDE RECENT ACTIONS SIDEBAR BY DEFAULT FOR ALL REGULAR MERCHANTS/AGENTS */
+#content-related {
+    display: none !important;
+}
+.dashboard #content {
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* 🟢 SAFETY BOX OVERFLOW RESET VALUE ROUTE */
+#content, .change-form, form {
+    overflow: visible !important;
+    height: auto !important;
+}
+
+
+
+
+
+/* 👑 EXCEPTION MATRIX: RE-REVEAL SIDEBAR ONLY WHEN A SUPERUSER LOGS IN (UPDATED WITH SCROLLBAR FIX) */
+body.dashboard:has(a[href*="agentprofile"]),
+body.dashboard:has(a[href*="platformsetting"]),
+body.dashboard:has(a[href*="infrastructuremaillog"]) {
+    /* Reset main content width back to standard split layout for the Super Admin */
+    & #content {
+        width: calc(100% - 320px) !important;
+        float: left !important;
+        overflow: visible !important;
+    }
+    /* Make the Recent Actions sidebar light up beautifully again */
+    & #content-related {
+        display: block !important;
+        float: right !important;
+        width: 280px !important;
+        overflow: visible !important;
+    }
+    /* 🟢 Clear floats layout lock tracker rule */
+    & #container::after {
+        content: "" !important;
+        display: table !important;
+        clear: both !important;
+    }
+}
+
+/* ==============================================================================
+   🪐 ALIGNED HUD THEME MANAGER SWITCHER SYSTEMS
+   ============================================================================== */
+:root {
+    --matrix-glow: #00ccff; /* Default Cyber Blue */
+    --matrix-pulse: rgba(0, 204, 255, 0.15);
+}
+
+/* 🎨 ATTACH DYNAMIC ACCENT TRACKING TARGET VARIABLES */
+body[data-admin-theme="emerald"] { --matrix-glow: #00ff66; --matrix-pulse: rgba(0, 255, 102, 0.15); }
+body[data-admin-theme="purple"]  { --matrix-glow: #cc00ff; --matrix-pulse: rgba(204, 0, 255, 0.15); }
+body[data-admin-theme="amber"]   { --matrix-glow: #ff9900; --matrix-pulse: rgba(255, 153, 0, 0.15); }
+body[data-admin-theme="blue"]    { --matrix-glow: #00ccff; --matrix-pulse: rgba(0, 204, 255, 0.15); }
+
+/* Widen table dashboards completely to span 100% width space cleanly */
+.dashboard #content {
+    width: 100% !important;
+    float: none !important;
+    box-sizing: border-box !important;
+}
+
+/* Apply dynamic variable changes onto headers, tags, fields, and cards natively */
+#header, .module h2, .module caption {
+    border-color: var(--matrix-glow) !important;
+    transition: border-color 0.4s ease !important;
+}
+#branding h1 span, #branding h1 a, #user-tools a {
+    color: var(--matrix-glow) !important;
+    border-color: var(--matrix-glow) !important;
+    transition: all 0.4s ease !important;
+}
+.module, .card, .change-form, .results, #changelist {
+    border-color: var(--matrix-pulse) !important;
+    transition: border-color 0.4s ease !important;
+}
+input[type="text"], input[type="password"], input[type="email"], select, textarea {
+    border-color: var(--matrix-pulse) !important;
+}
+input:focus, select:focus, textarea:focus {
+    border-color: var(--matrix-glow) !important;
+    box-shadow: 0 0 10px var(--matrix-pulse) !important;
+}
+
+
+
+
+
+/* ==============================================================================
+   🪐 MASSIVE DYNAMIC RADAR SHIELD MODULE GRID SYSTEM
+   ============================================================================== */
+
+/* 🗂️ Unified Multi-Column Workspace Flex Grid Layout */
+.admin-main-wrapper {
+    display: flex !important;
+    width: 100% !important;
+    gap: 30px !important;
+    align-items: flex-start !important;
+    box-sizing: border-box !important;
+}
+
+#content-main-canvas {
+    flex: 1 !important;
+    min-width: 0 !important;
+}
+
+/* ❌ CLEAR OLD FLOATING HEADER CONTROLS WINDOW ROW */
+.cyber-radar-header-controls {
+    display: none !important;
+}
+
+/* ==============================================================================
+   🪐 FLOATING CYBER HUD THERMAL MANAGER SWITCHER SYSTEMS
+   ============================================================================== */
+
+/* 🛰️ THE NEW FLOATING RADAR PANEL POSITIONER (Bypasses table column squeeze issues) */
+.radar-floating-hud-panel {
+    position: fixed !important; /* Floats independently like a premium sci-fi radar map */
+    bottom: 24px !important;
+    right: 24px !important;
+    z-index: 9999 !important; /* Keeps it layered securely on top of dark void grids */
+    width: 280px !important;
+    height: 280px !important;
+    pointer-events: none !important; /* Safety check to ensure clicking fields behind it works */
+}
+
+.cyber-radar-widget {
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+    border: 1px dashed rgba(255, 255, 255, 0.05) !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: rgba(10, 10, 16, 0.85) !important; /* Deep ambient blur backup panel */
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(0, 0, 0, 0.6) !important;
+    pointer-events: auto !important; /* Restores clickable selector nodes trace signals */
+}
+
+/* ==============================================================================
+   🪐 MAIN FRAMEWORK BODY & GLOBAL SCROLLBAR ACTIVATOR
+   ============================================================================== */
+
+/* 🟢 Forces global browser layout engine to scroll naturally */
+html, body {
+    background-color: #050508 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    height: auto !important;
+    min-height: 100vh !important;
+}
+
+#container {
+    background-color: var(--dark-void) !important;
+    background-image: radial-gradient(circle at 50% 50%, #0c1020 0%, var(--dark-void) 80%) !important;
+    color: #e4e4e7 !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    overflow: visible !important; /* 🟢 Destroys hidden layout traps */
+    height: auto !important;
+    min-height: 100vh !important;
+    display: block !important;
+}
+
+/* 🟢 FORCES INNER DATA CANVAS FIELDS TO EXTEND AND SCROLL FLUIDLY */
+#main, #content, .change-form, form, fieldset, .module {
+    overflow: visible !important;
+    height: auto !important;
+    clear: both !important;
+}
+
+/* Add a safety padding margin layout buffer zone right above your save toolbar */
+.change-form form, #content-main {
+    margin-bottom: 140px !important;
+}
+
+/* 🛡️ Header Navigation Bar Matrix */
+#header {
+    background: var(--glass-bg) !important;
+    backdrop-filter: blur(14px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(180%) !important;
+    border-bottom: 1px solid var(--glass-border) !important;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4) !important;
+}
+
+#branding h1 a, #user-tools a {
+    color: var(--matrix-blue) !important;
+    text-shadow: 0 0 8px var(--neon-glow) !important;
+    font-family: 'Courier New', Courier, monospace !important;
+    font-weight: 700 !important;
+}
+
+/* 📊 Content Cards and Module Blocks (Glassprism Boxes) */
+.module, .card, .change-form, .results, #changelist {
+    background: rgba(15, 15, 25, 0.5) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5) !important;
+}
+
+.module h2, .module caption {
+    background: rgba(0, 204, 255, 0.08) !important;
+    color: var(--matrix-blue) !important;
+    border-bottom: 1px solid var(--glass-border) !important;
+    font-family: 'Courier New', Courier, monospace !important;
+    letter-spacing: 1px !important;
+    text-transform: uppercase !important;
+}
+
+/* 🎛️ Input Tables and Rows Selection */
+table thead th {
+    background: rgba(10, 10, 14, 0.8) !important;
+    color: #a1a1aa !important;
+    border-bottom: 2px solid var(--glass-border) !important;
+}
+
+
+
+
+
+tr.row1, tr.row2 {
+    background: transparent !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03) !important;
+    transition: all 0.2s ease !important;
+}
+
+tr.row1:hover, tr.row2:hover {
+    background: rgba(0, 204, 255, 0.03) !important;
+    color: #fff !important;
+}
+
+
+/* ==============================================================================
+   🎛️ HIGH-TECH CAPSULE BUTTON CONSOLE FOR USER LINK CHANNELS
+   ============================================================================== */
+
+/* Align the entire welcome text and button tray container */
+#user-tools {
+    font-family: 'Courier New', Courier, monospace !important;
+    font-size: 0.78rem !important;
+    color: #a1a1aa !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 14px !important;
+}
+
+/* Transform 'VIEW SITE', 'CHANGE PASSWORD', and 'LOG OUT' into glowing buttons */
+#user-tools a {
+    color: var(--matrix-glow) !important;
+    text-decoration: none !important;
+    text-transform: uppercase !important;
+    font-weight: 700 !important;
+    border: 1px solid var(--matrix-glow) !important;
+    padding: 6px 14px !important;
+    border-radius: 20px !important; /* Creates the clean rounded capsule design look */
+    background: rgba(10, 10, 16, 0.6) !important;
+    box-shadow: inset 0 0 6px var(--matrix-pulse) !important;
+    letter-spacing: 0.5px !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    display: inline-block !important;
+}
+
+/* 🔥 DYNAMIC HIGH-SPEED HOVER INTERACTIONS */
+#user-tools a:hover {
+    color: #050508 !important;
+    background: var(--matrix-glow) !important;
+    box-shadow: 0 0 15px var(--matrix-glow), inset 0 0 2px rgba(255,255,255,0.5) !important;
+    transform: translateY(-1px) !important;
+    text-shadow: none !important;
+}
+
+/* Keep 'LOG OUT' as a critical red warning module button */
+#user-tools a[href*="logout"] {
+    color: #ef4444 !important;
+    border-color: rgba(239, 68, 68, 0.4) !important;
+    box-shadow: inset 0 0 4px rgba(239, 68, 68, 0.1) !important;
+}
+
+#user-tools a[href*="logout"]:hover {
+    color: #fff !important;
+    background: #ef4444 !important;
+    box-shadow: 0 0 15px #ef4444 !important;
+    border-color: #ef4444 !important;
+}
+
+/* ==============================================================================
+   🟢 ULTIMATE MASTER CLEARING GRID FOR AUTOMATED VERTICAL SCROLLING
+   ============================================================================== */
+/* Forces Django change-form pages to push past the fixed button rows bar naturally */
+.change-form form, #content-main {
+    margin-bottom: 120px !important; /* Spacing pad creates a safety scroll runway buffer zone! */
+    display: block !important;
+    clear: both !important;
+}
+
+.submit-row {
+    background: rgba(15, 15, 25, 0.85) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 12px !important;
+    padding: 16px 20px !important;
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.6) !important;
+    margin-top: 30px !important;
+}

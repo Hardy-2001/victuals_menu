@@ -1,0 +1,201 @@
+/* ==============================================================================
+   🏠 MODERN6 LUXURY REAL ESTATE SYSTEM LAYOUT GRIDS
+   Part 1: Core Theme Colors, Ambient Gradients, and Page Structural Foundations
+   ============================================================================== */
+
+:root {
+    --luxury-void: #060814;
+    --luxury-dark: #0d1127;
+    --neon-orange: #ff6b00;
+    --neon-cyan: #00f0ff;
+    --neon-purple: #9d00ff;
+    --glass-matte: rgba(13, 17, 39, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.08);
+}
+
+body {
+    background-color: var(--luxury-void);
+    background-image: radial-gradient(circle at 50% 20%, #161b3d 0%, var(--luxury-void) 70%);
+    font-family: 'Roboto', 'Open Sans', sans-serif;
+    color: #f1f5f9;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* 🏠 AMBIENT VECTOR COCKPIT BACKDROP BLUR SHARDS */
+body::before {
+    content: " ";
+    position: absolute;
+    top: 15%;
+    left: 10%;
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(255, 107, 0, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(40px);
+}
+
+
+
+
+
+
+/* ==============================================================================
+   🏠 MODERN6 LUXURY REAL ESTATE SYSTEM LAYOUT GRIDS
+   Part 2: Frosted Glass Panels & Premium Search Cockpit Matrix
+   ============================================================================== */
+
+/* 💎 FROSTED GLASSMORPHIC CARD CORES */
+.glass-card {
+    background: var(--glass-matte);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.45);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    z-index: 1;
+}
+
+/* 🔍 PREMIUM FLOATING REAL ESTATE SEARCH FILTERS ROW */
+.search-cockpit-bar {
+    background: rgba(18, 24, 56, 0.85);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 107, 0, 0.25);
+    border-radius: 100px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6);
+    padding: 12px 30px;
+}
+
+.search-input-field {
+    background: transparent !important;
+    border: none !important;
+    color: #ffffff !important;
+    font-size: 0.95rem;
+}
+
+.search-input-field::placeholder {
+    color: rgba(241, 245, 249, 0.4) !important;
+}
+
+.search-divider-line {
+    width: 1px;
+    height: 35px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* 🔥 LUXURY REAL ESTATE ACTION BUTTON ACCENTS */
+.btn-luxury-action {
+    background: linear-gradient(135deg, var(--neon-orange), #ff9e00);
+    color: #ffffff !important;
+    border: none;
+    border-radius: 50px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 12px 28px;
+    box-shadow: 0 4px 20px rgba(255, 107, 0, 0.35);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-luxury-action:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(255, 107, 0, 0.55);
+}
+
+
+
+
+
+
+/* ==============================================================================
+   🏠 MODERN6 LUXURY REAL ESTATE SYSTEM LAYOUT GRIDS
+   Part 3: Ambient Lighting Glow Effects & Property Bento Hovers
+   ============================================================================== */
+
+/* 🎨 AMBIENT BACKLIGHTING GLOW ENGINES */
+.glow-wrapper {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Base glow aura layout panel */
+.glow-wrapper::after {
+    content: " ";
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 60px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: -1;
+    filter: blur(25px);
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out, filter 0.4s ease-in-out;
+}
+
+/* Custom background color accent shifts chosen dynamically from your admin fields */
+.bento-card-house:hover .glow-orange::after {
+    background: radial-gradient(circle, rgba(255, 107, 0, 0.75) 0%, transparent 70%);
+    opacity: 1;
+    filter: blur(35px);
+}
+
+.bento-card-house:hover .glow-blue::after {
+    background: radial-gradient(circle, rgba(0, 240, 255, 0.75) 0%, transparent 70%);
+    opacity: 1;
+    filter: blur(35px);
+}
+
+.bento-card-house:hover .glow-purple::after {
+    background: radial-gradient(circle, rgba(157, 0, 255, 0.75) 0%, transparent 70%);
+    opacity: 1;
+    filter: blur(35px);
+}
+
+/* 🏙️ BENTO PROPERTY HOVER IMAGES MATRIX */
+.property-image-box {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    transform: translateZ(0);
+}
+
+.property-image-box img {
+    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* 3D Depth-parallax hover scaling shift matches your mockup image look */
+.bento-card-house:hover .property-image-box img {
+    transform: scale(1.06);
+}
+
+/* Glass card boundary animation responses */
+.bento-card-house:hover {
+    border-color: rgba(255, 255, 255, 0.18) !important;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.65);
+}
+
+/* Nav filter tab pill adjustments */
+.nav-pill-luxury {
+    background: transparent;
+    color: rgba(241, 245, 249, 0.6);
+    border: 1px solid transparent;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.nav-pill-luxury.active, .nav-pill-luxury:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--neon-cyan);
+    border-color: rgba(0, 240, 255, 0.25);
+}

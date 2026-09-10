@@ -1,0 +1,381 @@
+/* ==========================================================================
+   🍔 MODERN2 RESILIENT FOOD COMMERCE STREAMING ENGINE GENERAL STYLES
+   ========================================================================== */
+
+/* --- 🌌 BASE CONFIGURATIONS --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: #fcfcfc;
+    color: #111827;
+    min-height: 100vh;
+    /* 🎯 SCROLL FIX: Enforces native, completely smooth scrolling across all devices! */
+    overflow-x: hidden;
+    overflow-y: auto !important;
+}
+
+/* --- 🏙️ MASTER TOP ACTIONS HEADER BAR (STICKY FROZEN) --- */
+.food-master-sticky-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    border-bottom: 1px solid #f3f4f6;
+    z-index: 2000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.015);
+}
+
+.food-top-action-row {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.food-brand-logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.food-merchant-icon-pic {
+    height: 44px;
+    width: 44px;
+    object-fit: contain;
+    border-radius: 50%;
+    border: 1px solid #f3f4f6;
+}
+
+.food-merchant-name-title {
+    font-size: 20px;
+    font-weight: 900;
+    color: #111827;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+}
+
+/* 🔍 INLINE FOOD SEARCH PILL COMPONENT (OPTIMIZED FOR BREAKING LAYOUTS) */
+.food-search-container-box {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    max-width: 480px;
+    border: 1px solid #e5e7eb;
+    border-radius: 9999px;
+    background-color: #f9fafb;
+    overflow: hidden;
+    height: 42px;
+    padding: 0 4px;
+}
+
+.food-search-input-field {
+    flex-grow: 1;
+    border: none;
+    background-color: transparent;
+    padding: 0 16px;
+    font-size: 14px;
+    color: #111827;
+    outline: none;
+    width: 100%;
+}
+.food-search-input-field::placeholder {
+    color: #9ca3af;
+}
+
+.food-search-trigger-circle {
+    background-color: #00a660;
+    border: none;
+    color: #ffffff;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    flex-shrink: 0;
+}
+
+/* 🛒 HEADER INTERACTIVE SHOPPING BAG ANCHOR */
+.food-header-cart-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #00a660;
+    color: #ffffff;
+    padding: 10px 18px;
+    border-radius: 9999px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 800;
+    transition: background 0.2s;
+}
+
+.food-header-cart-box:hover {
+    background-color: #00874e;
+}
+
+.food-cart-counter-badge {
+    background-color: #ffffff;
+    color: #00a660;
+    font-size: 11px;
+    font-weight: 900;
+    padding: 2px 8px;
+    border-radius: 20px;
+    min-width: 22px;
+    text-align: center;
+}
+
+/* --- 📁 HORIZONTAL INLINE CATEGORIES NAVIGATION STRIP --- */
+.food-category-nav-strip {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    padding: 14px 24px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    position: fixed;
+    top: 73px;
+    left: 0;
+    z-index: 1900;
+}
+
+.food-category-nav-strip::-webkit-scrollbar {
+    display: none;
+}
+
+.food-nav-category-link {
+    text-decoration: none;
+    color: #4b5563;
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    transition: color 0.2s;
+    padding-bottom: 4px;
+    border-bottom: 2px solid transparent;
+}
+
+.food-nav-category-link:hover {
+    color: #00a660;
+    border-bottom-color: #00a660;
+}
+
+/* --- 📦 MAIN FOOD SHOWCASE CANVAS --- */
+.food-main-workspace {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 165px 24px 80px 24px;
+}
+
+.food-shelf-row-section {
+    margin-bottom: 48px;
+    width: 100%;
+    text-align: left;
+}
+
+.food-section-title-line {
+    font-size: 18px;
+    font-weight: 900;
+    color: #111827;
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+    border-left: 4px solid #00a660;
+    padding-left: 10px;
+}
+
+/* --- 🛒 2-COLUMN HIGH-DENSITY GRID FOR WORKSTATIONS/LAPTOPS --- */
+.food-equipment-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    width: 100%;
+}
+
+.food-product-showcase-card {
+    background-color: #ffffff;
+    border: 1px solid #f3f4f6;
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    position: relative;
+    cursor: pointer;
+}
+
+.food-product-showcase-card:hover {
+    border-color: #e5e7eb;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+}
+
+.food-card-meta-pane {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+    max-width: 65%;
+}
+
+.food-card-item-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: #111827;
+    line-height: 1.3;
+}
+
+.food-card-item-description {
+    font-size: 13px;
+    color: #6b7280;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.food-bold-active-price {
+    font-size: 15px;
+    font-weight: 800;
+    color: #111827;
+    margin-top: 4px;
+}
+
+/* 📸 EXTRA-LARGE CRISP THUMBNAIL FRAME CONTAINER (INCREASED SIZE!) */
+.food-image-frame {
+    width: 140px; /* 🎯 INCREASED: Expanded from 110px so food items look spacious and delicious! */
+    height: 140px; /* 🎯 INCREASED: Expanded from 110px to guarantee photos aren't squished! */
+    background-color: #f9fafb;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.food-image-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Floating Add Action Accent Button */
+.food-floating-add-btn {
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ffffff;
+    color: #00a660;
+    border: 1px solid #e5e7eb;
+    padding: 6px 16px;
+    font-size: 12px;
+    font-weight: 900;
+    border-radius: 20px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+
+.food-floating-add-btn:hover {
+    background-color: #f9fafb;
+}
+
+/* --- 🏙️ COMPACT CORPORATE STATIC FOOTER PANEL --- */
+.restaurant-corporate-footer {
+    background-color: #ffffff;
+    border-top: 1px solid #f3f4f6;
+    width: 100%;
+    padding: 40px 24px;
+    text-align: center;
+    margin-top: 60px;
+}
+
+.footer-restaurant-details {
+    font-size: 14px;
+    color: #4b5563;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* 🛒 SAFE INTEGRATED MODAL BACKDROP (CLEARS SCREEN TOUCH INPUT BLOCKS) */
+.gym-cart-drawer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    backdrop-filter: blur(8px);
+    display: none; /* 🎯 CRITICAL: Set to none by default so it stays completely out of the scrolling canvas! */
+    align-items: center;
+    justify-content: center;
+    z-index: 5000;
+    padding: 20px;
+}
+
+/* --- 📱 SMARTPHONE VIEWPORT CRITICAL OVERRIDES --- */
+@media (max-width: 768px) {
+    .food-top-action-row {
+        padding: 12px 16px;
+    }
+    .food-merchant-name-title {
+        font-size: 17px;
+    }
+    .food-category-nav-strip {
+        top: 69px;
+        padding: 12px 16px;
+        justify-content: flex-start;
+    }
+    .food-main-workspace {
+        padding: 150px 12px 60px 12px;
+    }
+
+    /* Converts the layout into exactly 1 large crisp card per row on mobile phones! */
+    .food-equipment-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px;
+    }
+
+    .food-product-showcase-card {
+        padding: 12px;
+        width: 100% !important;
+    }
+
+    /* 📸 Large crisp image sizing for mobile screen feeds */
+    .food-image-frame {
+        width: 120px;
+        height: 120px;
+    }
+
+    .food-card-item-title {
+        font-size: 14px;
+    }
+    .food-card-item-description {
+        font-size: 12px;
+    }
+}

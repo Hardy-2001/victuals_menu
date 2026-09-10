@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{{ profile.restaurant_name }} | Premium Fashion Hub</title>
+
+    <!-- External Custom Styles Link Connection Track -->
+    <link rel="stylesheet" href="{% static 'menu/fashion.css' %}">
+
+    <!-- Dynamic Hex parameters matching dashboard configurations -->
+    <style>
+        :root {
+            --primary-brand-color: {{ profile.primary_color|default:"#dc2626" }};
+            --outer-backdrop-color: {{ profile.outer_bg_color|default:"#0c0c0d" }};
+            --inner-canvas-color: {{ profile.inner_bg_color|default:"#121212" }};
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+
+        <!-- 🎯 THE UNIFIED STICKY TOP PANEL -->
+        <div class="sticky-top-header-wrapper">
+            <!-- Shrunk Dynamic Brand Header -->
+                        <!-- Shrunk Dynamic Brand Header -->
+            <header>
+                <div class="header-top" style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+
+                        <!-- 📸 DYNAMIC LOGO CONTAINER FRAME -->
+                        <div class="brand-logo-frame" style="width: 42px; height: 42px; border-radius: 50%; overflow: hidden; border: 2px solid var(--primary-brand-color); background-color: #18181b; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
+                            {% if profile.logo %}
+                                <img src="{{ profile.logo.url }}" style="width: 100%; height: 100%; object-fit: cover;" alt="logo" />
+                            {% else %}
+                                <!-- Clean professional minimalist placeholder icon if no photo is uploaded -->
+                                <span style="font-size: 16px; font-weight: 900; color: var(--primary-brand-color); font-family: monospace;">{{ profile.restaurant_name|slice:":1" }}</span>
+                            {% endif %}
+                        </div>
+
+                        <!-- Brand Typography Alignment Row -->
+                        <h1 class="brand-name" style="display: inline-block; vertical-align: middle; margin: 0;">
+                            {{ profile.restaurant_name }} <span style="font-size: 13px; font-weight: 500; color: #a1a1aa; margin-left: 6px; text-transform: none; letter-spacing: normal;">/ 📍 {{ profile.address|default:"Lagos, Nigeria" }}</span>
+                        </h1>
+                    </div>
+                    <div class="store-badge">Premium Boutique</div>
+                </div>
+            </header>
+
+
+            <!-- Live Keyword Search Filter Box -->
+            <div class="search-wrapper">
+                <input type="text" id="storeSearchInput" onkeyup="filterStoreCatalog()" class="search-input-field" placeholder="Search sneakers, clothes, hoodies, caps...">
+            </div>
+
+            <!-- Horizontal Quick-Jump Pill Filters Carousel Track -->
+            <div class="category-nav-bar">
+                {% for category in categories %}
+                    <a href="#cat-{{ category.id }}" onclick="activateMenuPill(this)" class="pill-link {% if forloop.first %}active-pill{% endif %}">
+                        {{ category.name }}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- 🛍️ Product Catalog Display Stream -->
+        <div class="catalog-container">
+            {% for category in categories %}
+                <div id="cat-{{ category.id }}" class="category-block">
+                    <h3 class="category-title">{{ category.name }}</h3>
+
+                    <div class="fashion-grid">
+                                            <!-- 🎯 RE-ENGINEERED FASHION CARD NODE: Removed the hyper-sensitive onclick from the main outer wrapper -->
+                    {% for item in category.items.all %}
+                        <div class="fashion-card product-search-node"
+                             data-id="{{ item.id }}"
+                             data-name="{{ item.name }}"
+                             data-price="{{ item.price }}"
+                             style="background-color: #18181b; border: 1px solid #2c2c2e; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; position: relative;">
+
+                            <!-- 🧭 ROUTING BLOCK: Clicking the image canvas redirects safely to the detail lookbook page -->
+<!-- 🎯 REFACTOR YOUR ANCHOR LINK PATHWAY TO LOOK EXACTLY LIKE THIS: -->
+                            <a href="/store/{{ tenant.slug }}/product/{{ item.id }}/" style="text-decoration: none; display: block; width: 100%;">
+                                <div class="img-container">
+                                    {% if item.image %}
+                                        <img src="{{ item.image.url }}" class="product-img" alt="{{ item.name }}" />
+                                    {% else %}
+                                        <div class="no-img-text">No Product Photo</div>
+                                    {% endif %}
+                                    <div id="badge-{{ item.id }}"></div>
+                                </div>
+                            </a>
+
+                            <!-- Card Typography Parameters Container -->
+                            <div class="info-block">
+                                <!-- 🧭 ROUTING BLOCK: Clicking the title text redirects safely to the detail lookbook page -->
+                                <a href="/store/{{ tenant.slug }}/product/{{ item.id }}/" style="text-decoration: none; display: block;">
+                                    <h4 class="product-title">{{ item.name }}</h4>
+                                </a>
+                                                                <div>
+                                    <div class="product-price">₦{{ item.price|floatformat:0 }}</div>
+
+                                    <!-- 🛒 PROFESSIONAL DUAL ACTION BUTTON ROW -->
+                                    <div class="action-buttons-split-row" style="display: flex; gap: 6px; margin-top: 8px;">
+                                        <!-- ❌ REMOVE ACTION: Passes the parent card element directly to your existing script -->
+                                        <button class="remove-action-btn" type="button"
+                                                onclick="removeOneFromCart(this.closest('.fashion-card'))"
+                                                style="width: 40%; font-size: 10px; font-weight: 800; background: #27272a; color: #ef4444; border: 1px solid #3f3f46; border-radius: 6px; padding: 6px 0; text-transform: uppercase; cursor: pointer; transition: all 0.2s;">
+                                            Rem
+                                        </button>
+
+                                        <!-- ➕ SELECT ACTION -->
+                                        <button class="select-action-btn" type="button"
+                                                onclick="addToCart(this.closest('.fashion-card'))"
+                                                style="width: 60%; font-size: 10px; font-weight: 800; background: var(--primary-brand-color); color: #fff; border: none; border-radius: 6px; padding: 6px 0; text-transform: uppercase; cursor: pointer; margin-top: 0; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
+                                            Sel
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    </div>
+                </div>
+            {% empty %}
+                <div style="color:#52525b; text-align:center; padding: 80px 0; font-size: 14px;">BOUTIQUE COLLECTION EMPTY</div>
+            {% endfor %}
+        </div>
+
+        <!-- MODERN DUAL BUTTON ROW STICKY FOOTER -->
+        <div class="sticky-footer">
+            <a href="tel:+{{ profile.phone_number }}" class="footer-btn footer-btn-call">Call Shop</a>
+
+            <button type="button" onclick="previewAndSendOrder()" class="footer-btn footer-btn-bag">
+                Shopping Bag (<span id="cart-total-badge">0</span>)
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript Selection Handlers -->
+        <!-- JavaScript Selection Handlers -->
+    <script>
+        // 🎯 FIXED ENGINE: Reads existing items from memory on page load instead of wiping them!
+        let orderCart = JSON.parse(localStorage.getItem('victuals_cart')) || {};
+
+        function filterStoreCatalog() {
+    // 🎯 Captures your search field value string cleanly
+    const searchInput = document.getElementById('storeSearchInput').value.toLowerCase();
+    const productNodes = document.querySelectorAll('.product-search-node');
+
+    // Step 1: Filter each product card individually by name matching parameters
+    productNodes.forEach(card => {
+        const productName = card.getAttribute('data-name').toLowerCase();
+        if (productName.includes(searchInput)) {
+            card.style.display = "flex";
+            card.setAttribute('data-visible', 'true'); // Tag matches with a custom data marker
+        } else {
+            card.style.display = "none";
+            card.setAttribute('data-visible', 'false'); // Mark non-matching entries as hidden
+        }
+    });
+
+    // Step 2: Cleanly update empty category sections without styling attribute bugs
+    document.querySelectorAll('.category-block').forEach(block => {
+        // 🎯 FIXED: Queries by our bulletproof data attribute tracker instead of inline style strings!
+        const visibleCards = block.querySelectorAll('.product-search-node[data-visible="true"]');
+
+        if (searchInput !== "" && visibleCards.length === 0) {
+            block.style.display = "none";
+        } else {
+            block.style.display = "block";
+        }
+    });
+}
+
+
+        function activateMenuPill(clickedElement) {
+            document.querySelectorAll('.pill-link').forEach(p => p.classList.remove('active-pill'));
+            clickedElement.classList.add('active-pill');
+        }
+
+        function addToCart(cardElement) {
+            const itemId = cardElement.getAttribute('data-id');
+            const itemName = cardElement.getAttribute('data-name');
+            const itemPrice = parseFloat(cardElement.getAttribute('data-price'));
+            const badgeElement = document.getElementById(`badge-${itemId}`);
+
+            if (orderCart[itemId]) {
+                orderCart[itemId].quantity += 1;
+            } else {
+                orderCart[itemId] = { name: itemName, price: itemPrice, quantity: 1 };
+                cardElement.style.borderColor = "var(--primary-brand-color)";
+            }
+
+            badgeElement.innerHTML = `<span class="selection-badge">x${orderCart[itemId].quantity}</span>`;
+            localStorage.setItem('victuals_cart', JSON.stringify(orderCart));
+            updateCartUI();
+        }
+
+        function removeOneFromCart(cardElement) {
+            const itemId = cardElement.getAttribute('data-id');
+            const badgeElement = document.getElementById(`badge-${itemId}`);
+
+            if (!orderCart[itemId]) return;
+            orderCart[itemId].quantity -= 1;
+
+            if (orderCart[itemId].quantity <= 0) {
+                delete orderCart[itemId];
+                cardElement.style.borderColor = "#2c2c2e";
+                badgeElement.innerHTML = '';
+            } else {
+                badgeElement.innerHTML = `<span class="selection-badge">x${orderCart[itemId].quantity}</span>`;
+            }
+
+            localStorage.setItem('victuals_cart', JSON.stringify(orderCart));
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            let total = 0;
+            for (const k in orderCart) { total += orderCart[k].quantity; }
+            document.getElementById('cart-total-badge').innerText = total;
+        }
+
+        function previewAndSendOrder() {
+            if (Object.keys(orderCart).length === 0) {
+                alert("🛒 Your boutique shopping bag is empty! Select items before checking out.");
+                return;
+            }
+            window.location.href = "/store/{{ tenant.slug }}/checkout/";
+        }
+
+        // 📊 RUNS INSTANTLY ON RELOAD: Forces your basket counter badge to light up the second the page loads!
+        updateCartUI();
+    </script>
+
+</body>
+</html>

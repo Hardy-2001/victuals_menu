@@ -1,0 +1,365 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{{ store.store_name }} — Premium Fitness Equipment Hub</title>
+
+    <!-- 🎨 STATIC LINK: Connections to your upcoming clean standalone style sheet -->
+    <link rel="stylesheet" href="{% static 'modern/css/gym_style.css' %}">
+</head>
+<body>
+
+    <!-- 🏙️ MASTER TOP SEARCH HEADER ACTIONS BAR (STICKY FROZEN) -->
+    <div class="gym-master-sticky-header">
+        <header class="gym-top-action-row">
+
+            <!-- BRAND IDENTITY SPACE WITH DYNAMIC LOGO FILE LOADER -->
+            <div class="gym-logo-branding-container">
+                <div class="gym-brand-logo-area">
+                    {{ store.store_name }}<span>.</span>
+                </div>
+                {% if store.store_logo %}
+                    <img src="{{ store.store_logo.url }}" alt="{{ store.store_name }} Logo" class="gym-header-merchant-logo">
+                {% endif %}
+            </div>
+
+            <!-- 🔍 PILL-SHAPED TRIPLE MATRIX SEARCH BAR -->
+            <div class="gym-search-matrix-container">
+                <select class="gym-search-dropdown-selector" id="gymCategoryDropdown" onchange="jumpToSelectedFitnessShelf()">
+                    <option value="all">All Categories</option>
+                    {% for category in categories %}
+                        <option value="gym_shelf_{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+
+                <input type="text" id="gymCatalogSearchInput" onkeyup="filterFitnessCatalog()" class="gym-search-input-field" placeholder="Search commercial benches, dumbbells, treadmills, cables...">
+
+                <button class="gym-search-trigger-circle" aria-label="Search">
+                    🔍
+                </button>
+            </div>
+
+            <!-- 🛒 HEADER INTERACTIVE SHOPPING BAG ANCHOR -->
+            <div class="gym-header-cart-box" onclick="openGymShoppingBagModal()">
+                <span class="gym-cart-icon-emoji">🛒</span>
+                <span id="gymHeaderCartBadge" class="gym-cart-counter-pill">0</span>
+            </div>
+        </header>
+
+        <!-- 📁 HORIZONTAL DYNAMIC CATEGORIES STRIP -->
+        <nav class="gym-category-nav-strip">
+            {% for category in categories %}
+                <a href="#gym_shelf_{{ category.id }}" onclick="event.preventDefault(); smoothScrollToShelf('gym_shelf_{{ category.id }}');" class="gym-nav-category-link">
+                    {{ category.name }}
+                </a>
+            {% endfor %}
+        </nav>
+    </div>
+
+    <!-- 📦 MAIN GYM LAYOUT SHOWCASE CANVAS -->
+    <main class="gym-main-workspace">
+
+        <!-- 🏙️ PREMIUM CINEMATIC HERO JUMBOTRON CARD WRAPPER -->
+<!-- 🏙️ PREMIUM CINEMATIC HERO JUMBOTRON CARD WRAPPER (FIXED SYNTAX QUOTES) -->
+<div class="gym-premium-hero-jumbotron" style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.65)), url('{% if store.custom_hero_banner %}{{ store.custom_hero_banner.url }}{% else %}{% static 'modern/images/fallback_banner.jpg' %}{% endif %}');">
+            <div class="gym-hero-content-core">
+                <h1 class="gym-hero-main-title">{{ store.store_name }}</h1>
+                <p class="gym-hero-description-paragraph">
+                    {% if store.business_biography %}
+                        {{ store.business_biography }}
+                    {% else %}
+                        Discover a curated collection of gym wear, training gear, and fitness essentials designed to keep you moving, performing, and looking your best.
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+
+        <!-- DYNAMIC LOOP TRACK FOR FITNESS SECTIONS -->
+        {% for category in categories %}
+            {% if category.modern_products.all %}
+            <section class="gym-shelf-row-section" id="gym_shelf_{{ category.id }}">
+
+                <h2 class="gym-section-title-line">{{ category.name }}</h2>
+
+                <!-- 🛒 4-COLUMN RESPONSIVE MAX-GRID SHOWCASE -->
+                <div class="gym-equipment-grid">
+                    {% for item in category.modern_products.all %}
+
+                    <!-- PRODUCT CARD ASSET BLOCK (Clicking card launches details view) -->
+                    <div class="gym-product-showcase-card product-gym-node" data-name="{{ item.name }}" onclick="window.location.href='/modern/{{ store.custom_slug }}/product/{{ item.id }}/';">
+
+                        <div class="gym-image-frame">
+                            <span class="gym-discount-badge">-12%</span>
+                            <span class="gym-new-arrival-badge">New</span>
+
+                            {% if item.image %}
+                                <img src="{{ item.image.url }}" alt="{{ item.name }}" loading="lazy">
+                            {% else %}
+                                <div style="font-size: 44px; color: #cbd5e1;">🏋️‍♂️</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="gym-card-meta-pane">
+                            <span class="gym-card-merchant-brand">
+                                {% if item.brand_or_manufacturer %}{{ item.brand_or_manufacturer }}{% else %}Commercial Grade{% endif %}
+                            </span>
+                            <h3 class="gym-card-item-title">{{ item.name }}</h3>
+
+                            <div class="gym-card-pricing-block">
+                                <span class="gym-slash-old-price">₦{{ item.price|add:"150000" }}</span>
+                                <span class="gym-bold-active-price">₦{{ item.price }}</span>
+                            </div>
+                        </div>
+
+                        <!-- + Add to Bag Flat Button (stopPropagation halts page routing to add item inline!) -->
+                        <button class="gym-flat-add-to-bag-btn" onclick="event.stopPropagation(); addGymItemToBag('{{ item.name }}', {{ item.price }});">
+                            + Add to Bag
+                        </button>
+                    </div>
+
+                    {% endfor %}
+                </div>
+
+            </section>
+            {% endif %}
+        {% empty %}
+            <div class="gym-empty-catalog-fallback">
+                Welcome to your Next-Gen Iron Pulse Gym Suite! <br><br>Log into the Modern Store dashboard section to register fitness categories and product item nodes.
+            </div>
+        {% endfor %}
+
+    </main>
+
+
+        <!-- 🏙️ MASTER CORPORATE MIDNIGHT-BLACK STORE FOOTER -->
+    <footer class="premium-corporate-footer">
+        <div class="footer-master-flex-grid">
+
+            <!-- Left Side: Contact Information Core -->
+            <div class="footer-left-contacts-pane">
+                <a href="/modern/{{ store.custom_slug }}/" class="footer-nav-root-link">Home</a>
+                <h3 class="footer-section-headline">CONTACT US</h3>
+
+                <div class="footer-contact-data-row">📞 {{ store.footer_phone }}</div>
+                <div class="footer-contact-data-row">📍 {{ store.footer_address }}</div>
+
+                <!-- 📲 SOCIAL NETWORKS LIVE CONNECTIONS BLOCK (INCLUDES FACEBOOK!) -->
+                <div class="footer-social-networks-rail">
+                    {% if store.instagram_username %}
+                        <a href="https://instagram.com{{ store.instagram_username }}" target="_blank" class="social-glyph-link" title="Instagram">📸</a>
+                    {% endif %}
+                    {% if store.facebook_username %}
+                        <a href="https://facebook.com{{ store.facebook_username }}" target="_blank" class="social-glyph-link" title="Facebook">👥</a>
+                    {% endif %}
+                    {% if store.tiktok_username %}
+                        <a href="https://tiktok.com@{{ store.tiktok_username }}" target="_blank" class="social-glyph-link" title="TikTok">🎵</a>
+                    {% endif %}
+                    {% if store.whatsapp_link_number %}
+                        <a href="https://wa.me{{ store.whatsapp_link_number }}" target="_blank" class="social-glyph-link" title="WhatsApp">💬</a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Right Side: Newsletter Subscription Board Chassis -->
+                        <!-- Right Side: Newsletter Subscription Board Chassis -->
+            <div class="footer-right-subscribe-pane">
+                <h3 class="footer-section-headline">SIGN UP FOR DISCOUNTS & UPDATES</h3>
+                <div class="footer-newsletter-form">
+                    <!-- 🎯 FIXED: Removed readonly property completely so clients can now type into this input block! -->
+                    <input type="text" id="footerNewsletterInput" class="footer-newsletter-input" placeholder="Enter your phone number or email address">
+                    <button class="footer-subscribe-action-btn" onclick="submitStoreNewsletterSubscription()">Subscribe</button>
+                </div>
+
+                <div class="footer-utility-link-row">
+                    <!-- 🎯 FIXED: Removed Return Policy. Sits cleanly redirecting to your upcoming dynamic standalone page link -->
+                    <a href="/modern/{{ store.custom_slug }}/about/" class="footer-sub-text-link">About Us</a>
+                </div>
+            </div>
+
+
+        </div>
+    </footer>
+
+    <!-- 🛒 PREMIUM SHOPPING BAG PREVIEW MODAL POPUP -->
+    <div id="gymCartModalOverlay" class="gym-cart-drawer-overlay" onclick="closeGymShoppingBagModal()">
+        <div class="gym-cart-drawer-box" onclick="event.stopPropagation();">
+            <button class="gym-drawer-close-trigger" onclick="closeGymShoppingBagModal()">×</button>
+
+            <h2 class="gym-drawer-headline-title">🏋️‍♂️ Your Fitness Gear Bag</h2>
+            <div id="gymModalItemsList" class="gym-drawer-items-list-container"></div>
+
+            <div class="gym-drawer-invoice-summary-row">
+                <span class="gym-drawer-invoice-label">Total Invoice:</span>
+                <span id="gymModalTotalBillTag" class="gym-drawer-invoice-price-tag">₦0.00</span>
+            </div>
+
+            <button class="gym-drawer-dispatch-commit-btn" onclick="dispatchGymWhatsAppManifest()">
+                Confirm & Dispatch Order via WhatsApp →
+            </button>
+        </div>
+    </div>
+    </footer>
+
+        <!-- 🔮 REAL-TIME BASKET MATHS, LOCALSTORAGE STORAGE SYNC & SEARCH FILTER SCRIPTS -->
+    <script>
+        let gymShoppingBagArray = [];
+
+        // ⚡ AUTOMATED LOAD SYNC: Automatically pulls basket memories across product view redirects
+        window.addEventListener('DOMContentLoaded', () => {
+            let runningStorageData = localStorage.getItem('grocery_cart_storage');
+            if (runningStorageData) {
+                gymShoppingBagArray = JSON.parse(runningStorageData);
+                updateGymHeaderCartBadgeValue();
+            }
+        });
+
+        function addGymItemToBag(name, price) {
+            let existingIndex = gymShoppingBagArray.findIndex(item => item.name === name);
+            if (existingIndex > -1) {
+                gymShoppingBagArray[existingIndex].quantity += 1;
+            } else {
+                gymShoppingBagArray.push({ name: name, price: price, quantity: 1 });
+            }
+
+            // Unify session cache storage parameters across catalog sheets and product cards
+            localStorage.setItem('grocery_cart_storage', JSON.stringify(gymShoppingBagArray));
+            updateGymHeaderCartBadgeValue();
+
+            // Provide instant micro-interaction notice feedback
+            alert(`⚡ ${name} added safely into your fitness shopping bag selection!`);
+        }
+
+        function updateGymHeaderCartBadgeValue() {
+            const badge = document.getElementById('gymHeaderCartBadge');
+            let absoluteUnitsCount = gymShoppingBagArray.reduce((acc, curr) => acc + curr.quantity, 0);
+            badge.innerText = absoluteUnitsCount;
+        }
+
+        function openGymShoppingBagModal() {
+            if (gymShoppingBagArray.length === 0) {
+                alert("Your fitness bag is currently empty! Add items from the displays first.");
+                return;
+            }
+
+            const listContainer = document.getElementById('gymModalItemsList');
+            const billTag = document.getElementById('gymModalTotalBillTag');
+
+            listContainer.innerHTML = "";
+            let revenueAccumulator = 0;
+
+            gymShoppingBagArray.forEach((product, idx) => {
+                let costSum = product.price * product.quantity;
+                revenueAccumulator += costSum;
+
+                listContainer.innerHTML += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f3f4f6;">
+                        <div style="text-align: left; max-width: 65%;">
+                            <div style="font-size: 13px; font-weight: 700; color: #111827;">${product.name}</div>
+                            <div style="font-size: 11px; color: #6b7280;">₦${product.price.toLocaleString()} x ${product.quantity}</div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <span style="font-size: 13px; font-weight: 800; color: #111827; font-family: monospace;">₦${costSum.toLocaleString()}</span>
+                            <button onclick="removeGymItemRow(${idx})" style="background:transparent; border:none; color:#dc2626; font-weight:bold; cursor:pointer;">🗑️</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            billTag.innerText = `₦${revenueAccumulator.toLocaleString()}`;
+            document.getElementById('gymCartModalOverlay').style.display = "flex";
+        }
+
+        function removeGymItemRow(index) {
+            gymShoppingBagArray.splice(index, 1);
+            localStorage.setItem('grocery_cart_storage', JSON.stringify(gymShoppingBagArray));
+            updateGymHeaderCartBadgeValue();
+            if (gymShoppingBagArray.length === 0) {
+                closeGymShoppingBagModal();
+            } else {
+                openGymShoppingBagModal();
+            }
+        }
+
+        function closeGymShoppingBagModal() {
+            document.getElementById('gymCartModalOverlay').style.display = "none";
+        }
+
+        function dispatchGymWhatsAppManifest() {
+            if (gymShoppingBagArray.length === 0) return;
+
+            let summaryMessage = `Hello Admin! I would like to purchase these fitness workout equipment items from your Gym store:\n\n`;
+            let runningFinancialTotal = 0;
+
+            gymShoppingBagArray.forEach((item, idx) => {
+                let itemTotalCost = item.price * item.quantity;
+                runningFinancialTotal += itemTotalCost;
+                summaryMessage += `${idx + 1}. 🏋️‍♂️ ${item.name} (x${item.quantity}) — ₦${itemTotalCost.toLocaleString()}\n`;
+            });
+
+            summaryMessage += `\n💰 Gross Total Invoice Bill: ₦${runningFinancialTotal.toLocaleString()}\n\n`;
+            summaryMessage += `Kindly confirm item physical status metrics and warehouse delivery coordinates.`;
+
+            localStorage.removeItem('grocery_cart_storage');
+            const targetPhoneCoordinates = "{{ store.whatsapp_dispatch_number }}";
+            window.location.href = "whatsapp://send?phone=" + targetPhoneCoordinates + "&text=" + encodeURIComponent(summaryMessage);
+        }
+
+        function jumpToSelectedFitnessShelf() {
+            const selectVal = document.getElementById('gymCategoryDropdown').value;
+            if (selectVal !== "all") {
+                smoothScrollToShelf(selectVal);
+            }
+        }
+
+        function smoothScrollToShelf(id) {
+            const target = document.getElementById(id);
+            if (target) {
+                const offsetBuffer = 150;
+                const scrollPos = target.getBoundingClientRect().top + window.pageYOffset - offsetBuffer;
+                window.scrollTo({ top: scrollPos, behavior: 'smooth' });
+            }
+        }
+
+        function filterFitnessCatalog() {
+            const textValueInput = document.getElementById('gymCatalogSearchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.product-gym-node');
+
+            cards.forEach(card => {
+                const titleText = card.getAttribute('data-name').toLowerCase();
+                if (titleText.includes(textValueInput)) {
+                    card.style.display = "flex";
+                    card.setAttribute('data-visible', 'true');
+                } else {
+                    card.style.display = "none";
+                    card.setAttribute('data-visible', 'false');
+                }
+            });
+
+            document.querySelectorAll('.gym-shelf-row-section').forEach(section => {
+                const matchingCards = section.querySelectorAll('.product-gym-node[data-visible="true"]');
+                if (textValueInput !== "" && matchingCards.length === 0) {
+                    section.style.display = "none";
+                } else {
+                    section.style.display = "block";
+                }
+            });
+        }
+                // ✉️ NEWSLETTER DISPATCH ENGINE SUBSCRIPTION TRACKER
+        function submitStoreNewsletterSubscription() {
+            const inputVal = document.getElementById('footerNewsletterInput').value.trim();
+            if (inputVal === "") {
+                alert("Please fill in a valid email address or phone coordinate sequence line first.");
+                return;
+            }
+            alert(`🎉 Success! The credential coordinates [ ${inputVal} ] have been logged for flash sale discount notifications.`);
+            document.getElementById('footerNewsletterInput').value = ""; // Clear input cell after click
+        }
+
+    </script>
+
+</body>
+</html>
+
+

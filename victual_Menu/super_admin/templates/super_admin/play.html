@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assigned Functional Modules Dashboard</title>
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://jsdelivr.net">
+
+    <style>
+        :root {
+            --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            --bg-color: #fafafa;
+            --card-bg: #ffffff;
+            --border-color: #e4e4e7;
+            --text-primary: #18181b;
+            --text-secondary: #71717a;
+            --accent-color: #3f3f46;
+        }
+
+        /* Dark mode fallback readiness */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #09090b;
+                --card-bg: #18181b;
+                --border-color: #27272a;
+                --text-primary: #f4f4f5;
+                --text-secondary: #a1a1aa;
+                --accent-color: #fafafa;
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 40px 24px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        /* Grid Configuration */
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        /* Base Card Styling */
+        .module-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        .module-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Card Header / Section Splitter Variant */
+        .module-header-card {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, var(--card-bg), var(--bg-color));
+            pointer-events: none;
+            cursor: default;
+            border-style: dashed;
+        }
+
+        .module-header-card:hover {
+            transform: none;
+            box-shadow: none;
+            border-color: var(--border-color);
+        }
+
+        /* Icon Wrapper */
+        .module-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .module-header-card .module-icon {
+            background-color: var(--accent-color);
+            color: var(--card-bg);
+            border: none;
+        }
+
+        /* Text Layout */
+        .module-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .module-info h4 {
+            margin: 0;
+            font-size: 0.95rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .module-info span {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <h3 style="font-family: var(--font-mono); font-size: 0.9rem; color: #71717a; text-transform: uppercase; margin-bottom: 16px;">Assigned Functional Modules</h3>
+
+        <div class="module-grid">
+            <!-- Static Base Modules -->
+            <div class="module-card">
+                <div class="module-icon"><i class="bi bi-collection-play-fill"></i></div>
+                <div class="module-info"><h4>Gallery Images</h4><span>Add or change gallery items</span></div>
+            </div>
+            <div class="module-card">
+                <div class="module-icon"><i class="bi bi-heart-pulse-fill"></i></div>
+                <div class="module-info"><h4>Service Offers</h4><span>Configure clinical service list</span></div>
+            </div>
+            <div class="module-card">
+                <div class="module-icon"><i class="bi bi-person-badge-fill"></i></div>
+                <div class="module-info"><h4>Medical Doctors</h4><span>Manage practitioner registry</span></div>
+            </div>
+            <div class="module-card">
+                <div class="module-icon"><i class="bi bi-chat-left-quote-fill"></i></div>
+                <div class="module-info"><h4>Testimonials</h4><span>Patient success story rows</span></div>
+            </div>
+            <div class="module-card">
+                <div class="module-icon"><i class="bi bi-calendar-check-fill"></i></div>
+                <div class="module-info"><h4>Appointments</h4><span>View incoming user logs</span></div>
+            </div>
+            <div class="module-card">
+                <div class="module-icon"><i class="bi bi-envelope-paper-fill"></i></div>
+                <div class="module-info"><h4>Mailbox Forms</h4><span>Monitor visitor messaging feedback</span></div>
+            </div>
+            <div class="module-card">
+                <div class="module-icon"><i class="bi bi-question-square-fill"></i></div>
+                <div class="module-info"><h4>FAQ Drawers</h4><span>Edit support accordion tabs</span></div>
+            </div>
+
+            <!-- Dynamic Template Sections -->
+            {% if true %}
+            <div class="module-card">
+                <div class="module-icon"><i class="bi bi-building"></i></div>
+                <div class="module-info"><h4>Departments</h4><span>Manage department blocks</span></div>
+            </div>
+            {% endif %}
+
+            {% if is_menu_multi_site %}
+            <div class="module-card module-header-card" style="opacity: 0.85;">
+                <div class="module-icon"><i class="bi bi-layers-half"></i></div>
+                <div class="module-info"><h4>Assigned E-Commerce Modules</h4><span>3 Sites Active</span></div>
+            </div>
+            <div class="module-card">
+                <div class="module-icon"><i class="bi bi-tags-fill"></i></div>
+                <div class="module-info"><h4>Menu Categories</h4><span>Configure item categories</span></div>
+            </div>
+            <div class="module-card">
+                <div class="module-icon"><i class="bi bi-box-seam-fill"></i></div>
+                <div class="module-info"><h4>Items Catalog</h4><span>Add/Update product items</span></div>
+            </div>
+            <div class="module-card">
+                <div class="module-icon"><i class="bi bi-chat-square-text-fill"></i></div>
+                <div class="module-info"><h4>User Feedback</h4><span>View customer messages</span></div>
+            </div>
+            {% endif %}
+
+            {% if is_premium_food %}
+            <div class="module-card module-header-card" style="opacity: 0.85;">
+                <div class="module-icon"><i class="bi bi-stars"></i></div>
+                <div class="module-info"><h4>Premium Modern Operations</h4><span>Advanced kitchen management</span></div>
+            </div>
+            <div class="module-card">
+                <div class="module-icon"><i class="bi bi-grid-3x3-gap-fill"></i></div>
+                <div class="module-info"><h4>Modern Categories</h4><span>Add/Change catalog categories</span></div>
+            </div>
+            <div class="module-card">
+                <div class="module-icon"><i class="bi bi-egg-fried"></i></div>
+                <div class="module-info"><h4>Modern Product Items</h4><span>Full CRUD product manager</span></div>
+            </div>
+            <div class="module-card">
+                <div class="module-icon"><i class="bi bi-credit-card-2-front-fill"></i></div>
+                <div class="module-info"><h4>Merchant Billing Notice</h4><span>View your billing parameters</span></div>
+            </div>
+            {% endif %}
+
+            {% if is_modern2_food %}
+            <div class="module-card module-header-card" style="opacity: 0.85;">
+                <div class="module-icon"><i class="bi bi-shop"></i></div>
+                <div class="module-info"><h4>Modern2 Restaurant Operations</h4><span>Standard dining configuration</span></div>
+            </div>
+            <div class="module-card">
+                <div class="module-icon"><i class="bi bi-list-stars"></i></div>
+                <div class="module-info"><h4>Restaurant Categories</h4><span>Configure dining categories</span></div>
+            </div>
+            <div class="module-card">
+                <div class="module-icon"><i class="bi bi-journal-text"></i></div>
+                <div class="module-info"><h4>Food Menu Items</h4><span>Manage menu selection registry</span></div>
+            </div>
+            <div class="module-card">
+                <div class="module-icon"><i class="bi bi-cash-stack"></i></div>
+                <div class="module-info"><h4>Merchant Billing Detail</h4><span>Monitor account ledger data</span></div>
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+
+</body>
+</html>

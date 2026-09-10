@@ -1,0 +1,449 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>COREX SERVER — Control Terminal Console</title>
+
+    <!-- 🌌 HIGH-TECH ICONS CORE LIBRARY MIRRORS -->
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <link rel="stylesheet" href="https://cloudflare.com">
+
+    <!-- 🎨 EXTERNAL STYLE PATH CHANNELS WITH FRESH ANTICACHE QUERY STRING -->
+    <link rel="stylesheet" href="{% static 'super_admin/css/console.css' %}?v=2.5">
+</head>
+
+
+<!-- 🪐 CONFIRM YOUR OPENING BODY TAG IN landing.html CONTAINS ALL THESE ATTRIBUTES: -->
+<body class="theme-default" id="console-canvas-body"
+      style="background-image: url('{{ platform_config.server_state_default.url|default:'' }}');"
+      data-state-1="{{ platform_config.server_state_default.url|default:'' }}"
+      data-state-2="{{ platform_config.server_state_blue.url|default:'' }}"
+      data-state-3="{{ platform_config.server_state_purple.url|default:'' }}"
+      data-state-4="{{ platform_config.server_state_emerald.url|default:'' }}"
+      data-state-5="{{ platform_config.server_state_amber.url|default:'' }}"
+
+
+
+      data-state-6="{{ platform_config.server_state_six.url|default:'' }}"
+      data-state-7="{{ platform_config.server_state_seven.url|default:'' }}"
+      data-state-8="{{ platform_config.server_state_eight.url|default:'' }}"
+      data-state-9="{{ platform_config.server_state_nine.url|default:'' }}"
+      data-state-10="{{ platform_config.server_state_ten.url|default:'' }}">
+
+
+
+    <!-- 📡 TERMINAL TOP NAVBAR HEADER (FIXED INLINE OVERRIDES FOR RESPONSIVE CAPACITY) -->
+    <header class="cyber-header">
+                <!-- 🎯 REFACTOR YOUR BRAND NODE IN landing.html TO CAPTURE THE SHIELDED SPAN TRACK: -->
+                <!-- 🐉 DYNAMIC PLATFORM BRANDING LOGO COMPONENT -->
+                <!-- 🐉 DYNAMIC PLATFORM BRANDING LOGO COMPONENT -->
+        <div class="brand-node" style="display: flex; align-items: center; gap: 12px;">
+
+            <!-- 🟢 MATCHED WITH YOUR VIEW CONTEXT VARIANT 'platform_config' -->
+            {% if platform_config.platform_logo %}
+                <!-- 👑 Renders your custom corporate image file uploaded from the super admin panel -->
+                <img src="{{ platform_config.platform_logo.url }}" alt="Corex Logo" class="brand-logo-icon" id="header-brand-logo-img" style="height: 55px; width: auto; object-fit: contain;">
+            {% else %}
+                <!-- 🛡️ Fallback responsive icon track if no logo is active in the database row -->
+                <i class="bi bi-shield-lock-fill brand-logo-icon" id="header-brand-logo-icon"></i>
+            {% endif %}
+
+            <div class="brand-text">
+                <h2><span class="glowing-brand-word">Corex Server</span></h2>
+                <span>SECURE. STABLE. ALWAYS ALIVE.</span>
+            </div>
+        </div>
+
+
+        <!-- 🧭 ACCORDION NAV HOOKS MATRIX -->
+                <!-- 🧭 ACCORDION NAV HOOKS MATRIX (UPDATED WITH SECURE PORTAL CHANNEL) -->
+        <ul class="cyber-nav">
+            <li><a href="#" class="active" onclick="toggleHudDrawer(event, 'none')">Home</a></li>
+            <li><a href="#" onclick="toggleHudDrawer(event, 'contact-drawer')">Contact</a></li>
+            <li><a href="#" onclick="toggleHudDrawer(event, 'services-drawer')">Services</a></li>
+            <li><a href="#" onclick="toggleHudDrawer(event, 'security-drawer')">Security</a></li>
+            <li><a href="#" onclick="toggleHudDrawer(event, 'about-drawer')">About</a></li>
+            <span class="metric-value blinking-metric-node">
+                <li><a href="#" onclick="toggleHudDrawer(event, 'portal-login-drawer')" style="color: #fff; font-weight: 700; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 15px;"><i class="bi bi-key-fill" style="color: var(--neon-color); margin-right: 6px;"></i> <span class="glowing-brand-word">Login Portal</span> </a></li>
+            </span>
+        </ul>
+
+
+        <div class="header-status-badge">
+            <span class="status-dot"></span>
+            <span>SERVER STATUS: </span>
+            <span class="metric-value blinking-metric-node">ONLINE</span>
+
+        </div>
+    </header>
+
+    <!-- 📥 SLIDE-DOWN ACCORDION DRAWERS LAYER CONTAINER PANELS -->
+
+    <!-- A. CONTACT DRAWER -->
+            <!-- A. CONTACT DRAWER LAYER (OPTIMIZED NO-CLIP GRID) -->
+    <div id="contact-drawer" class="hud-dropdown-drawer">
+        <!-- 💡 INJECTED FIXED VISUAL WRAPPER BOX WITH RESPONSIVE OVERFLOW CLEANANCE -->
+        <div class="drawer-content-box" style="padding: 24px; font-family: var(--font-terminal); overflow: hidden; min-height: 280px;">
+            <h4 style="color: var(--neon-color); font-size: 1.1rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 0 5px var(--neon-glow);"><i class="bi bi-terminal-split" style="margin-right: 8px;"></i>Terminal Communication Hub</h4>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: stretch; width: 100%;">
+
+                <!-- 📡 LEFT COLUMN: STACKED SYSTEM COMMUNICATION CHANNELS -->
+                <div style="display: flex; flex-direction: column; gap: 16px; justify-content: flex-start;">
+                    <!-- 🔒 STATIC GRID NODE 1: WHATSAPP DATA RAIL -->
+                    <div class="contact-action-card" style="cursor: default; display: flex; align-items: center; gap: 14px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); padding: 16px; border-radius: 6px; width: 100%;">
+                        <i class="bi bi-whatsapp contact-card-icon-node" style="font-size: 1.8rem; color: var(--neon-color);"></i>
+                        <div>
+                            <span style="display:block; font-size:0.8rem; color:#71717a; letter-spacing: 1px;">WHATSAPP GATEWAY</span>
+                            <span style="font-weight:700; color:#fff;">+{{ platform_config.admin_whatsapp }}</span>
+                        </div>
+                    </div>
+
+                    <!-- 🔒 STATIC GRID NODE 2: PHONE DATA RAIL -->
+                    <div class="contact-action-card" style="cursor: default; display: flex; align-items: center; gap: 14px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); padding: 16px; border-radius: 6px; width: 100%;">
+                        <i class="bi bi-telephone-fill contact-card-icon-node" style="font-size: 1.8rem; color: var(--neon-color);"></i>
+                        <div>
+                            <span style="display:block; font-size:0.8rem; color:#71717a; letter-spacing: 1px;">DIRECT CALL OPERATOR</span>
+                            <span style="font-weight:700; color:#fff;">+{{ platform_config.admin_phone }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 📬 RIGHT COLUMN: LIVE INFRASTRUCTURE MAIL INTAKE PANEL -->
+                <div style="background: rgba(0,0,0,0.3); padding: 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.03); display: flex; flex-direction: column; justify-content: center;">
+                    <form action="{% url 'super_admin:dispatch_console_mail' %}" method="post" style="display: flex; flex-direction: column; gap: 12px; margin: 0;">
+                        {% csrf_token %}
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                            <input type="text" name="name" placeholder="IDENT NAME" required style="width: 100%; padding: 10px; background: #050506; border: 1px solid rgba(0,255,102,0.2); border-radius: 4px; color: #fff; font-family: var(--font-terminal); font-size: 0.85rem;">
+                            <input type="email" name="email" placeholder="SECURE EMAIL" required style="width: 100%; padding: 10px; background: #050506; border: 1px solid rgba(0,255,102,0.2); border-radius: 4px; color: #fff; font-family: var(--font-terminal); font-size: 0.85rem;">
+                        </div>
+                        <textarea name="message" rows="3" placeholder="ENTER CORE PACKET MESSAGE DESCRIPTION..." required style="width: 100%; padding: 10px; background: #050506; border: 1px solid rgba(0,255,102,0.2); border-radius: 4px; color: #fff; font-family: var(--font-terminal); font-size: 0.85rem; resize: none;"></textarea>
+
+                        {% if messages %}
+                            {% for msg in messages %}
+                                {% if 'terminal_mail' in msg.extra_tags %}
+                                    <div style="color: var(--neon-color); font-size: 0.8rem; margin-bottom: 4px;">✔ {{ msg }}</div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+
+                        <button type="submit" style="width: 100%; padding: 10px; background: transparent; border: 1px solid var(--neon-color); color: var(--neon-color); font-family: var(--font-terminal); font-weight: 700; font-size: 0.85rem; border-radius: 4px; cursor: pointer; text-transform: uppercase; transition: all 0.25s ease; margin: 0;">
+                            Transmit Mail Packet <i class="bi bi-send-fill" style="margin-left: 6px;"></i>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- B. SERVICES DRAWER -->
+    <div id="services-drawer" class="hud-dropdown-drawer">
+        <div class="drawer-content-box">
+            <h4><i class="bi bi-gear-wide-connected" style="margin-right: 8px;"></i>Platform Core Services</h4>
+            <p>{{ platform_config.services_text }}</p>
+        </div>
+    </div>
+
+    <!-- C. SECURITY DRAWER -->
+    <div id="security-drawer" class="hud-dropdown-drawer">
+        <div class="drawer-content-box">
+            <h4><i class="bi bi-shield-lock-fill" style="margin-right: 8px;"></i>Infrastructure Security Protocols</h4>
+            <p>{{ platform_config.security_text }}</p>
+        </div>
+    </div>
+
+    <!-- D. ABOUT DRAWER -->
+    <div id="about-drawer" class="hud-dropdown-drawer">
+        <div class="drawer-content-box">
+            <h4><i class="bi bi-info-circle-fill" style="margin-right: 8px;"></i>Terminal Node Specifications</h4>
+            <p>{{ platform_config.about_text }}</p>
+        </div>
+    </div>
+
+
+
+        <!-- 🔐 E. SECURE AGENT & VENDOR AUTHENTICATION PORTAL DRAWER LAYER -->
+    <div id="portal-login-drawer" class="hud-dropdown-drawer">
+        <div class="drawer-content-box" style="padding: 24px; font-family: var(--font-terminal); overflow: hidden; min-height: 280px;">
+            <h4 style="color: var(--neon-color); font-size: 1.1rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 0 5px var(--neon-glow);"><i class="bi bi-shield-lock-fill" style="margin-right: 8px;"></i>Identity Verification Console</h4>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; width: 100%;">
+
+                <!-- 📡 LEFT SIDE: ARCHITECTURE LOGO PROFILES STRIP -->
+                <div style="display: flex; flex-direction: column; gap: 12px; padding-right: 20px; border-right: 1px solid rgba(255,255,255,0.05);">
+                    <span style="font-size: 0.85rem; font-weight: 700; color: #fff; display: block; letter-spacing: 1px;">CENTRAL GATEWAY INTERCEPT</span>
+                    <p style="font-size: 0.8rem; color: #71717a; line-height: 1.5; margin: 0;">
+                        Authorized personnel only. Field agents and merchant store operators are required to submit active credentials to log onto their data dashboards [2/Sep/2026].
+                    </p>
+                    <span style="font-size: 0.7rem; color: var(--neon-color); font-family: var(--font-terminal); letter-spacing: 1px; margin-top: 5px;">[ STATUS: SECURE ACCREDITATION RAIL ]</span>
+                </div>
+
+                <!-- 🔑 RIGHT SIDE: LIVE PORTAL INPUT INTENDED FORM NODE -->
+                <div style="background: rgba(0,0,0,0.3); padding: 18px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.03);">
+                    <form action="{% url 'super_admin:portal_login' %}" method="POST" style="display: flex; flex-direction: column; gap: 14px; margin: 0;">
+                        {% csrf_token %}
+
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                            <label style="font-size: 0.75rem; color: #a1a1aa; text-transform: uppercase; letter-spacing: 1px;">Username Ident</label>
+                            <input type="text" name="username" placeholder="ENTER OPERATOR ID" required style="width: 100%; padding: 11px 14px; background: #050506; border: 1px solid rgba(0,255,102,0.2); border-radius: 4px; color: #00ff66; font-family: var(--font-terminal); font-size: 0.9rem; letter-spacing: 1px;">
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                            <label style="font-size: 0.75rem; color: #a1a1aa; text-transform: uppercase; letter-spacing: 1px;">Security Passkey</label>
+                            <input type="password" name="password" placeholder="••••••••••••" required style="width: 100%; padding: 11px 14px; background: #050506; border: 1px solid rgba(0,255,102,0.2); border-radius: 4px; color: #00ff66; font-family: var(--font-terminal); font-size: 0.9rem; letter-spacing: 1px;">
+                        </div>
+
+                        <!-- Error Feedback Indicator Stream -->
+                        {% if messages %}
+                            {% for msg in messages %}
+                                {% if 'portal_auth' in msg.extra_tags %}
+                                    <div style="color: #ff3333; font-size: 0.8rem; font-weight: 700; margin-top: 4px;"><i class="bi bi-exclamation-triangle-fill"></i> {{ msg }}</div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+
+                        <button type="submit" style="width: 100%; padding: 12px; background: transparent; border: 1px solid var(--neon-color); color: var(--neon-color); font-family: var(--font-terminal); font-weight: 700; font-size: 0.9rem; border-radius: 4px; cursor: pointer; text-transform: uppercase; transition: all 0.25s ease; box-shadow: 0 0 10px var(--neon-glow);">
+                            Access Your Portal <i class="bi bi-shield-lock" style="margin-left: 6px;"></i>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- 📝 PRIMARY HEADER INTRO TEXT BANNERS -->
+    <div class="terminal-welcome-banner" style="text-align: center; margin-bottom: 20px; z-index: 10;">
+        <div class="welcome-slug" style="font-family: var(--font-terminal); font-size: 0.8rem; color: var(--neon-color); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 5px;">Core Infrastructure Terminal</div>
+        <h1 style="font-size: 3rem; font-weight: 900; letter-spacing: 3px; color: #fff; text-transform: uppercase;">Welcome to <span style="color: var(--neon-color); text-shadow: 0 0 15px var(--neon-glow); transition: color 0.3s ease;">Corex Server</span></h1>
+        <div class="welcome-subtext" style="color: #a1a1aa; font-size: 0.9rem; letter-spacing: 2px; margin-top: 5px; text-transform: uppercase;">Secure Connection. Powerful Performance.</div>
+    </div>
+
+    <!-- 🎯 CENTRAL MASTER MATRIX LAYOUT GRID -->
+    <div class="console-container">
+
+        <!-- LEFT COLUMN: SYSTEM SECURITY PROTOCOLS -->
+        <div class="left-security-deck" style="display: flex; flex-direction: column; gap: 25px;">
+            <div class="security-item-card" style="display: flex; gap: 16px; background: rgba(10, 10, 12, 0.4); border-left: 3px solid var(--neon-color); padding: 16px; border-radius: 0 8px 8px 0; transition: all 0.3s ease;">
+                <i class="bi bi-shield-check security-card-icon" style="font-size: 1.5rem; color: var(--neon-color); margin-top: 2px;"></i>
+                <div class="security-card-info">
+                    <h4 style="font-size: 0.95rem; text-transform: uppercase; color: #fff; margin-bottom: 4px; letter-spacing: 1px;">Advanced Security</h4>
+                    <p style="font-size: 0.8rem; color: #a1a1aa; line-height: 1.4;">Military-grade network protection layer shielding your databases and multi-tenant app structures natively.</p>
+                </div>
+            </div>
+            <div class="security-item-card" style="display: flex; gap: 16px; background: rgba(10, 10, 12, 0.4); border-left: 3px solid var(--neon-color); padding: 16px; border-radius: 0 8px 8px 0; transition: all 0.3s ease;">
+                <i class="bi bi-activity security-card-icon" style="font-size: 1.5rem; color: var(--neon-color); margin-top: 2px;"></i>
+                <div class="security-card-info">
+                    <h4 style="font-size: 0.95rem; text-transform: uppercase; color: #fff; margin-bottom: 4px; letter-spacing: 1px;">99.99% Uptime</h4>
+                    <p style="font-size: 0.8rem; color: #a1a1aa; line-height: 1.4;">Fault-tolerant system node architecture hosting consistent live store connections you can rely on.</p>
+                </div>
+            </div>
+            <div class="security-item-card" style="display: flex; gap: 16px; background: rgba(10, 10, 12, 0.4); border-left: 3px solid var(--neon-color); padding: 16px; border-radius: 0 8px 8px 0; transition: all 0.3s ease;">
+                <i class="bi bi-eye-fill security-card-icon" style="font-size: 1.5rem; color: var(--neon-color); margin-top: 2px;"></i>
+                <div class="security-card-info">
+                    <h4 style="font-size: 0.95rem; text-transform: uppercase; color: #fff; margin-bottom: 4px; letter-spacing: 1px;">Real-Time Monitoring</h4>
+                    <p style="font-size: 0.8rem; color: #a1a1aa; line-height: 1.4;">Continuous diagnostic stream tracing agent operations, user creations, and active tenant traffic scopes.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CENTER PANEL: SHIELD STATE MATRIX INTERACTION TARGET NODE -->
+        <div class="shield-interactive-hub">
+            <div class="shield-hotspot" id="interactive-shield-trigger">
+                <div class="shield-pulse-ring"></div>
+                <i class="fa-solid fa-shield-halved" style="font-size: 7.5rem; color: var(--neon-color); transition: color 0.3s ease;"></i>
+            </div>
+        </div>
+
+        <!-- RIGHT PANEL: SYSTEM MONITOR DECK MATRIX METRICS -->
+        <div class="system-status-deck">
+            <div class="console-header">
+                <div class="console-title"><i class="bi bi-cpu-fill" style="margin-right: 8px;"></i>Server Metrics</div>
+            </div>
+            <div class="metric-row-rail">
+                <span class="metric-label">Network Status</span>
+                <span class="metric-value" style="color: var(--neon-color);">SECURE</span>
+            </div>
+                        <!-- 🎯 REFACTOR THIS SPECIFIC METRIC ROW IN YOUR landing.html TO APPLY THE BLINK EFFECT: -->
+            <div class="metric-row-rail">
+                <span class="metric-label">Active Nodes</span>
+                <!-- 🟢 Added the blinking-metric-node class here to make it pulse smoothly! -->
+                <span class="metric-value blinking-metric-node">{{ platform_config.mock_rented_shops_base|default:"14" }} Units</span>
+            </div>
+
+            <div class="metric-row-rail">
+                <span class="metric-label">Latency Response</span>
+                <span class="metric-value">12ms</span>
+            </div>
+            <div class="metric-row-rail">
+                <span class="metric-label">System Load</span>
+                <span class="metric-value">23%</span>
+            </div>
+            <div class="metric-row-rail">
+                <span class="metric-label">Total Connections</span>
+                <span class="metric-value">128 Rail</span>
+            </div>
+        </div>
+
+        <!-- LOWER DISPATCH CONTROL BUTTON STRIP LAYOUT LAYER -->
+        <div class="action-dispatch-layer" style="grid-column: 1 / -1; text-align: center; margin-top: 15px;">
+            <div class="sub-action-headline" style="font-family: var(--font-terminal); color: var(--neon-color); font-size: 0.9rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px;">Your Data. Our Shield.</div>
+            <div class="sub-action-brief" style="color: #71717a; font-size: 0.8rem; margin-bottom: 15px;">Built with security. Backed by performance. Always alive for your enterprise network.</div>
+            <div style="max-width: 380px; margin: 0 auto;">
+                <!-- Link directly to your separate template showroom sub-page address -->
+                <a href="/templates/" class="access-command-btn">Access Dashboard <i class="bi bi-chevron-right" style="margin-left: 6px;"></i></a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 🌌 CORPORATE FOOTER INFORMATION BADGE FLOATER STRIP BAR -->
+    <footer class="cyber-footer-strip" style="display: flex; justify-content: space-between; width: 100%; max-width: 1400px; margin: 20px auto 0 auto; border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 20px; z-index: 10;">
+        <div class="footer-badge-node" style="display: flex; align-items: center; gap: 10px; font-family: var(--font-terminal);">
+            <i class="bi bi-shield-shaded" style="color: var(--neon-color); font-size: 1.1rem;"></i>
+            <div class="footer-badge-info">
+                <h5 style="font-size: 0.8rem; color: #fff; text-transform: uppercase;">DDoS Protection</h5>
+                <span style="font-size: 0.7rem; color: #71717a;">Always Operational</span>
+            </div>
+        </div>
+        <div class="footer-badge-node" style="display: flex; align-items: center; gap: 10px; font-family: var(--font-terminal);">
+            <i class="bi bi-lock-fill" style="color: var(--neon-color); font-size: 1.1rem;"></i>
+            <div class="footer-badge-info">
+                <h5 style="font-size: 0.8rem; color: #fff; text-transform: uppercase;">SSL Encryption</h5>
+                <span style="font-size: 0.7rem; color: #71717a;">256-Bit Corporate Key</span>
+            </div>
+        </div>
+        <div class="footer-badge-node" style="display: flex; align-items: center; gap: 10px; font-family: var(--font-terminal);">
+            <i class="bi bi-bricks" style="color: var(--neon-color); font-size: 1.1rem;"></i>
+            <div class="footer-badge-info">
+                <h5 style="font-size: 0.8rem; color: #fff; text-transform: uppercase;">Firewall Matrix</h5>
+                <span style="font-size: 0.7rem; color: #71717a;">Traffic Monitored</span>
+            </div>
+        </div>
+        <div class="footer-badge-node" style="display: flex; align-items: center; gap: 10px; font-family: var(--font-terminal);">
+            <i class="bi bi-cloud-arrow-up-fill" style="color: var(--neon-color); font-size: 1.1rem;"></i>
+            <div class="footer-badge-info">
+                <h5 style="font-size: 0.8rem; color: #fff; text-transform: uppercase;">Daily Backups</h5>
+                <span style="font-size: 0.7rem; color: #71717a;">Data Redundant</span>
+            </div>
+        </div>
+        <div class="footer-badge-node" style="display: flex; align-items: center; gap: 10px; font-family: var(--font-terminal);">
+            <i class="bi bi-headset" style="color: var(--neon-color); font-size: 1.1rem;"></i>
+            <div class="footer-badge-info">
+                <h5 style="font-size: 0.8rem; color: #fff; text-transform: uppercase;">Support 24/7</h5>
+                <span style="font-size: 0.7rem; color: #71717a;">Engineers On-Duty</span>
+            </div>
+        </div>
+    </footer>
+<!-- 🤖 THE CORE SYSTEM ACCORDION DRAWERS & BUG-FREE 10-STAGE STATE-SHIFTING SCRIPT ENGINE -->
+<script>
+    // 1. HUD DRIVABLE SLIDE-DOWN ACCORDION DRAWERS SWITCHER ENGINE
+    function toggleHudDrawer(event, drawerId) {
+        event.preventDefault();
+
+        const allDrawers = document.querySelectorAll(".hud-dropdown-drawer");
+        const targetDrawer = document.getElementById(drawerId);
+        const isCurrentlyActive = targetDrawer ? targetDrawer.classList.contains("active-drawer") : false;
+
+        allDrawers.forEach(drawer => drawer.classList.remove("active-drawer"));
+        document.querySelectorAll(".cyber-nav a").forEach(link => link.classList.remove("active"));
+
+        if (targetDrawer && !isCurrentlyActive) {
+            targetDrawer.classList.add("active-drawer");
+            event.target.classList.add("active");
+        } else if (drawerId === 'none') {
+            event.target.classList.add("active");
+        }
+    }
+
+    // 2. STABLE BACKDROP THEME-SHIFTING BACKGROUND CYCLE SYSTEM (10-STAGE INTEGRATION RAIL)
+    document.addEventListener("DOMContentLoaded", function() {
+        const bodyCanvas = document.getElementById("console-canvas-body");
+        const shieldTrigger = document.getElementById("interactive-shield-trigger");
+
+        if (!bodyCanvas || !shieldTrigger) return;
+
+        // 🟢 EXTENDED STATES MATRIX: Expanded cleanly to map all 10 background image data tracks
+        const statesMap = {
+            1: bodyCanvas.getAttribute("data-state-1"),
+            2: bodyCanvas.getAttribute("data-state-2"),
+            3: bodyCanvas.getAttribute("data-state-3"),
+            4: bodyCanvas.getAttribute("data-state-4"),
+            5: bodyCanvas.getAttribute("data-state-5"),
+            6: bodyCanvas.getAttribute("data-state-6"),
+            7: bodyCanvas.getAttribute("data-state-7"),
+            8: bodyCanvas.getAttribute("data-state-8"),
+            9: bodyCanvas.getAttribute("data-state-9"),
+            10: bodyCanvas.getAttribute("data-state-10")
+        };
+
+        // 🟢 10-STAGE CLASS MAP ARCHITECTURE: Tied directly to your updated style.css rules
+        const themeClasses = [
+            "theme-default", "theme-blue", "theme-purple", "theme-emerald", "theme-amber",
+            "theme-six", "theme-seven", "theme-eight", "theme-nine", "theme-ten"
+        ];
+
+        let currentStateIndex = 1;
+
+        // ⚡ THE CYCLE INTERACTION EVENT ENGINE: Cycles perfectly across all 10 states sequentially
+        shieldTrigger.addEventListener("click", function() {
+            // Increase index point loop, rolling straight back to 1 after state 10 is cleared
+            currentStateIndex = currentStateIndex >= 10 ? 1 : currentStateIndex + 1;
+
+            // Clean slate baseline body style attributes
+            bodyCanvas.className = "";
+
+            // Apply targeted theme class matrix token configurations and update image nodes
+            if (currentStateIndex === 1) {
+                bodyCanvas.classList.add("theme-default");
+                updateBackground(statesMap[1]);
+            } else if (currentStateIndex === 2) {
+                bodyCanvas.classList.add("theme-blue");
+                updateBackground(statesMap[2]);
+            } else if (currentStateIndex === 3) {
+                bodyCanvas.classList.add("theme-purple");
+                updateBackground(statesMap[3]);
+            } else if (currentStateIndex === 4) {
+                bodyCanvas.classList.add("theme-emerald");
+                updateBackground(statesMap[4]);
+            } else if (currentStateIndex === 5) {
+                bodyCanvas.classList.add("theme-amber");
+                updateBackground(statesMap[5]);
+            } else if (currentStateIndex === 6) {
+                bodyCanvas.classList.add("theme-six");
+                updateBackground(statesMap[6]);
+            } else if (currentStateIndex === 7) {
+                bodyCanvas.classList.add("theme-seven");
+                updateBackground(statesMap[7]);
+            } else if (currentStateIndex === 8) {
+                bodyCanvas.classList.add("theme-eight");
+                updateBackground(statesMap[8]);
+            } else if (currentStateIndex === 9) {
+                bodyCanvas.classList.add("theme-nine");
+                updateBackground(statesMap[9]);
+            } else if (currentStateIndex === 10) {
+                bodyCanvas.classList.add("theme-ten");
+                updateBackground(statesMap[10]);
+            }
+        });
+
+        function updateBackground(imageUrl) {
+            if (imageUrl && imageUrl.trim() !== '') {
+                bodyCanvas.style.backgroundImage = `url('${imageUrl}')`;
+            }
+        }
+    });
+</script>
+
+
+
+</body>
+</html>

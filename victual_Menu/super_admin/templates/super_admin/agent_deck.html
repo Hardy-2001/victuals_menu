@@ -1,0 +1,137 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AGENT CONTROL DECK — Infrastructure Administration Command</title>
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <style>
+        :root {
+            --font-terminal: "Courier New", Courier, monospace;
+            --neon-color: #00ff66;
+            --bg-panel: rgba(14, 14, 18, 0.95);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: #050506;
+            color: #f4f4f5;
+            font-family: var(--font-terminal);
+            min-height: 100vh;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .deck-wrapper {
+            width: 100%;
+            max-width: 1000px;
+            background: var(--bg-panel);
+            border: 1px solid rgba(0, 255, 102, 0.2);
+            box-shadow: 0 0 30px rgba(0, 255, 102, 0.05), inset 0 0 15px rgba(0, 255, 102, 0.05);
+            border-radius: 12px;
+            padding: 32px;
+            margin-top: 20px;
+        }
+        header {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 20px;
+        }
+        h1 { color: var(--neon-color); font-size: 1.6rem; letter-spacing: 2px; text-transform: uppercase; }
+        .logout-btn {
+            color: #ff3333;
+            text-decoration: none;
+            font-weight: 700;
+            border: 1px solid rgba(255, 51, 51, 0.3);
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+        .logout-btn:hover { background: #ff3333; color: #000; box-shadow: 0 0 15px rgba(255, 51, 51, 0.4); }
+        .creation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 30px;
+        }
+        .form-box {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            padding: 24px;
+            border-radius: 8px;
+        }
+        .input-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+        label { color: #a1a1aa; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+        input, select {
+            width: 100%; padding: 12px; background: #050506; border: 1px solid rgba(0, 255, 102, 0.2);
+            border-radius: 4px; color: var(--neon-color); font-family: var(--font-terminal); font-size: 0.9rem;
+        }
+        input:focus { outline: none; border-color: var(--neon-color); box-shadow: 0 0 10px rgba(0, 255, 102, 0.2); }
+        .submit-btn {
+            width: 100%; padding: 14px; background: transparent; border: 1px solid var(--neon-color);
+            color: var(--neon-color); font-family: var(--font-terminal); font-weight: 700; font-size: 1rem;
+            border-radius: 4px; cursor: pointer; text-transform: uppercase; transition: all 0.25s ease;
+            box-shadow: 0 0 10px rgba(0, 255, 102, 0.1);
+        }
+        .submit-btn:hover { background: var(--neon-color); color: #000; box-shadow: 0 0 20px var(--neon-color); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div>
+            <h1><i class="bi bi-cpu-fill" style="margin-right: 10px;"></i>Agent Command Bridge</h1>
+            <span style="font-size: 0.75rem; color: #71717a; letter-spacing: 1px;">OPERATOR ACTIVE: {{ request.user.username|upper }} • PRIVILEGE: FIELD_AGENT</span>
+        </div>
+        <a href="{% url 'super_admin:portal_logout' %}" class="logout-btn"><i class="bi bi-power" style="margin-right: 6px;"></i> Disconnect Console</a>
+    </header>
+
+    <div class="deck-wrapper">
+        <div class="creation-grid">
+
+            <!-- LEFT PANEL: REGISTER FRESH USER CREDENTIAL PACKETS -->
+            <div class="form-box">
+                <h3 style="color: #fff; margin-bottom: 20px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px;"><i class="bi bi-person-plus-fill" style="color: var(--neon-color); margin-right: 8px;"></i>Create Merchant Account</h3>
+                <form action="#" method="POST">
+                    <!-- We will wire this form controller logic in our very next workspace phase step -->
+                    <div class="input-group">
+                        <label>Merchant Username</label>
+                        <input type="text" placeholder="e.g., winilove_admin" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Secure Email Rail</label>
+                        <input type="email" placeholder="merchant@domain.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Default Passkey Access</label>
+                        <input type="password" placeholder="••••••••" required>
+                    </div>
+                    <button type="button" class="submit-btn" style="opacity: 0.6; cursor: not-allowed;">Generate Account Token</button>
+                </form>
+            </div>
+
+            <!-- RIGHT PANEL: OPERATIONAL SYSTEM GUIDELINES SUMMARY -->
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 8px; border: 1px dashed rgba(255,255,255,0.05);">
+                    <h4 style="color: var(--neon-color); margin-bottom: 10px; font-size: 0.9rem; text-transform: uppercase;">Infrastructure Notes</h4>
+                    <p style="font-size: 0.8rem; color: #a1a1aa; line-height: 1.6;">
+                        Merchant profiles created via this deck function natively as data-isolated storefront operators. Once generated, hand the access credentials to your clients so they can populate their e-commerce configurations independently [2/Sep/2026].
+                    </p>
+                </div>
+                <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 8px; border: 1px dashed rgba(255,255,255,0.05);">
+                    <h4 style="color: var(--neon-color); margin-bottom: 10px; font-size: 0.9rem; text-transform: uppercase;">Active Deployments</h4>
+                    <span style="font-size: 1.2rem; font-weight: 700; color: #fff;">{{ request.user.deployed_stores.count|default:"0" }} Stores</span>
+                    <span style="display: block; font-size: 0.75rem; color: #71717a; margin-top: 4px;">Registered under your agent tracker network token.</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

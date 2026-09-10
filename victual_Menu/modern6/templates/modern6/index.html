@@ -1,0 +1,482 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <!-- 🏢 DYNAMIC FIELD: Real Estate Agency Name Branding (Controlled completely from User Account dashboard settings) -->
+    <title>{% if platform_config.tenant_identity.agency_name %}{{ platform_config.tenant_identity.agency_name }}{% else %}Deluxe Estates — Premium Real Estate Portal{% endif %}</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="real estate, luxury villas, penthouse, mansions, miami, lekki, corex nigeria" name="keywords">
+    <meta content="Next-generation glassmorphic property showcase dashboard tracking premium architectural projects." name="description">
+
+    <!-- Favicon static pipeline routing rails -->
+    <link href="{% static 'modern4/img/favicon.ico' %}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Open+Sans:wght@400;500&family=Roboto:wght@500;700;900&display=swap" rel="stylesheet">
+
+    <!-- Local Bootstrap Master Grid Framework Framework Core CSS -->
+    <link href="{% static 'modern4/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Premium Luxury Real Estate Custom Glassmorphic Stylesheet Core CSS -->
+    <link href="{% static 'modern6/css/style.css' %}" rel="stylesheet">
+
+  <style>
+        /* Force deep dark workspace parameters below hero line bounds */
+        body { background-color: #060814 !important; color: #ffffff !important; overflow-x: hidden; }
+
+        /* 🎨 UPPER HERO SECTION BACKDROP PICTURE WRAPPER (Updatable from Admin Account settings) */
+        .premium-upper-hero-section {
+            position: relative;
+            width: 100%;
+            min-height: 90vh;
+            /* Dynamic Admin image retrieval channel fallback built-in */
+            background-image: {% if platform_config.hero_background_image %} url("{{ platform_config.hero_background_image.url }}") {% else %} radial-gradient(circle at 80% 40%, #1c234e 0%, #060814 80%) {% endif %};
+            background-size: cover;
+            background-position: center right;
+            background-repeat: no-repeat;
+        }
+
+        /* Ambient tint shader layer mimics reference mockup aesthetic perfectly */
+        .premium-upper-hero-section::before {
+            content: " ";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(90deg, #060814 35%, rgba(6, 8, 20, 0.4) 70%, #060814 100%);
+            z-index: 1;
+        }
+
+        .hero-content-deck { position: relative; z-index: 5; }
+
+        /* 🎛️ SLIDEDOWN FROSTED GLASS VISIT DRAWER PANEL */
+        .slidedown-visit-drawer {
+            position: fixed;
+            top: -100%; /* Hidden initially off-screen glass tracks */
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 550px;
+            width: 90%;
+            background: rgba(13, 17, 39, 0.95);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 107, 0, 0.3);
+            box-shadow: 0 30px 70px rgba(0,0,0,0.9);
+            border-radius: 0 0 24px 24px;
+            z-index: 99999;
+            transition: top 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+            padding: 25px;
+        }
+        .slidedown-visit-drawer.open-drawer-panel { top: 0; }
+
+        .search-cockpit-bar {
+            background: rgba(18, 24, 56, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 100px;
+            padding: 12px 30px;
+        }
+        .search-input-field { background: transparent !important; border: none !important; color: #ffffff !important; box-shadow: none !important; }
+        .search-divider-line { width: 1px; height: 35px; background: rgba(255, 255, 255, 0.12); }
+        .btn-luxury-action { background: linear-gradient(135deg, #ff6b00 0%, #ff9e00 100%) !important; color: #ffffff !important; border: none !important; border-radius: 50px !important; font-weight: 700 !important; }
+    </style>
+<body style="background-color: #060814 !important; color: #f1f5f9 !important;">
+
+    <!-- Brand Navigation Bar Start -->
+    <nav class="navbar navbar-expand-lg bg-transparent navbar-dark py-4 px-4 px-lg-5 position-relative z-index-2">
+        <a href="{% url 'modern6_agency_storefront' active_tenant.agency_slug %}" class="navbar-brand d-flex align-items-center">
+            <!-- 🏢 DYNAMIC FIELD: Dynamic Agency Branding Logo or Emblem Graphic Upload Slot -->
+            {% if platform_config.agency_logo %}
+                <img src="{{ platform_config.agency_logo.url }}" alt="Logo" style="max-height: 40px; width: auto; object-fit: contain;">
+            {% else %}
+                <h2 class="m-0 text-white font-monospace fw-bold"><i class="fa fa-home text-warning me-3"></i>{% if platform_config.tenant_identity.agency_name %}{{ platform_config.tenant_identity.agency_name }}{% else %}Deluxe{% endif %}</h2>
+            {% endif %}
+        </a>
+        <div class="ms-auto font-monospace d-none d-md-flex align-items-center">
+            <span class="text-muted small me-2"><i class="fa fa-phone text-warning me-2"></i>Brokerage Line:</span>
+            <!-- 🏢 DYNAMIC FIELD: Core Agency Phone Variable -->
+            <small class="text-white fw-bold">{{ platform_config.brokerage_hotline }}</small>
+        </div>
+    </nav>
+    <!-- Brand Navigation Bar End -->
+
+    <!-- Main Central Hero Presentation Space Start -->
+    <div class="container text-center pt-5 pb-4 position-relative z-index-2">
+        <!-- 🏢 DYNAMIC FIELD: Hero Headline Title Text -->
+        <h1 class="display-4 text-white fw-bold mb-3 mx-auto" style="max-width: 800px;">
+            {% if platform_config.hero_headline_title %}{{ platform_config.hero_headline_title }}{% else %}Find Your Dream Safe Haven & Luxury Space{% endif %}
+        </h1>
+        <!-- 🏢 DYNAMIC FIELD: Hero Subheadline Summary Copy -->
+        <p class="lead text-light opacity-50 mb-5 mx-auto" style="max-width: 600px; font-size: 1.05rem;">
+            {% if platform_config.hero_subheadline_copy %}{{ platform_config.hero_subheadline_copy }}{% else %}Discover premium architectural masterpieces, high-tier residential structures, and secure real estate investment portfolios across Nigeria.{% endif %}
+        </p>
+
+        <!-- 🔍 3D DYNAMIC FLOATING SEARCH COCKPIT BAR (Matches your image mock style precisely) -->
+        <div class="row justify-content-center mb-5">
+            <div class="col-xl-10 col-lg-11">
+                <form action="{% url 'modern6_agency_storefront' active_tenant.agency_slug %}" method="GET" class="search-cockpit-bar d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 gap-md-0 font-monospace">
+
+                    <!-- Search Control Field Group 1: Location -->
+                    <div class="d-flex align-items-center text-start px-2 flex-grow-1 w-100">
+                        <i class="fa fa-map-marker-alt text-warning fs-5 me-3"></i>
+                        <div class="w-100">
+                            <small class="text-muted text-uppercase d-block fw-bold" style="font-size: 0.7rem; letter-spacing: 0.5px;">Location Node</small>
+                            <input type="text" name="search_location" class="form-control search-input-field p-0 w-100" placeholder="e.g. Lekki, Lagos" value="{{ selected_location }}">
+                        </div>
+                    </div>
+
+                    <div class="search-divider-line d-none d-md-block"></div>
+
+                    <!-- Search Control Field Group 2: Property Type (Fed Dynamically from User Account Categories) -->
+                    <div class="d-flex align-items-center text-start px-3 flex-grow-1 w-100">
+                        <i class="fa fa-building text-info fs-5 me-3"></i>
+                        <div class="w-100">
+                            <small class="text-muted text-uppercase d-block fw-bold" style="font-size: 0.7rem; letter-spacing: 0.5px;">Property Type</small>
+                            <select name="search_category_slug" class="form-select search-input-field p-0 w-100 cursor-pointer" style="outline: none !important;">
+                                <option value="" class="bg-dark text-white">All Properties</option>
+                                {% for category in agency_categories %}
+                                    <option value="{{ category.category_slug }}" class="bg-dark text-white" {% if selected_category == category.category_slug %}selected{% endif %}>{{ category.category_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="search-divider-line d-none d-md-block"></div>
+
+                    <!-- Search Control Field Group 3: Price Target Tiers -->
+                    <div class="d-flex align-items-center text-start px-3 flex-grow-1 w-100">
+                        <i class="fa fa-tags text-purple fs-5 me-3" style="color: var(--cyber-purple);"></i>
+                        <div class="w-100">
+                            <small class="text-muted text-uppercase d-block fw-bold" style="font-size: 0.7rem; letter-spacing: 0.5px;">Price Parameter</small>
+                            <select name="search_price_tier" class="form-select search-input-field p-0 w-100 cursor-pointer">
+                                <option value="" class="bg-dark text-white">Any Price Range</option>
+                                <option value="₦25M - ₦50M" class="bg-dark text-white" {% if selected_price == "₦25M - ₦50M" %}selected{% endif %}>₦25M - ₦50M</option>
+                                <option value="₦50M - ₦100M" class="bg-dark text-white" {% if selected_price == "₦50M - ₦100M" %}selected{% endif %}>₦50M - ₦100M</option>
+                                <option value="₦100M+" class="bg-dark text-white" {% if selected_price == "₦100M+" %}selected{% endif %}>₦100M+</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <!-- Search Action Submit Button -->
+                    <div class="ps-md-2 w-100 w-md-auto text-end">
+                        <button type="submit" class="btn btn-luxury-action py-3 px-4 w-100 text-uppercase fw-bold font-monospace" style="font-size: 0.85rem;"><i class="fa fa-search me-2"></i>Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Main Central Hero Presentation Space End -->
+
+
+
+    <!-- Dynamic Category Filter Navigation Row Start -->
+    <div class="container mb-5 position-relative z-index-2">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="d-flex flex-wrap justify-content-center gap-2 font-monospace">
+                    <!-- Standard Reset Nav Pill -->
+                    <a href="{% url 'modern6_agency_storefront' active_tenant.agency_slug %}"
+                       class="nav-pill-luxury text-decoration-none {% if not selected_category %}active{% endif %}">
+                        <i class="fa fa-th-large me-2"></i>All Listings
+                    </a>
+
+                    <!-- 🏢 DYNAMIC LOOP COUPLING: Maps out category pills straight from user admin records -->
+                    {% if agency_categories %}
+                        {% for category in agency_categories %}
+                            <a href="{% url 'modern6_agency_storefront' active_tenant.agency_slug %}?search_category_slug={{ category.category_slug }}"
+                               class="nav-pill-luxury text-decoration-none {% if selected_category == category.category_slug %}active{% endif %}">
+                                <i class="fa fa-circle small me-2" style="font-size: 0.5rem; vertical-align: middle;"></i>{{ category.category_name }}
+                            </a>
+                        {% endfor %}
+                    {% else %}
+                        <!-- Safe Design fallbacks if dashboard has no category rows yet -->
+                        <span class="nav-pill-luxury opacity-50"><i class="fa fa-info-circle me-2"></i>Create Category Slots inside Admin Panel</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Dynamic Category Filter Navigation Row End -->
+
+
+
+
+
+    <!-- Luxury Property Showcase Bento Section Start -->
+    <div class="container py-4 position-relative z-index-2" id="listings">
+        <div class="row g-4">
+            <!-- 🏢 DYNAMIC LOOP COUPLING: Iterates through your live property data matrices -->
+            {% if property_listings %}
+                {% for house in property_listings %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <!-- Glassmorphic Bento House Container Card -->
+                    <div class="glass-card bento-card-house h-100 overflow-hidden d-flex flex-column p-3">
+
+                        <!-- 🎨 BACKLIGHTING EFFECT WRROLLER WRAPPER LAYER -->
+                            <!-- 🟢 UPDATED: Wrapped cleanly inside an index details redirect anchor rail -->
+                            <a href="{% url 'modern6_property_detail' active_tenant.agency_slug house.id %}" class="text-decoration-none">
+                                <div class="glow-wrapper {{ house.ambient_glow_color|default:'glow-orange' }} mb-3">
+                                    <div class="property-image-box" style="height: 240px; border-radius: 12px;">
+                                        <img class="w-100 h-100" src="{{ house.property_thumbnail.url }}" style="object-fit: cover;" alt="{{ house.property_title }}">
+
+                                        <!-- Floating Status Location Badge Pin -->
+                                        <span class="position-absolute top-0 start-0 m-3 badge bg-black bg-opacity-70 border border-secondary border-opacity-25 font-monospace py-2 px-3 text-white small" style="border-radius: 50px;">
+                                            <i class="fa fa-map-marker-alt text-warning me-2"></i>{{ house.location_city }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+
+
+                        <!-- Card Technical Context Specifications Layout -->
+                        <div class="px-2 pt-2 d-flex flex-column flex-grow-1">
+                            <div class="d-flex justify-content-between align-items-center mb-2 font-monospace">
+                                <small class="text-uppercase tracking-wider font-bold text-info" style="font-size: 0.75rem;">{{ house.dynamic_category.category_name }}</small>
+                                <h5 class="m-0 fw-bold" style="color: var(--neon-cyan);">{{ house.price_display_label }}</h5>
+                            </div>
+
+                            <h4 class="text-white fw-bold mb-3" style="font-size: 1.15rem;">{{ house.property_title }}</h4>
+
+                            <!-- Book Tour Interactive Toggle Action Button Panel -->
+                            <div class="d-flex gap-2 mt-auto pt-3 border-top border-secondary border-opacity-10 font-monospace">
+                                <button type="button"
+                                        class="btn btn-luxury-action w-100 py-3 text-uppercase font-bold"
+                                        style="font-size: 0.8rem; border-radius: 10px; letter-spacing: 0.5px;"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#tourModal"
+                                        data-house-title="{{ house.property_title }}"
+                                        data-house-category="{{ house.dynamic_category.category_name }}"
+                                        data-house-price="{{ house.price_display_label }}"
+                                        data-house-location="{{ house.location_city }}">
+                                    <i class="fa fa-calendar-check me-2"></i>Schedule Private Tour
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <!-- 🛡️ SAFE FALLBACK SKELETON MATRIX CARDS: Renders if table has no entries yet -->
+                <div class="col-12 text-center py-5 font-monospace">
+                    <div class="glass-card p-5 mx-auto bg-dark bg-opacity-20 border-opacity-10" style="max-width: 500px;">
+                        <i class="fa fa-folder-open fa-3x text-muted mb-3"></i>
+                        <h5 class="text-white">No Properties Matched Selection</h5>
+                        <p class="text-muted small mb-0">Create listing cards inside the Django Admin dashboard or reset your floating cockpit parameters to load profiles [5/Sep/2026].</p>
+                        <a href="{% url 'modern6_agency_storefront' active_tenant.agency_slug %}" class="btn btn-cyber-primary py-2 px-3 mt-4 text-decoration-none" style="border-radius: 50px; border-color: var(--neon-cyan); color: var(--neon-cyan);">Reset Filters</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <!-- Luxury Property Showcase Bento Section End -->
+
+
+
+
+
+    <!-- Real-Time Agency Performance Counters Section Start -->
+    <div class="container my-5 position-relative z-index-2 font-monospace">
+        <div class="row g-4 text-center">
+            <div class="col-md-4">
+                <div class="glass-card p-4 bg-dark bg-opacity-25 border-opacity-10">
+                    <h2 class="display-6 font-bold mb-1" style="color: var(--neon-orange);">{{ platform_config.count_properties_sold }}</h2>
+                    <small class="text-uppercase tracking-wider text-muted small">Properties Distributed</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="glass-card p-4 bg-dark bg-opacity-25 border-opacity-10">
+                    <h2 class="display-6 font-bold mb-1" style="color: var(--neon-cyan);">{{ platform_config.count_active_listings }}</h2>
+                    <small class="text-uppercase tracking-wider text-muted small">Active Premium Listings</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="glass-card p-4 bg-dark bg-opacity-25 border-opacity-10">
+                    <h2 class="display-6 font-bold mb-1 style-color" style="color: var(--neon-purple);">{{ platform_config.count_verified_brokers }}</h2>
+                    <small class="text-uppercase tracking-wider text-muted small">Verified Elite Brokers</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Real-Time Agency Performance Counters Section End -->
+
+
+    <div class="container-fluid bg-transparent border-top border-secondary border-opacity-10 py-5 position-relative z-index-2 font-monospace text-center">
+        <div class="container">
+            <p class="text-light opacity-50 small mb-2"><i class="fa fa-map-marker-alt text-warning me-2"></i>{{ platform_config.office_physical_address }}</p>
+            <p class="text-light opacity-50 small mb-4"><i class="fa fa-envelope text-info me-2"></i>{{ platform_config.brokerage_email }}</p>
+            <small class="text-muted d-block">&copy; 2026 Corex Network Architecture Nodes Engine. All Systems Operational [5/Sep/2026].</small>
+        </div>
+    </div>
+
+
+
+    <!-- 💎 PREMIUM FROSTED GLASS SCHEDULING INTERACTIVE WIDGET MODAL OVERLAY -->
+    <div class="modal fade" id="tourModal" tabindex="-1" aria-labelledby="tourModalLabel" aria-hidden="true" style="backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content glass-card p-4 bg-dark bg-opacity-90 border-opacity-20 text-white">
+                <div class="modal-header border-bottom border-secondary border-opacity-25 pb-3">
+                    <h5 class="modal-title font-monospace fw-bold" id="tourModalLabel"><i class="fa fa-calendar-alt text-warning me-2"></i>Reserve Asset Tour Node</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-submit="modal" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body pt-4">
+
+                    <!-- Secure form submission pipeline routing matrix mapping tags -->
+                    <form action="{% url 'modern6_book_property_tour' active_tenant.agency_slug %}" method="POST">
+                        {% csrf_token %}
+
+                        <!-- Invisible context tracking hooks capture current picker layout choices silently -->
+                        <input type="hidden" name="location_type" id="modalHouseLocation" value="Lekki, Lagos">
+                        <input type="hidden" name="house_type" id="modalHouseCategory" value="Luxury Villa">
+                        <input type="hidden" name="price_range" id="modalHousePrice" value="₦25M - ₦50M">
+
+                        <!-- Context Data Display Card Info Segment -->
+                        <div class="p-3 bg-black bg-opacity-40 rounded mb-4 font-monospace border border-secondary border-opacity-10">
+                            <small class="text-muted text-uppercase d-block mb-1" style="font-size: 0.65rem; letter-spacing: 0.5px;">Target Asset Allocation Node</small>
+                            <div class="text-white small fw-bold mb-1" id="modalDisplayTitle">Selected Luxury House Asset</div>
+                            <span class="badge bg-dark text-info border border-secondary border-opacity-25" id="modalDisplayMeta">Villa — ₦50M</span>
+                        </div>
+
+                        <div class="row g-3 font-monospace">
+                            <div class="col-12">
+                                <label class="form-label text-muted small text-uppercase fw-bold">Your Identity Name</label>
+                                <input type="text" name="client_name" class="form-control bg-dark bg-opacity-50 border-secondary text-white py-2" placeholder="e.g. Alhaji Ibrahim" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label text-muted small text-uppercase fw-bold">Digital Mail Endpoint</label>
+                                <input type="email" name="client_email" class="form-control bg-dark bg-opacity-50 border-secondary text-white py-2" placeholder="name@domain.com" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label text-muted small text-uppercase fw-bold">Mobile Link Phone</label>
+                                <input type="text" name="client_phone" class="form-control bg-dark bg-opacity-50 border-secondary text-white py-2" placeholder="0803 123 4567" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label text-muted small text-uppercase fw-bold">Target Inspection Date Slot</label>
+                                <input type="date" name="tour_date" class="form-control bg-dark bg-opacity-50 border-secondary text-white py-2" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label text-muted small text-uppercase fw-bold">Special Requests Brief</label>
+                                <textarea name="client_message" class="form-control bg-dark bg-opacity-50 border-secondary text-white p-2" rows="3" placeholder="Any specific requirements or timings..."></textarea>
+                            </div>
+                            <div class="col-12 mt-4">
+                                <button type="submit" class="btn btn-luxury-action w-100 py-3 text-uppercase font-bold font-monospace">Lock Consultation Schedule Slot</button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 🛠️ SELF-CONTAINED AUTOMATED MODAL CONTEXT ROUTER INTERFACE HANDLERS -->
+        <!-- 🏢 OVERWRITE EVERYTHING FROM THE BOTTOM OF THE FILE (AFTER THE FOOTER) DOWN TO THE CLOSING HTML TAG: -->
+
+    <!-- 💎 PREMIUM GLASSMORPHIC TOUR SCHEDULER POP-UP OVERLAY WIDGET -->
+    <div id="tourPopupSheet" class="custom-popup-sheet-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(6, 8, 20, 0.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 9999; justify-content: center; align-items: center; padding: 20px;">
+        <div class="glass-card p-4 mx-auto text-white position-relative" style="max-width: 500px; width: 100%; background: rgba(13, 17, 39, 0.95); border: 1px solid rgba(255, 255, 255, 0.12); box-shadow: 0 25px 60px rgba(0,0,0,0.8); border-radius: 16px;">
+
+            <!-- Close Button Header -->
+            <div class="d-flex justify-content-between align-items-center mb-3 border-bottom border-secondary border-opacity-25 pb-2 font-monospace">
+                <span class="text-warning fw-bold"><i class="fa fa-calendar-alt me-2"></i>RESERVE PRIVATE TOUR NODE</span>
+                <button type="button" class="btn-close btn-close-white" id="closePopupBtn" style="cursor: pointer; background-size: 12px; padding: 10px;"></button>
+            </div>
+
+            <!-- Dynamic Property Data Display Box -->
+            <div class="p-3 bg-black bg-opacity-40 rounded mb-4 font-monospace border border-secondary border-opacity-10">
+                <small class="text-muted text-uppercase d-block mb-1" style="font-size: 0.65rem; letter-spacing: 0.5px;">Selected Property Target</small>
+                <div class="text-white fw-bold mb-1" id="popupDisplayTitle">Selected Luxury House Asset</div>
+                <span class="badge bg-dark text-info border border-secondary border-opacity-25" id="popupDisplayMeta">Villa — ₦50M</span>
+            </div>
+
+            <!-- Booking Intake Transaction Form -->
+            <form action="{% url 'modern6_book_property_tour' active_tenant.agency_slug %}" method="POST">
+                {% csrf_token %}
+
+                <!-- Hidden inputs pass context data to your Django database mailbox -->
+                <input type="hidden" name="location_type" id="popupHouseLocation" value="Lekki, Lagos">
+                <input type="hidden" name="house_type" id="popupHouseCategory" value="Luxury Villa">
+                <input type="hidden" name="price_range" id="popupHousePrice" value="₦25M - ₦50M">
+
+                <div class="row g-3 font-monospace" style="font-size: 0.9rem;">
+                    <div class="col-12">
+                        <label class="form-label text-muted small text-uppercase fw-bold m-0">Your Full Name</label>
+                        <input type="text" name="client_name" class="form-control bg-dark bg-opacity-50 border-secondary border-opacity-50 text-white py-2" placeholder="e.g. Alhaji Ibrahim" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label text-muted small text-uppercase fw-bold m-0">Email Address</label>
+                        <input type="email" name="client_email" class="form-control bg-dark bg-opacity-50 border-secondary border-opacity-50 text-white py-2" placeholder="name@mail.com" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label text-muted small text-uppercase fw-bold m-0">Mobile Number</label>
+                        <input type="text" name="client_phone" class="form-control bg-dark bg-opacity-50 border-secondary border-opacity-50 text-white py-2" placeholder="0803 123 4567" required>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label text-muted small text-uppercase fw-bold m-0">Preferred Inspection Date</label>
+                        <input type="date" name="tour_date" class="form-control bg-dark bg-opacity-50 border-secondary border-opacity-50 text-white py-2" required>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label text-muted small text-uppercase fw-bold m-0">Special Request Notes</label>
+                        <textarea name="client_message" class="form-control bg-dark bg-opacity-50 border-secondary border-opacity-50 text-white p-2" rows="2" placeholder="Any specific timings or preferences..."></textarea>
+                    </div>
+                    <div class="col-12 mt-4">
+                        <button type="submit" class="btn btn-luxury-action w-100 py-3 text-uppercase fw-bold">Lock Tour Inspection Schedule</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 🛠️ NATIVE LIGHTWEIGHT INTERACTIVE LAYOUT TRIGGER SCRIPT -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const popupSheet = document.getElementById('tourPopupSheet');
+            const closeBtn = document.getElementById('closePopupBtn');
+            const tourButtons = document.querySelectorAll('[data-bs-toggle="modal"]');
+
+            // 🪐 1. Intercept Button Click Events Dynamically across your Masonry Bento House Cards
+            tourButtons.forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    // Capture attributes data tokens directly from the card wrapper elements
+                    const houseTitle = this.getAttribute('data-house-title') || "Luxury Property Listing";
+                    const houseCategory = this.getAttribute('data-house-category') || "Luxury Real Estate";
+                    const housePrice = this.getAttribute('data-house-price') || "Contact for Price";
+                    const houseLocation = this.getAttribute('data-house-location') || "Lekki, Lagos";
+
+                    // Bind parameter tokens directly to internal pop-up sheet texts
+                    document.getElementById('popupDisplayTitle').textContent = houseTitle;
+                    document.getElementById('popupDisplayMeta').textContent = `${houseCategory} — ${housePrice} [${houseLocation}]`;
+
+                    // Sync parameters with hidden database lookup forms fields tokens
+                    document.getElementById('popupHouseLocation').value = houseLocation;
+                    document.getElementById('popupHouseCategory').value = houseCategory;
+                    document.getElementById('popupHousePrice').value = housePrice;
+
+                    // Display Pop-up Overlay Sheet using standard CSS flex rows formatting
+                    popupSheet.style.display = 'flex';
+                });
+            });
+
+            // 🪐 2. Close Overlay Window Event Protocols
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function () {
+                    popupSheet.style.display = 'none';
+                });
+            }
+
+            // Close automatically if client clicks anywhere outside the glass content card container bounds
+            window.addEventListener('click', function (e) {
+                if (e.target === popupSheet) {
+                    popupSheet.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+

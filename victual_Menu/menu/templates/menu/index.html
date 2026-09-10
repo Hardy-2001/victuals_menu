@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Scope Inspired Menu | The Victuals</title>
+
+    <!-- Link to the clean custom offline stylesheet asset -->
+    <link rel="stylesheet" href="{% static 'menu/style.css' %}">
+        <link rel="stylesheet" href="{% static 'menu/style.css' %}">
+
+    <!-- 🎨 DYNAMIC BRAND COLOR ENGINE CONFIGURATION -->
+    <style>
+        :root {
+            --primary-brand-color: {{ profile.primary_color }};
+            --outer-backdrop-color: {{ profile.outer_bg_color }};
+            --inner-canvas-color: {{ profile.inner_bg_color }};
+        }
+        /* Overwrite CSS selectors dynamically using backend profile variables */
+        html { background-color: var(--outer-backdrop-color) !important; }
+        body { background-color: var(--inner-canvas-color) !important; }
+        .pill-link { border: 2px solid var(--primary-brand-color) !important; }
+        .pill-link.active-pill { background-color: var(--primary-brand-color) !important; }
+        .btn-whatsapp { background-color: var(--primary-brand-color) !important; }
+
+        /* 🚨 VIRTUAL COLLECTION ACCOUNT PAYWALL ALERT BLINKERS */
+        @keyframes blinker {
+            50% { opacity: 0.4; }
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <!-- 🏙️ META BANNER HEADER CARD -->
+        <!-- 🏙️ 100% DYNAMIC SaaS HEADER CARD -->
+        <header>
+        <div style="max-width: 448px; margin: 0 auto;">
+            <div class="header-flex" style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+
+                <!-- 🎯 FIXED ROW ALIGNMENT: Holds your logo and name side-by-side -->
+                <div style="display: flex; align-items: center; gap: 12px;">
+
+                    <!-- 📸 DYNAMIC LOGO BADGE BLOCK (Pulls directly from Admin profile) -->
+                    <div class="brand-logo-frame" style="width: 44px; height: 44px; border-radius: 50%; overflow: hidden; border: 2px solid var(--primary-brand-color, #dc2626); background-color: #18181b; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
+                        {% if profile.logo %}
+                            <img src="{{ profile.logo.url }}" style="width: 100%; height: 100%; object-fit: cover;" alt="logo" />
+                        {% else %}
+                            <!-- Minimalist initial text fallback symbol if no logo is uploaded -->
+                            <span style="font-size: 16px; font-weight: 900; color: var(--primary-brand-color, #dc2626); font-family: monospace;">{{ profile.restaurant_name|slice:":1" }}</span>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <!-- 🎯 Dynamic Brand Name from Admin -->
+                        <h1 class="brand-name" style="margin: 0; line-height: 1.2;">{{ profile.restaurant_name }}</h1>
+                        <p class="brand-sub" style="margin-top: 2px;">{{ profile.address }}</p>
+                    </div>
+                </div>
+
+                <div>
+                    <span class="tag-badge">Fine Dining</span>
+                </div>
+            </div>
+
+            <p class="brand-quote">"Experience premium gastronomy re-imagined."</p>
+
+            <div class="button-row">
+                <!-- 🎯 Dynamic Call Button: Tied cleanly to the configuration settings layout -->
+                <a href="tel:+{{ profile.phone_number }}" class="btn-base btn-call">Call Lounge</a>
+
+                <button type="button" onclick="previewAndSendOrder()" class="btn-base btn-whatsapp" style="border: none; cursor: pointer;">
+                    Place Order (<span id="cart-total-badge">0</span>)
+                </button>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- 📱 DYNAMIC HORIZONTAL SCROLLING PILL INDICATORS -->
+    <nav>
+        <div class="nav-container">
+            {% for category in categories %}
+                <a href="#cat-{{ category.id }}"
+                   class="pill-link {% if forloop.first %}active-pill{% endif %}"
+                   onclick="activateMenuPill(this)">
+                    {{ category.name }}
+                </a>
+            {% empty %}
+                <span style="font-size: 12px; color: #52525b;">No layout tracks found</span>
+            {% endfor %}
+        </div>
+    </nav>
+
+    <!-- 🍽️ DINING WRAPPER DISPLAY BOX -->
+    <main>
+        {% for category in categories %}
+            <section id="cat-{{ category.id }}" class="category-block">
+
+                <div class="category-banner">
+                    {% if category.image %}
+                        <img src="{{ category.image.url }}" alt="{{ category.name }}">
+                    {% endif %}
+                    <h2 class="category-title">{{ category.name }}</h2>
+                </div>
+
+                <div class="item-stack">
+                    {% for item in category.items.all %}
+                        {% if item.is_available %}
+                        <!-- 🍽️ DYNAMIC MULTI-TOUCH INTERFACE CARD CONTAINER -->
+                            <div class="food-card"
+                                 data-id="{{ item.id }}"
+                                 data-name="{{ item.name }}"
+                                 data-price="{{ item.price }}"
+                                 onclick="addToCart(this)"
+                                 oncontextmenu="event.preventDefault(); removeOneFromCart(this); return false;">
+
+
+                                {% if item.image %}
+                                    <img src="{{ item.image.url }}" alt="{{ item.name }}" class="food-card-bg">
+                                {% endif %}
+
+                                <!-- Contrast protection layer mask -->
+                                <div class="food-card-overlay"></div>
+
+                                <!-- Floating details overlay layer -->
+                                <div class="food-card-content">
+                                    <div class="item-info">
+                                        <h3 class="item-name">{{ item.name }}<span id="badge-{{ item.id }}"></span></h3>
+                                        {% if item.description %}
+                                            <p class="item-description">{{ item.description }}</p>
+                                        {% endif %}
+                                    </div>
+                                    <div class="item-price-wrapper">
+                                        <span class="item-price">₦{{ item.price|floatformat:0 }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% empty %}
+                        <p style="font-size: 12px; color: #52525b; font-style: italic;">No items listed here.</p>
+                    {% endfor %}
+                </div>
+
+            </section>
+        {% empty %}
+            <div style="text-align: center; padding: 40px 20px; background-color: #1c1c1e; border-radius: 12px;">
+                <h3 style="color: #d4d4d8; text-transform: uppercase; font-size: 14px;">Menu Database Empty</h3>
+            </div>
+        {% endfor %}
+    </main>
+
+    <!-- 🗳️ PREMIUM MODAL OVERLAY COMPONENT (Hidden by Default) -->
+    <div id="feedbackModal" style="display: none; position: fixed; inset: 0; background-color: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 100; align-items: center; justify-content: center; padding: 20px;">
+        <div style="background-color: #1c1c1e; border: 1px solid #2c2c2e; padding: 24px; border-radius: 16px; width: 100%; max-width: 400px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3 style="color: #fff; font-size: 16px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.05em;">Anonymous Review</h3>
+                <button onclick="toggleModal(false)" style="background: none; border: none; color: #a1a1aa; font-size: 20px; cursor: pointer; font-weight: bold;">&times;</button>
+            </div>
+
+            <form id="feedbackForm" onsubmit="handleFormSubmit(event)">
+                <div style="margin-bottom: 16px;">
+                    <label style="display: block; color: #a1a1aa; font-size: 11px; text-transform: uppercase; font-weight: 700; margin-bottom: 6px;">Table Number (Optional)</label>
+                    <input type="text" id="table_number" name="table_number" placeholder="e.g., Table 4" style="width: 100%; background-color: #121212; border: 1px solid #2c2c2e; padding: 12px; border-radius: 8px; color: #fff; font-size: 14px; outline: none;">
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                    <label style="display: block; color: #a1a1aa; font-size: 11px; text-transform: uppercase; font-weight: 700; margin-bottom: 6px;">Your Rating</label>
+                    <select id="rating" name="rating" style="width: 100%; background-color: #121212; border: 1px solid #2c2c2e; padding: 12px; border-radius: 8px; color: #fff; font-size: 14px; outline: none;">
+                        <option value="5">⭐⭐⭐⭐⭐ (Excellent)</option>
+                        <option value="4">⭐⭐⭐⭐ (Good)</option>
+                        <option value="3">⭐⭐⭐ (Average)</option>
+                        <option value="2">⭐⭐ (Fair)</option>
+                        <option value="1">⭐ (Poor)</option>
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; color: #a1a1aa; font-size: 11px; text-transform: uppercase; font-weight: 700; margin-bottom: 6px;">Comments / Feedback</label>
+                    <textarea id="comment" name="comment" rows="4" placeholder="How was your meal, wait time, or zobo beverage today?" required style="width: 100%; background-color: #121212; border: 1px solid #2c2c2e; padding: 12px; border-radius: 8px; color: #fff; font-size: 14px; resize: none; outline: none; line-height: 1.5;"></textarea>
+                </div>
+
+                <button type="submit" style="width: 100%; background-color: #fbbf24; color: #000; font-weight: 900; padding: 14px; border-radius: 12px; border: none; cursor: pointer; text-transform: uppercase; font-size: 12px; tracking-spacing: 0.05em;">
+                    Send Feedback
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 📣 STICKY PRIMARY CTA BOTTOM BANNER -->
+       <!-- 📣 STICKY PRIMARY CTA BOTTOM BANNER -->
+    <footer>
+        <div class="footer-container">
+            <button onclick="toggleModal(true)" class="btn-submit-review">
+                Submit Anonymous Review
+            </button>
+        </div>
+    </footer>
+
+    <!-- 💡 JAVASCRIPT CONTROL ENGINE -->
+    <script>
+            let orderCart = {};
+
+        // 🔴 Category Pill Selection State Switcher
+        function activateMenuPill(clickedElement) {
+            const allPills = document.querySelectorAll('.pill-link');
+            allPills.forEach(pill => {
+                pill.classList.remove('active-pill');
+            });
+            clickedElement.classList.add('active-pill');
+        }
+
+        // 🛍️ Selection Logic Handler (Increases count by 1)
+        function addToCart(cardElement) {
+            const itemId = cardElement.getAttribute('data-id');
+            const itemName = cardElement.getAttribute('data-name');
+            const itemPrice = parseFloat(cardElement.getAttribute('data-price'));
+            const badgeElement = document.getElementById(`badge-${itemId}`);
+
+            if (orderCart[itemId]) {
+                orderCart[itemId].quantity += 1;
+            } else {
+                orderCart[itemId] = {
+                    name: itemName,
+                    price: itemPrice,
+                    quantity: 1
+                };
+                cardElement.classList.add('selected-card');
+            }
+
+            badgeElement.innerHTML = ` <span class="selection-badge">x${orderCart[itemId].quantity}</span>`;
+            localStorage.setItem('victuals_cart', JSON.stringify(orderCart));
+            updateCartUI();
+        }
+
+        // ❌ NEW ACTION: Right-click or long-press decreases item count by 1
+        function removeOneFromCart(cardElement) {
+            const itemId = cardElement.getAttribute('data-id');
+            const badgeElement = document.getElementById(`badge-${itemId}`);
+
+            if (!orderCart[itemId]) return;
+
+            orderCart[itemId].quantity -= 1;
+
+            if (orderCart[itemId].quantity <= 0) {
+                // Completely purge the dish line from memory when it hits 0
+                delete orderCart[itemId];
+                cardElement.classList.remove('selected-card');
+                badgeElement.innerHTML = '';
+            } else {
+                // Otherwise, decrease the counter text badge value layout
+                badgeElement.innerHTML = ` <span class="selection-badge">x${orderCart[itemId].quantity}</span>`;
+            }
+
+            localStorage.setItem('victuals_cart', JSON.stringify(orderCart));
+            updateCartUI();
+        }
+
+
+        // 🗳️ Anonymous Feedback Modal Controls
+        function toggleModal(show) {
+            const modal = document.getElementById('feedbackModal');
+            modal.style.display = show ? 'flex' : 'none';
+        }
+
+        function handleFormSubmit(event) {
+            event.preventDefault();
+
+            const formData = new FormData();
+            formData.append('table_number', document.getElementById('table_number').value);
+            formData.append('rating', document.getElementById('rating').value);
+            formData.append('comment', document.getElementById('comment').value);
+
+            // 🎯 FIXED FOR SAAS: Dynamically routes the review data to the specific restaurant slug path
+            fetch('/store/{{ tenant.slug }}/submit-feedback/', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('🎉 Success! ' + data.message);
+                    document.getElementById('feedbackForm').reset();
+                    toggleModal(false);
+                } else {
+                    alert('⚠️ Error: ' + data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Submission breakdown:', error);
+                alert('Connection failure. Check your local server status path.');
+            });
+        }
+
+
+        // 🛍️ Cart & Basket Selection Management Architecture
+        function addToCart(cardElement) {
+            const itemId = cardElement.getAttribute('data-id');
+            const itemName = cardElement.getAttribute('data-name');
+            const itemPrice = parseFloat(cardElement.getAttribute('data-price'));
+            const badgeElement = document.getElementById(`badge-${itemId}`);
+
+            if (orderCart[itemId]) {
+                orderCart[itemId].quantity += 1;
+            } else {
+                orderCart[itemId] = {
+                    name: itemName,
+                    price: itemPrice,
+                    quantity: 1
+                };
+                cardElement.classList.add('selected-card');
+            }
+
+            badgeElement.innerHTML = ` <span class="selection-badge">x${orderCart[itemId].quantity}</span>`;
+            localStorage.setItem('victuals_cart', JSON.stringify(orderCart));
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            let totalItemsCount = 0;
+            for (const key in orderCart) {
+                totalItemsCount += orderCart[key].quantity;
+            }
+            document.getElementById('cart-total-badge').innerText = totalItemsCount;
+        }
+
+                // 📋 Transition over to Checkout Review Mini-Page
+        function previewAndSendOrder() {
+            if (Object.keys(orderCart).length === 0) {
+                alert("🛒 Your basket is currently empty! Tap on any food card item to select your dishes before checking out.");
+                return;
+            }
+            // 🎯 FIXED FOR MULTI-TENANT: Passes the browser smoothly into the tenant's specific checkout receipt link path
+            window.location.href = "/store/{{ tenant.slug }}/checkout/";
+        }
+
+        // Flush old temporary cart session tokens from browser cache memory upon page load
+        //localStorage.removeItem('victuals_cart');
+
+    </script>
+</body>
+</html>
+

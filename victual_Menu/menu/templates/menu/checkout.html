@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Review Your Basket | The Victuals</title>
+    <link rel="stylesheet" href="{% static 'menu/style.css' %}">
+</head>
+<body style="padding-bottom: 30px;">
+
+    <!-- 🏙️ MINI PAGE HEADER -->
+        <!-- 🏙️ MINI PAGE HEADER -->
+    <header style="position: relative; box-shadow: none; border-bottom: 1px solid #2c2c2e;">
+        <div style="max-width: 448px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
+            <!-- 🎯 FIXED FOR SAAS: Routes cleanly back into this specific restaurant's menu slug instead of a blank root path -->
+            <a href="/store/{{ tenant.slug }}/" style="color: #dc2626; text-decoration: none; font-weight: bold; font-size: 14px;">&larr; Back to Menu</a>
+            <h1 class="brand-name" style="font-size: 18px;">Your Receipt</h1>
+        </div>
+    </header>
+
+
+    <!-- 🍽️ ORDER SUMMARY CARDS CONTAINER -->
+    <main style="max-width: 448px; margin: 0 auto; padding: 24px 16px;">
+        <div style="background-color: #1c1c1e; border: 1px solid #2c2c2e; padding: 20px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+            <h2 style="font-size: 14px; text-transform: uppercase; color: #a1a1aa; letter-spacing: 0.05em; border-bottom: 1px dashed #2c2c2e; padding-bottom: 12px; margin-bottom: 16px;">Itemized Review</h2>
+
+            <div id="summary-items-list" style="display: flex; flex-direction: column; gap: 14px;"></div>
+
+            <div style="border-top: 1px dashed #2c2c2e; margin-top: 20px; padding-top: 16px; display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 14px; color: #fff; font-weight: bold; text-transform: uppercase;">Total Bill</span>
+                <span id="summary-final-total" style="color: #fbbf24; font-weight: 900; font-size: 22px; font-family: monospace;">₦0</span>
+            </div>
+        </div>
+
+        <!-- 🚀 FOOLPROOF NATIVE HTML FORM (Chrome can NEVER block this type of redirect!) -->
+                <!-- 🚀 PROTOCOL ACTION LINK (Forces Windows/Mac to open your installed desktop app instantly!) -->
+                <!-- 🚀 PROTOCOL ACTION LINK -->
+        <div style="margin-top: 24px;">
+            <form action="whatsapp://send" method="GET">
+                <!-- 🎯 FIXED: Value is now injected dynamically from Django Admin database via context! -->
+                <input type="hidden" name="phone" value="{{ whatsapp_number }}">
+                <input type="hidden" id="whatsapp-text-input" name="text" value="">
+
+                <button type="submit" class="btn-submit-review" style="background-color: #059669; color: #ffffff; font-size: 14px; font-weight: 900; padding: 18px; width: 100%; border: none; cursor: pointer; text-transform: uppercase; border-radius: 12px;">
+                    Confirm & Open WhatsApp Chat
+                </button>
+            </form>
+        </div>
+
+
+    </main>
+
+    <!-- 💡 CHECKOUT LOGIC ENGINE -->
+    <script>
+        let orderCart = JSON.parse(localStorage.getItem('victuals_cart')) || {};
+
+        function renderCheckoutAndPrepareForm() {
+            const listContainer = document.getElementById('summary-items-list');
+            const textHiddenInput = document.getElementById('whatsapp-text-input');
+            let finalBillSum = 0;
+            let listMarkupString = '';
+
+            if (!orderCart || Object.keys(orderCart).length === 0) {
+                listContainer.innerHTML = `<p style="font-size: 14px; color: #a1a1aa; font-style: italic; text-align:center; padding: 20px 0;">Your basket is empty!</p>`;
+                return;
+            }
+
+                        // Build WhatsApp message content dynamically based on Admin configuration profile
+            let textMessage = `*NEW ORDER - {{ profile.restaurant_name|upper }}* 🛒\n`;
+            textMessage += "=========================\n\n";
+
+            for (const id in orderCart) {
+                const item = orderCart[id];
+                const lineTotal = item.price * item.quantity;
+                finalBillSum += lineTotal;
+
+                listMarkupString += `
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; background-color: #121212; padding: 12px 16px; border-radius: 10px; border: 1px solid #2c2c2e;">
+                        <div>
+                            <h3 style="font-size: 15px; font-weight: bold; color: #fff; margin-bottom: 2px;">${item.name} <span style="color: #22c55e;">x${item.quantity}</span></h3>
+                        </div>
+                        <span style="color: #ffffff; font-weight: bold; font-family: monospace; font-size: 14px;">₦${lineTotal.toLocaleString()}</span>
+                    </div>
+                `;
+
+                textMessage += "▪️ " + item.name + " (x" + item.quantity + "\n";
+                textMessage += "   Price: ₦" + lineTotal.toLocaleString() + "\n\n";
+            }
+
+            textMessage += "=========================\n";
+            textMessage += "💰 *TOTAL PAYABLE BILL:* ₦" + finalBillSum.toLocaleString() + "\n\n";
+            textMessage += "_Sent via digital store checkout order setup._";
+
+
+            // Render details on screen layout
+            listContainer.innerHTML = listMarkupString;
+            document.getElementById('summary-final-total').innerText = `₦${finalBillSum.toLocaleString()}`;
+
+            // 🎯 THE CRUCIAL FIX: Populate the text data safely BEFORE the user clicks the button
+            textHiddenInput.value = textMessage;
+        }
+
+        // Run instantly when page components render
+        renderCheckoutAndPrepareForm();
+    </script>
+</body>
+</html>

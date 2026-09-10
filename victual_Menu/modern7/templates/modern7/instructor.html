@@ -1,0 +1,330 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<!-- Meta -->
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<!-- 🏢 DYNAMIC FIELD: MULTI-TENANT INSTITUTION NAME (Controlled from tenant admin settings) -->
+		<title>{% if platform_config.institution_name %}{{ platform_config.institution_name }}{% else %}Faculty Instructors — Premium Education Platform{% endif %}</title>
+
+		<!-- Latest Bootstrap min CSS (Wired cleanly to modern7 static tracking rails) -->
+		<link rel="stylesheet" href="{% static 'modern7/bootstrap/css/bootstrap.min.css' %}">
+
+		<!-- Google Fonts -->
+		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+		<!-- Font Awesome Free & Icon Asset Bundles -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+		<link rel="stylesheet" href="{% static 'modern7/fonts/font-awesome.min.css' %}">
+		<link rel="stylesheet" href="{% static 'modern7/fonts/themify-icons.css' %}">
+
+		<!--- owl carousel New CSS -->
+		<link rel="stylesheet" href="{% static 'modern7/owlcarousel/css/owl.carousel.css' %}">
+		<link rel="stylesheet" href="{% static 'modern7/owlcarousel/css/owl.theme.css' %}">
+
+		<!-- Jquery Mobile Menu CSS -->
+        <link rel="stylesheet" href="{% static 'modern7/css/jquery-simple-mobilemenu.css' %}">
+
+		<!-- Pop-up Windows & Animation Frameworks CSS -->
+		<link rel="stylesheet" href="{% static 'modern7/css/magnific-popup.css' %}">
+		<link rel="stylesheet" href="{% static 'modern7/css/animate.css' %}">
+
+		<!-- Master Theme Style CSS -->
+		<link rel="stylesheet" href="{% static 'modern7/css/style.css' %}">
+
+		<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	</head>
+
+    <body data-spy="scroll" data-offset="80">
+
+		<!-- START PRELOADER -->
+		<div class="preloaders">
+			<span class="loader"></span>
+		</div>
+		<!-- END PRELOADER -->
+
+		<!-- START NAVBAR -->
+		<div id="navigation" class="navbar-light bg-faded site-navigation">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-20 align-self-center">
+						<div class="site-logo">
+							<!-- 🏢 DYNAMIC FIELD: BRAND LOGO (Updatable from user admin account settings) -->
+							<a href="{% url 'modern7_homepage' active_tenant.slug_path %}">
+								{% if platform_config.brand_logo %}
+									<img src="{{ platform_config.brand_logo.url }}" alt="Institution Logo">
+								{% else %}
+									<img src="{% static 'modern7/img/logo.png' %}" alt="Default Logo">
+								{% endif %}
+							</a>
+						</div>
+					</div><!--- END Col -->
+
+					<div class="col-60 d-flex">
+						<nav id="main-menu">
+							<ul>
+								<!-- 🟢 ISOLATED ROUTING LINKS: Connected to your multi-tenant app routing paths securely -->
+								<li><a href="{% url 'modern7_homepage' active_tenant.slug_path %}">Home</a></li>
+								<li><a href="{% url 'modern7_aboutpage' active_tenant.slug_path %}">About</a></li>
+
+								<li class="menu-item-has-children"><a href="{% url 'modern7_coursepage' active_tenant.slug_path %}">Courses</a>
+									<ul>
+										<li><a href="{% url 'modern7_coursepage' active_tenant.slug_path %}">All Courses</a></li>
+									</ul>
+								</li>
+
+								<li class="menu-item-has-children"><a href="#">Pages</a>
+									<ul>
+										<li><a href="{% url 'modern7_instructorpage' active_tenant.slug_path %}">Instructors</a></li>
+										<li><a href="{% url 'modern7_pricingpage' active_tenant.slug_path %}">Pricing Plan</a></li>
+										<li><a href="{% url 'modern7_faqpage' active_tenant.slug_path %}">Faq Page</a></li>
+									</ul>
+								</li>
+
+								<li class="menu-item-has-children"><a href="{% url 'modern7_blogpage' active_tenant.slug_path %}">Blog</a>
+									<ul>
+										<li><a href="{% url 'modern7_blogpage' active_tenant.slug_path %}">Blog Feed</a></li>
+									</ul>
+								</li>
+								<li><a href="{% url 'modern7_contactpage' active_tenant.slug_path %}">Contact</a></li>
+							</ul>
+						</nav>
+					</div><!--- END Col -->
+
+					
+					                    <div class="col-20 d-none d-xl-block text-end align-self-center">
+						<a href="#" class="header-btn">Sign In</a>
+						<!-- 🟢 ACTION REDIRECT BUTTON: Routes user cleanly to your tenant contact or registration channel -->
+						<a href="{% url 'modern7_contactpage' active_tenant.slug_path %}" class="btn_one">Sign Up</a>
+					</div><!--- END Col -->
+
+					<!-- MOBILE SIDEBAR RESPONSIVE NAVIGATION MATRIX -->
+					<ul class="mobile_menu">
+						<li><a href="{% url 'modern7_homepage' active_tenant.slug_path %}">Home</a></li>
+						<li><a href="{% url 'modern7_aboutpage' active_tenant.slug_path %}">About</a></li>
+						<li><a href="{% url 'modern7_coursepage' active_tenant.slug_path %}">Course</a></li>
+						<li><a href="#">Pages</a>
+							<ul class="sub-menu">
+								<li><a href="{% url 'modern7_instructorpage' active_tenant.slug_path %}">Instructor</a></li>
+								<li><a href="{% url 'modern7_pricingpage' active_tenant.slug_path %}">Pricing Plan</a></li>
+								<li><a href="{% url 'modern7_faqpage' active_tenant.slug_path %}">Faq Page</a></li>
+							</ul>
+						</li>
+						<li><a href="{% url 'modern7_blogpage' active_tenant.slug_path %}">Blog</a></li>
+						<li><a href="{% url 'modern7_contactpage' active_tenant.slug_path %}">Contact</a></li>
+					</ul>
+				</div><!--- END ROW -->
+			</div><!--- END CONTAINER -->
+		</div>
+		<!-- END NAVBAR -->
+
+		<!-- START SECTION TOP -->
+		<section class="section-top">
+			<div class="container">
+				<div class="col-lg-10 offset-lg-1 text-center">
+					<div class="section-top-title wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.3s" data-wow-offset="0">
+						<h1>Our Instructors</h1>
+						<ul>
+							<li><a href="{% url 'modern7_homepage' active_tenant.slug_path %}">Home</a></li>
+							<li> / Instructor</li>
+						</ul>
+					</div><!-- //.HERO-TEXT -->
+				</div><!--- END COL -->
+			</div><!--- END CONTAINER -->
+		</section>
+		<!-- END SECTION TOP -->
+		<!-- START TEAM -->
+		<section class="team_area section-padding">
+			<div class="container">
+				<div class="section-title text-center">
+					<!-- 🏢 DYNAMIC FIELD: Instructors Core Heading and Content Overviews -->
+					<h2>{% if platform_config.instructors_title %}{{ platform_config.instructors_title }}{% else %}Meet our Instructors{% endif %}</h2>
+					<p>{% if platform_config.instructors_summary %}{{ platform_config.instructors_summary }}{% else %}We offer a brand new approach to the most basic learning paradigms. Choose from a wide range of learning options and gain new skills! Our school is know.{% endif %}</p>
+				</div>
+
+				<div class="row">
+					<!-- 🏢 DYNAMIC LOOP COUPLING: Iterates through your database instructor team rows safely -->
+					{% if platform_instructors %}
+						{% for instructor in platform_instructors %}
+						<div class="col-lg-3 col-sm-6 col-xs-12 mb-4 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.1s" data-wow-offset="0">
+							<div class="our-team">
+								<div class="team-content">
+									{% if instructor.profile_avatar %}
+										<a href="#"><img src="{{ instructor.profile_avatar.url }}" alt="{{ instructor.full_name }}"></a>
+									{% else %}
+										<a href="#"><img src="{% static 'modern7/img/team/team1.jpg' %}" alt="default profile"></a>
+									{% endif %}
+
+									<ul class="social-links">
+										<li><a href="{% if instructor.twitter_url %}{{ instructor.twitter_url }}{% else %}#{% endif %}" target="_blank"><i class="fa-solid fa-x"></i></a></li>
+										<li><a href="{% if instructor.facebook_url %}{{ instructor.facebook_url }}{% else %}#{% endif %}" target="_blank"><i class="fa-brands fa-facebook-f"></i></a></li>
+										<li><a href="{% if instructor.linkedin_url %}{{ instructor.linkedin_url }}{% else %}#{% endif %}" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a></li>
+									</ul>
+								</div>
+								<div class="team-prof">
+									<h3>{{ instructor.full_name }}</h3>
+									<span>{{ instructor.professional_title }}</span>
+								</div>
+								<div class="sth_det2">
+									<span class="ti-file"> <u>{{ instructor.count_courses_text|default:"04 Courses" }}</u></span>
+									<span class="ti-user"> <u>{{ instructor.count_students_text|default:"25 Students" }}</u></span>
+								</div>
+							</div>
+						</div><!--- END COL -->
+						{% endfor %}
+					{% else %}
+						<!-- Safe default visual fallback cards layout if no instructor data records are populated yet -->
+						<div class="col-lg-3 col-sm-6 col-xs-12 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.1s" data-wow-offset="0">
+							<div class="our-team">
+								<div class="team-content">
+									<a href="#"><img src="{% static 'modern7/img/team/team1.jpg' %}" alt=""></a>
+									<ul class="social-links">
+										<li><a href="#"><i class="fa-solid fa-x"></i></a></li>
+										<li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
+										<li><a href="#"><i class="fa-brands fa-linkedin-in"></i></a></li>
+									</ul>
+								</div>
+								<div class="team-prof">
+									<h3>Bilkis Vabi</h3>
+									<span>Web designer</span>
+								</div>
+								<div class="sth_det2">
+									<span class="ti-file"> <u>04 Course</u></span>
+									<span class="ti-user"> <u>27 Student</u></span>
+								</div>
+							</div>
+						</div><!--- END COL -->
+					{% endif %}
+				</div><!--- END ROW -->
+			</div><!--- END CONTAINER -->
+		</section>
+		<!-- END TEAM -->
+<!-- START FOOTER -->
+		<div class="footer section-padding">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-3 col-sm-6 col-xs-12">
+						<div class="single_footer">
+							<!-- 🏢 DYNAMIC FIELD: BRAND LOGO OR TITLE (Updatable from user admin settings) -->
+							<a href="{% url 'modern7_homepage' active_tenant.slug_path %}">
+								{% if platform_config.brand_logo %}
+									<img src="{{ platform_config.brand_logo.url }}" alt="Logo">
+								{% else %}
+									<img src="{% static 'modern7/img/logo.png' %}" alt="Default Logo">
+								{% endif %}
+							</a>
+							<p>{% if platform_config.footer_summary_text %}{{ platform_config.footer_summary_text }}{% else %}Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vitae risus nec dui venenatis dignissim.{% endif %}</p>
+							<div class="social_profile">
+								<ul>
+									<li><a class="f_facebook" href="{% if platform_config.twitter_x_url %}{{ platform_config.twitter_x_url }}{% else %}#{% endif %}" target="_blank"><i class="fa-solid fa-x"></i></a></li>
+									<li><a class="f_twitter" href="{% if platform_config.facebook_url %}{{ platform_config.facebook_url }}{% else %}#{% endif %}" target="_blank"><i class="fa-brands fa-facebook-f"></i></a></li>
+									<li><a class="f_instagram" href="{% if platform_config.instagram_url %}{{ platform_config.instagram_url }}{% else %}#{% endif %}" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
+									<li><a class="f_linkedin" href="{% if platform_config.linkedin_url %}{{ platform_config.linkedin_url }}{% else %}#{% endif %}" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a></li>
+								</ul>
+							</div>
+						</div>
+					</div><!--- END COL -->
+					<div class="col-lg-2 col-sm-6 col-xs-12">
+						<div class="single_footer">
+							<h4>About {% firstof platform_config.institution_name "Eduleb" %}</h4>
+							<ul>
+								<li><a href="{% url 'modern7_aboutpage' active_tenant.slug_path %}">About us</a></li>
+								<li><a href="{% url 'modern7_instructorpage' active_tenant.slug_path %}">All Instructors</a></li>
+								<li><a href="{% url 'modern7_faqpage' active_tenant.slug_path %}">Asked Questions</a></li>
+								<li><a href="{% url 'modern7_contactpage' active_tenant.slug_path %}">Contact us</a></li>
+							</ul>
+						</div>
+					</div><!--- END COL -->
+					<div class="col-lg-2 col-sm-6 col-xs-12">
+						<div class="single_footer">
+							<h4>Popular Categories</h4>
+							<ul>
+								<!-- Loops the user-managed course categories right into the footer links tracking row -->
+								{% for category in course_categories|slice:":5" %}
+									<li><a href="{% url 'modern7_coursepage' active_tenant.slug_path %}?category_slug={{ category.category_slug }}">{{ category.category_name }}</a></li>
+								{% empty %}
+									<li><a href="#">Development</a></li>
+									<li><a href="#">Arts & design</a></li>
+									<li><a href="#">Visual Design</a></li>
+								{% endfor %}
+							</ul>
+						</div>
+					</div><!--- END COL -->
+					<div class="col-lg-3 col-sm-6 col-xs-12">
+						<div class="single_footer">
+							<h4>Contact Info</h4>
+							<div class="sf_contact">
+								<span class="ti-map"></span>
+								<!-- 🏢 DYNAMIC FIELD: Physical Address -->
+								<p>{% if platform_config.office_address %}{{ platform_config.office_address }}{% else %}2570 Quadra Street Victoria Road, New York, Canada{% endif %}</p>
+							</div>
+							<div class="sf_contact">
+								<span class="ti-mobile"></span>
+								<!-- 🏢 DYNAMIC FIELD: Direct Telephone Line -->
+								<p>{% if platform_config.support_phone %}{{ platform_config.support_phone }}{% else %}+88 457 845 695{% endif %}</p>
+							</div>
+							<div class="sf_contact">
+								<span class="ti-mobile"></span>
+								<!-- 📞 DIRECT LINE CHANNEL TO WHATSAPP DESK CORE -->
+								<p><a href="https://wa.me{{ platform_config.whatsapp_number|default:'2347009008888' }}?text=Hello%20Support,%20I%20have%20an%20enquiry%20regarding%20instructors." target="_blank">Contact Whatsapp</a></p>
+							</div>
+							<div class="sf_contact">
+								<span class="ti-email"></span>
+								<!-- 🏢 DYNAMIC FIELD: Public Support Email Vault Endpoint -->
+								<p>{% if platform_config.support_email %}{{ platform_config.support_email }}{% else %}example@yourmail.com{% endif %}</p>
+							</div>
+						</div>
+					</div><!--- END COL -->
+					<div class="col-lg-2 col-sm-6 col-xs-12">
+						<div class="single_footer">
+							<h4>Download App</h4>
+							<p>Download our app from app store and google play store.</p>
+							<!-- 🎨 STATIC Badges Pipeline routing rails -->
+							<a href="{% url 'modern7_homepage' active_tenant.slug_path %}"><img src="{% static 'modern7/img/google-play.jpg' %}" class="foot_img" alt="Google Play"></a>
+							<a href="{% url 'modern7_homepage' active_tenant.slug_path %}"><img src="{% static 'modern7/img/app-store.jpg' %}" class="foot_img" alt="App Store"></a>
+						</div>
+					</div><!--- END COL -->
+				</div><!--- END ROW -->
+			</div><!--- END CONTAINER -->
+		</div>
+		<!-- END FOOTER -->
+
+		<!-- START FOOTER COPYRIGHT -->
+		<div class="foot_copy">
+			<div class="footer_copyright">
+				<p>&copy; 2026. All Rights Reserved by <a href="{% url 'modern7_homepage' active_tenant.slug_path %}">{% firstof platform_config.institution_name "Eduleb" %}</a> • Distributed by <a href="https://themewagon.com" target="_blank">ThemeWagon</a></p>
+			</div>
+		</div>
+		<!-- END FOOTER COPYRIGHT -->
+
+	<!-- 🛠️ LOCAL JAVASCRIPT FRAMEWORK LIBRARIES LAYER BINDINGS -->
+	<!-- Latest jQuery Framework -->
+		<script src="{% static 'modern7/js/jquery-1.12.4.min.js' %}"></script>
+	<!-- Latest compiled and minified Bootstrap Core JS Engines -->
+		<script src="{% static 'modern7/bootstrap/js/bootstrap.min.js' %}"></script>
+	<!-- Modernizer Compatibility Matrix Handles -->
+		<script src="{% static 'modern7/js/modernizr-2.8.3.min.js' %}"></script>
+	<!-- Responsive Mobile Sidebar Menu Navigation Toggles -->
+		<script src="{% static 'modern7/js/jquery-simple-mobilemenu.js' %}"></script>
+	<!-- Testimonials & Course Slider Carousel Animation Loops -->
+		<script src="{% static 'modern7/owlcarousel/js/owl.carousel.min.js' %}"></script>
+	<!-- Magnific Video Popup Core Engine Overlays -->
+		<script src="{% static 'modern7/js/jquery.magnific-popup.min.js' %}"></script>
+	<!-- Inview Viewport Counters Tracker JS -->
+		<script src="{% static 'modern7/js/jquery.inview.min.js' %}"></script>
+	<!-- Scroll-To-Top Control Mechanics JS -->
+		<script src="{% static 'modern7/js/scrolltopcontrol.js' %}"></script>
+	<!-- WOW - Reveal Animations Script Framework -->
+		<script src="{% static 'modern7/js/wow.min.js' %}"></script>
+	<!-- Custom Platform Theme Scripts Initializer -->
+		<script src="{% static 'modern7/js/scripts.js' %}"></script>
+    </body>
+</html>

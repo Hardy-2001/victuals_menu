@@ -1,0 +1,376 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{{ tenant.business_name }} — Premium E-Marketplace</title>
+
+    <!-- 🎨 FIXED PATH LINK: Points directly to your root static folder layout -->
+    <link rel="stylesheet" href="{% static 'menu/grocery_style.css' %}">
+</head>
+<body>
+
+    <!-- 🏙️ MASTER TOP ACTIONS HEADER BAR -->
+    <header class="premium-top-header">
+        <div class="premium-logo-area">
+            {{ tenant.business_name }}
+        </div>
+
+                <!-- 🔍 INTERACTIVE TRIPLE-ROW SEARCH BAR MATRIX (UPDATED FOR DYNAMIC CATEGORIES) -->
+        <div class="premium-search-matrix-box">
+            <input type="text" id="storeSearchInput" onkeyup="filterStoreCatalog()" class="premium-search-input" placeholder="Search brands, items, essentials, supplies...">
+
+            <!-- 🎯 DYNAMIC DROPDOWN: Loops through your real database categories live! -->
+            <select class="premium-search-select-dropdown" id="categoryFilterDropdown" onchange="scrollToSelectedCategorySection()">
+                <option value="all">All Categories</option>
+                {% for category in categories %}
+                    {% if category.items.all %}
+                        <option value="category_section_{{ category.id }}">{{ category.name }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+
+            <button class="premium-search-action-trigger" aria-label="Search">
+                🔍
+            </button>
+        </div>
+
+
+                <!-- 🛒 HEADER INTEGRATED CART TRACKER (UPDATED TRIGER) -->
+        <div class="header-cart-basket-node" id="headerCartContainer" onclick="openShoppingBagModal()" style="cursor: pointer;">
+            <span class="basket-icon-glyph">🛒</span>
+            <span class="basket-counter-badge" id="cartTotalCountLabel">0</span>
+        </div>
+
+    </header>
+
+    <!-- 📁 HORIZONTAL CATEGORIES SUB-NAVIGATION BAR -->
+    <nav class="premium-category-sub-navbar">
+        {% for category in categories %}
+            {% if category.items.all %}
+                <a href="#category_section_{{ category.id }}" class="category-nav-link">
+                    {{ category.name }}
+                </a>
+            {% endif %}
+        {% endfor %}
+    </nav>
+
+    <!-- 📦 MAIN WORKSPACE EXHIBITION LAYOUT -->
+    <main class="premium-main-workspace">
+
+        {% for category in categories %}
+            {% if category.items.all %}
+            <section class="grocery-category-section" id="category_section_{{ category.id }}">
+
+                <h2 class="shelf-section-headline">{{ category.name }}</h2>
+
+                <div class="premium-showcase-grid">
+                    {% for item in category.items.all %}
+
+                    <div class="premium-retail-product-card product-search-node" data-name="{{ item.name }}" onclick="addItemToShoppingBag('{{ item.name }}', {{ item.price }})">
+
+                        <div class="premium-item-thumbnail-box">
+                            {% if item.unit_size %}
+                                <span class="premium-unit-tag-badge">{{ item.unit_size }}</span>
+                            {% endif %}
+
+                            {% if item.image %}
+                                <img src="{{ item.image.url }}" alt="{{ item.name }}" loading="lazy">
+                            {% else %}
+                                <div style="font-size: 40px; color: #cccccc; padding: 20px 0;">📦</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Content Details Pane -->
+<div class="premium-item-info-pane">
+    <span class="premium-item-brand">
+        {% if item.brand_name %}{{ item.brand_name }}{% else %}{{ tenant.business_name }}{% endif %}
+    </span>
+    <h3 class="premium-item-title">{{ item.name }}</h3>
+
+    <div class="premium-item-price-row" style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+        <span class="premium-item-price-text">₦{{ item.price }}</span>
+
+        <!-- 🎯 FIXED VIEW DETAILS LINK: Safely stops parent card adding triggers and slides out to the separate detail view page! -->
+<!-- 🎯 REFACTOR THE SPAN ELEMENT CLICKS INLINE ACTION TO LOOK EXACTLY LIKE THIS: -->
+<span onclick="event.stopPropagation(); window.location.href='/store/{{ tenant.slug }}/product/{{ item.id }}/';"
+      class="details-action-button"
+      style="font-size: 11px; font-weight: 800; color: #a30000; text-transform: uppercase; cursor: pointer; text-decoration: underline;">
+            View Details
+        </span>
+    </div>
+</div>
+
+
+                        <button class="premium-flat-action-btn">
+                            + Add to Bag
+                        </button>
+                    </div>
+
+                    {% endfor %}
+                </div>
+
+            </section>
+            {% endif %}
+        {% empty %}
+            <div style="text-align: center; color: #888888; padding: 80px 0; font-size: 15px;">
+                No product rows initialized. Log into your dashboard to append item data modules.
+            </div>
+        {% endfor %}
+
+    </main>
+
+    <!-- 🔮 CLIENT SIDE INTERACTIVE CART TRACKING SCRIPTS -->
+    <script>
+              let globalShoppingBagArray = [];
+
+        function addItemToShoppingBag(itemName, itemPrice) {
+            let existingProductIndex = globalShoppingBagArray.findIndex(prod => prod.name === itemName);
+
+            if (existingProductIndex > -1) {
+                globalShoppingBagArray[existingProductIndex].quantity += 1;
+            } else {
+                globalShoppingBagArray.push({
+                    name: itemName,
+                    price: itemPrice,
+                    quantity: 1
+                });
+            }
+            // Save to sync with details page storage
+            localStorage.setItem('grocery_cart_storage', JSON.stringify(globalShoppingBagArray));
+            updateCartCounterDisplay();
+        }
+
+        function updateCartCounterDisplay() {
+            const counterBadge = document.getElementById('cartTotalCountLabel');
+            let collectiveSumUnits = globalShoppingBagArray.reduce((acc, curr) => acc + curr.quantity, 0);
+            counterBadge.innerText = collectiveSumUnits;
+        }
+
+        // 🎯 UPDATED: OPENS THE SHOPPING BAG MODAL WITH INLINE DELETE CONTROLS
+        function openShoppingBagModal() {
+            if (globalShoppingBagArray.length === 0) {
+                alert("Your shopping bag is empty! Add items from the shelves first.");
+                return;
+            }
+
+            const itemsContainer = document.getElementById('modalCartItemsList');
+            const totalSumTag = document.getElementById('modalCartTotalSumTag');
+
+            itemsContainer.innerHTML = ""; // Clear old rows
+            let grossAccumulator = 0;
+
+            // Generate clean rows with a professional delete button trigger
+            globalShoppingBagArray.forEach((product, idx) => {
+                let currentItemCost = product.price * product.quantity;
+                grossAccumulator += currentItemCost;
+
+                itemsContainer.innerHTML += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid #f5f5f5;">
+                        <div style="text-align: left; max-width: 60%;">
+                            <div style="font-size: 14px; font-weight: 600; color: #222222;">${product.name}</div>
+                            <div style="font-size: 12px; color: #888888;">₦${product.price.toLocaleString()} x ${product.quantity}</div>
+                        </div>
+
+                        <!-- 🎯 PRICE & DELETE ACTION BLOCK RIGHT HAND SIDE -->
+                        <div style="display: flex; align-items: center; gap: 16px;">
+                            <span style="font-size: 14px; font-weight: 700; color: #000000; font-family: monospace;">
+                                ₦${currentItemCost.toLocaleString()}
+                            </span>
+
+                            <!-- 🗑️ Dynamic Remove Button -->
+                            <button onclick="removeItemFromShoppingBag(${idx})" style="background: transparent; border: none; color: #dc2626; font-size: 16px; cursor: pointer; padding: 4px; font-weight: bold;" title="Remove Item">
+                                🗑️
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            totalSumTag.innerText = `₦${grossAccumulator.toLocaleString()}`;
+            document.getElementById('shoppingBagModalOverlay').style.display = "flex";
+        }
+
+        // 🎯 NEW: REMOVES SPECIFIC ITEM ROWS DYNAMICALLY FROM MEMORY
+        function removeItemFromShoppingBag(itemIndex) {
+            // Remove the selected item row out of your global basket memory array
+            globalShoppingBagArray.splice(itemIndex, 1);
+
+            // Sync current state into the backup local session memory tracker
+            localStorage.setItem('grocery_cart_storage', JSON.stringify(globalShoppingBagArray));
+
+            // Update the frozen header cart counter badge live
+            updateCartCounterDisplay();
+
+            // If the cart bag is now completely empty, close the popup automatically
+            if (globalShoppingBagArray.length === 0) {
+                closeShoppingBagModal();
+                alert("Your shopping bag is now empty.");
+            } else {
+                // Otherwise, refresh the modal rows instantly to draw the updated lists!
+                openShoppingBagModal();
+            }
+        }
+
+        function closeShoppingBagModal() {
+            document.getElementById('shoppingBagModalOverlay').style.display = "none";
+        }
+
+
+                // 🎯 ADD THIS TO THE VERY BOTTOM OF YOUR SCRIPT TAG INSIDE grocery_catalog.html:
+
+        // As soon as the page loads, sync any items added from the detail page!
+        window.addEventListener('DOMContentLoaded', () => {
+            let storedData = localStorage.getItem('grocery_cart_storage');
+            if (storedData) {
+                globalShoppingBagArray = JSON.parse(storedData);
+                updateCartCounterDisplay(); // Instantly lights up the top header cart bubble counter!
+            }
+        });
+
+        // Update your existing compileAndDispatchWhatsAppCart function to clear local storage after order dispatch:
+        function compileAndDispatchWhatsAppCart() {
+            if (globalShoppingBagArray.length === 0) return;
+
+            let messageManifestString = `Hello! I would like to place an order from your catalog:\n\n`;
+            let grossFinancialAccumulator = 0;
+
+            globalShoppingBagArray.forEach((product, idx) => {
+                let currentItemCost = product.price * product.quantity;
+                grossFinancialAccumulator += currentItemCost;
+                messageManifestString += `${idx + 1}. 📦 ${product.name} (x${product.quantity}) — ₦${currentItemCost.toLocaleString()}\n`;
+            });
+
+            messageManifestString += `\n💰 Total Running Bill Sum: ₦${grossFinancialAccumulator.toLocaleString()}\n\n`;
+            messageManifestString += `Kindly confirm inventory item shelf positions and delivery times.`;
+
+            // 🎯 CLEANUP CACHE memory tracks upon launching whatsapp dispatch triggers
+            localStorage.removeItem('grocery_cart_storage');
+
+            const operationalWhatsAppEndpoint = "{{ profile.whatsapp_number }}";
+            const nativeDispatchUrl = "whatsapp://send?phone=" + operationalWhatsAppEndpoint + "&text=" + encodeURIComponent(messageManifestString);
+            window.location.href = nativeDispatchUrl;
+        }
+
+
+
+        function filterStoreCatalog() {
+            const searchInput = document.getElementById('storeSearchInput').value.toLowerCase();
+            const productNodes = document.querySelectorAll('.product-search-node');
+
+            productNodes.forEach(card => {
+                const productName = card.getAttribute('data-name').toLowerCase();
+                if (productName.includes(searchInput)) {
+                    card.style.display = "flex";
+                    card.setAttribute('data-visible', 'true');
+                } else {
+                    card.style.display = "none";
+                    card.setAttribute('data-visible', 'false');
+                }
+            });
+
+            document.querySelectorAll('.grocery-category-section').forEach(block => {
+                const visibleCards = block.querySelectorAll('.product-search-node[data-visible="true"]');
+                if (searchInput !== "" && visibleCards.length === 0) {
+                    block.style.display = "none";
+                } else {
+                    block.style.display = "block";
+                }
+            });
+        }
+                // 🎯 AUTOMATED CAT JUMP ENGINE: Instantly jumps the user down to the exact section they pick!
+        function scrollToSelectedCategorySection() {
+            const chosenTargetId = document.getElementById('categoryFilterDropdown').value;
+
+            if (chosenTargetId === "all") {
+                // If they pick "All Categories", scroll smoothly back to the absolute top of the store
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                const targetElement = document.getElementById(chosenTargetId);
+                if (targetElement) {
+                    // Calculate header block buffer space so the frozen navbar doesn't cover your title text!
+                    const headerHeightOffset = 160;
+                    const elementPositionOffset = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                    const adjustedScrollPosition = elementPositionOffset - headerHeightOffset;
+
+                    window.scrollTo({
+                        top: adjustedScrollPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        }
+
+                // 🔮 INTERACTIVE MODAL INTERFACE WINDOW DISPLAY CONTROLLERS
+        function displayProductDetailModalPane(name, price, brand, unit, description, imageUrl) {
+            // Inject text value data nodes straight into the empty popup elements templates strings
+            document.getElementById('modalProductNameTitle').innerText = name;
+            document.getElementById('modalProductPriceTag').innerText = `₦${parseFloat(price).toLocaleString()}`;
+            document.getElementById('modalProductBrandLabel').innerText = brand;
+            document.getElementById('modalProductUnitLabel').innerText = `Specification: ${unit}`;
+
+            // Handle fallback description tracking lines properties
+            if (description.trim() !== "") {
+                document.getElementById('modalProductDescriptionText').innerText = description;
+            } else {
+                document.getElementById('modalProductDescriptionText').innerText = "Premium fresh shelf provisions stock, fully certified and monitored via localized network distribution routes.";
+            }
+
+            // Render matching graphics canvas blocks dynamically
+            const imageBox = document.getElementById('modalProductImageContainer');
+            if (imageUrl && imageUrl !== "") {
+                imageBox.innerHTML = `<img src="${imageUrl}" alt="${name}">`;
+            } else {
+                imageBox.innerHTML = `<div style="font-size:56px; color:#cccccc;">📦</div>`;
+            }
+
+            // Safely assign the button behavior inside the modal box context to load the item metrics array loop
+            const addToBagButton = document.getElementById('modalAddToCartActionButton');
+            addToBagButton.onclick = function() {
+                addItemToShoppingBag(name, parseFloat(price));
+                closeProductDetailModalWindow(); // Automatically closes popup after item clicks!
+            };
+
+            // Glide open the complete dimming frame layout on screen viewport glass
+            document.getElementById('productDetailModalOverlay').style.display = "flex";
+        }
+
+        function closeProductDetailModalWindow() {
+            // Conceal the interactive window frame box layout element cleanly
+            document.getElementById('productDetailModalOverlay').style.display = "none";
+        }
+
+
+    </script>
+<!-- 🛒 PREMIUM SHOPPING BAG PREVIEW MODAL POPUP -->
+<div id="shoppingBagModalOverlay" class="premium-modal-overlay" style="display: none;" onclick="closeShoppingBagModal()">
+    <div class="premium-modal-card-box" onclick="event.stopPropagation();" style="max-width: 500px;">
+        <button class="modal-close-trigger-btn" onclick="closeShoppingBagModal()">×</button>
+
+        <div style="padding: 32px;">
+            <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 20px; border-bottom: 2px solid #eaeaea; padding-bottom: 10px; color: #111111;">
+                🛒 Your Shopping Bag
+            </h2>
+
+            <!-- Dynamic Item List Container -->
+            <div id="modalCartItemsList" style="max-height: 280px; overflow-y: auto; margin-bottom: 24px; padding-right: 4px;">
+                <!-- Injected via JavaScript dynamically -->
+            </div>
+
+            <!-- Summary Pricing Board -->
+            <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #eaeaea; padding-top: 18px; margin-bottom: 24px;">
+                <span style="font-size: 14px; font-weight: 700; color: #666666; text-transform: uppercase;">Total Bill:</span>
+                <span id="modalCartTotalSumTag" style="font-size: 22px; font-weight: 900; color: #000000; font-family: monospace;">₦0.00</span>
+            </div>
+
+            <!-- Master Action Confirmation Button -->
+            <button class="modal-commit-add-to-bag-btn" style="width: 100%; text-align: center; background-color: #10b981;" onclick="compileAndDispatchWhatsAppCart()">
+                Confirm & Order via WhatsApp →
+            </button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,219 @@
+/* ==========================================================================
+   🏋️‍♂️ IRON PULSE SUITE — PREMIUM FITNESS PRODUCT DETAILS VIEW LAYOUT
+   ========================================================================== */
+
+.gym-detail-canvas {
+    width: 100%;
+    max-width: 1300px;
+    margin: 40px auto;
+    padding: 0 24px;
+    background-color: #ffffff;
+}
+
+/* --- 📝 MASTER VIEWPORT SPLITTING CONTAINER WRAPPER --- */
+.gym-detail-wrapper {
+    width: 100%;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr; /* Image and metrics split side-by-side beautifully on desktops */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    overflow: hidden;
+}
+
+/* --- 📸 ACCENT IMAGE VIEWPORT --- */
+.gym-detail-image-viewport {
+    background-color: #ffffff;
+    padding: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-right: 1px solid #e5e7eb;
+    min-height: 550px;
+}
+
+.gym-detail-image-viewport img {
+    max-width: 100%;
+    max-height: 480px;
+    object-fit: contain;
+}
+
+.gym-detail-back-btn {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    background: #111827;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    z-index: 10;
+    transition: background 0.2s ease;
+}
+
+.gym-detail-back-btn:hover {
+    background: #ea580c; /* Shifts to gym orange accent on hover states */
+}
+
+/* --- 📝 CORE DATA CONTENT METRICS PANE --- */
+.gym-detail-info-pane {
+    padding: 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: left;
+}
+
+.gym-detail-manufacturer-lbl {
+    font-size: 12px;
+    font-weight: 800;
+    color: #ea580c; /* High-Visibility Gym Orange tracking label color */
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+}
+
+.gym-detail-headline-title {
+    font-size: 34px;
+    font-weight: 900;
+    color: #111827;
+    line-height: 1.2;
+    margin-bottom: 10px;
+    letter-spacing: -0.02em;
+}
+
+.gym-detail-spec-lbl {
+    font-size: 15px;
+    color: #4b5563;
+    font-weight: 600;
+    margin-bottom: 32px;
+    display: block;
+}
+
+/* --- 💵 PRICING MATRIX ROW --- */
+.gym-detail-pricing-row {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    border-top: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 24px 0;
+    margin-bottom: 32px;
+}
+
+.gym-detail-price-text {
+    font-size: 36px;
+    font-weight: 900;
+    color: #0284c7; /* Sky Blue Price Font color match from screenshot */
+    font-family: monospace;
+}
+
+/* ➕ RECTANGLE METRICS QUANTITY WEIGHT SELECT COUNTERS */
+.gym-inline-qty-picker {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background-color: #ffffff;
+    overflow: hidden;
+}
+
+.gym-inline-qty-btn {
+    background: transparent;
+    border: none;
+    color: #111827;
+    font-size: 20px;
+    font-weight: bold;
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.gym-inline-qty-btn:hover {
+    background-color: #f3f4f6;
+}
+
+.gym-inline-qty-display {
+    font-size: 16px;
+    font-weight: 800;
+    padding: 0 12px;
+    min-width: 40px;
+    text-align: center;
+    color: #111827;
+}
+
+.gym-description-header-lbl {
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #9ca3af;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+}
+
+.gym-description-paragraph-text {
+    font-size: 15px;
+    color: #374151;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+/* ⚡ DISPATCH ON-SCREEN FLAT BUTTON */
+.gym-detail-commit-btn {
+    background-color: #111827;
+    color: #ffffff;
+    border: none;
+    padding: 16px;
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 6px;
+    transition: background 0.2s ease;
+    width: 100%;
+    margin-top: auto;
+    box-shadow: 0 4px 12px rgba(17,24,39,0.15);
+}
+
+.gym-detail-commit-btn:hover {
+    background-color: #ea580c;
+    box-shadow: 0 4px 14px rgba(234,88,12,0.25);
+}
+
+/* --- 📱 MOBILE DEVICE VIEWPORT SMOOTHING OVERRIDES --- */
+@media (max-width: 768px) {
+    .gym-detail-canvas {
+        padding: 0 16px;
+    }
+    .gym-detail-wrapper {
+        grid-template-columns: 1fr; /* Dynamic conversion to clean 1-column mobile stack layout */
+        margin: 20px 0;
+    }
+    .gym-detail-image-viewport {
+        border-right: none;
+        border-bottom: 1px solid #e5e7eb;
+        min-height: 320px;
+        padding: 24px;
+    }
+    .gym-detail-image-viewport img {
+        max-height: 280px;
+    }
+    .gym-detail-info-pane {
+        padding: 32px 20px;
+    }
+    .gym-detail-headline-title {
+        font-size: 26px;
+    }
+    .gym-detail-price-text {
+        font-size: 30px;
+    }
+}

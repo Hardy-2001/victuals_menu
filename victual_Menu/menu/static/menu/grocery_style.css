@@ -1,0 +1,522 @@
+/* 🛒 ESSENZA-INSPIRED PREMIUM LIGHT MARKETPLACE SYSTEM */
+
+/* --- 🌌 BASE STYLES --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+    background-color: #fcfcfc;
+    color: #1c1c1e;
+    min-height: 100vh;
+    padding-bottom: 120px;
+}
+
+/* --- 🏙️ MASTER TOP ACTIONS HEADER BAR (UPDATED FOR STICKY FREEZE) --- */
+.premium-top-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #eaeaea;
+    width: 100%;
+    padding: 16px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+
+    /* 🎯 THE FREEZE ENGINE */
+    position: fixed;       /* Freezes the header relative to the viewport glass */
+    top: 0;                /* Pins it to the absolute top edge */
+    left: 0;               /* Pins it to the left edge edge */
+    z-index: 2000;         /* Forces it to sit high above all scrolling product cards */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03); /* Adds a premium subtle shadow on scroll */
+}
+
+/* --- 📁 HORIZONTAL CATEGORIES BAR (UPDATED FOR STICKY FREEZE) --- */
+.premium-category-sub-navbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #eaeaea;
+    width: 100%;
+    padding: 12px 40px;
+    display: flex;
+    gap: 28px;
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    /* 🎯 THE SECONDARY FREEZE ENGINE */
+    position: fixed;
+    top: 77px;             /* Freezes it directly below your top header row channel */
+    left: 0;
+    z-index: 1900;         /* Sits right beneath the master header layer */
+}
+.premium-category-sub-navbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* --- 📦 MAIN SECTION WRAPPER (UPDATED OFFSET) --- */
+.premium-main-workspace {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+
+    /* 🎯 THE OFFSET LAYER: Prevents products from getting buried under your frozen bars! */
+    padding: 160px 40px 40px 40px;
+    text-align: left;
+}
+
+/* --- 📱 MOBILE DEVICE FREEZE OVERRIDES --- */
+@media (max-width: 768px) {
+    .premium-top-header {
+        padding: 16px 20px;
+        flex-direction: column;
+        gap: 12px;
+        position: relative; /* Release freeze on mobile screens to optimize valuable screen space */
+    }
+    .premium-category-sub-navbar {
+        position: relative;
+        top: 0;
+        padding: 12px 20px;
+    }
+    .premium-main-workspace {
+        padding: 24px 20px; /* Reset padding safely on mobile interfaces */
+    }
+}
+
+
+.premium-logo-area {
+    font-size: 26px;
+    font-weight: 900;
+    color: #000000;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+}
+
+/* 🔍 INTERACTIVE TRIPLE-ROW SEARCH BAR MATRIX */
+.premium-search-matrix-box {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    max-width: 700px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    background-color: #ffffff;
+    overflow: hidden;
+}
+
+.premium-search-input {
+    flex-grow: 1;
+    border: none;
+    padding: 12px 16px;
+    font-size: 14px;
+    color: #333333;
+    outline: none;
+}
+
+.premium-search-select-dropdown {
+    border: none;
+    border-left: 1px solid #eaeaea;
+    padding: 0 16px;
+    font-size: 13px;
+    color: #555555;
+    background-color: #ffffff;
+    height: 40px;
+    outline: none;
+    cursor: pointer;
+}
+
+.premium-search-action-trigger {
+    background-color: #a30000; /* Bold Deep Corporate Accent Red */
+    border: none;
+    color: #ffffff;
+    padding: 0 24px;
+    height: 44px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- 📁 HORIZONTAL CATEGORIES SUB-NAVIGATION BAR --- */
+.premium-category-sub-navbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #eaeaea;
+    width: 100%;
+    padding: 12px 40px;
+    display: flex;
+    gap: 28px;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.premium-category-sub-navbar::-webkit-scrollbar {
+    display: none;
+}
+
+.category-nav-link {
+    text-decoration: none;
+    color: #444444;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+}
+
+.category-nav-link:hover {
+    color: #a30000;
+}
+
+/* --- 📦 MAIN SECTION WRAPPER --- */
+.premium-main-workspace {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px;
+    text-align: left;
+}
+
+.shelf-section-headline {
+    font-size: 22px;
+    font-weight: 800;
+    color: #111111;
+    margin-bottom: 24px;
+}
+
+/* --- 🛒 4-COLUMN RESPONSIVE ECOSYSTEM PRODUCT GRID --- */
+.premium-showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 32px;
+    width: 100%;
+}
+
+.premium-retail-product-card {
+    background-color: #ffffff;
+    border: 1px solid #ededed;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.2s ease;
+}
+
+.premium-retail-product-card:hover {
+    box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+}
+
+.premium-item-thumbnail-box {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: #ffffff;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.premium-item-thumbnail-box img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.premium-unit-tag-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background-color: #111111;
+    color: #ffffff;
+    font-size: 9px;
+    font-weight: 800;
+    padding: 3px 6px;
+    text-transform: uppercase;
+}
+
+/* --- 📝 METRICS WRAPPERS --- */
+.premium-item-info-pane {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
+}
+
+.premium-item-brand {
+    font-size: 11px;
+    font-weight: 500;
+    color: #666666;
+    text-transform: uppercase;
+}
+
+.premium-item-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #222222;
+    line-height: 1.4;
+    min-height: 40px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.premium-item-price-row {
+    font-size: 18px;
+    font-weight: 800;
+    color: #000000;
+    margin-top: 4px;
+}
+
+/* ⚡ ADD TO CART SYSTEM FLAT BUTTON */
+.premium-flat-action-btn {
+    background-color: #000000;
+    color: #ffffff;
+    border: none;
+    padding: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    text-align: center;
+    margin-top: auto;
+    transition: background 0.2s ease;
+}
+
+.premium-flat-action-btn:hover {
+    background-color: #a30000;
+}
+
+/* --- 📱 MOBILE STYLING FLUID OVERRIDES --- */
+@media (max-width: 768px) {
+    .premium-top-header {
+        padding: 16px 20px;
+        flex-direction: column;
+        gap: 16px;
+    }
+    .premium-search-matrix-box {
+        width: 100%;
+    }
+    .premium-category-sub-navbar {
+        padding: 12px 20px;
+    }
+    .premium-main-workspace {
+        padding: 24px 20px;
+    }
+    .premium-showcase-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+}
+
+
+/* --- 🛒 HEADER INTEGRATED CART STYLES --- */
+.header-cart-basket-node {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #f4f4f5;
+    border: 1px solid #e4e4e7;
+    padding: 10px 16px;
+    border-radius: 4px;
+    transition: all 0.2s ease-in-out;
+    position: relative;
+}
+
+.header-cart-basket-node:hover {
+    border-color: #a30000;
+    background-color: #fef2f2;
+}
+
+.basket-icon-glyph {
+    font-size: 18px;
+}
+
+.basket-counter-badge {
+    background-color: #111111;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 20px;
+    transition: all 0.2s;
+}
+
+/* 🟢 When items are added, highlight the counter badge with your corporate red accent */
+.basket-has-items .basket-counter-badge {
+    background-color: #a30000;
+    animation: popScale 0.3s ease-out;
+}
+
+@keyframes popScale {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- 🪟 LIGHT-MODE INTERACTIVE POP-UP MODAL STYLES --- */
+.premium-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Elegant dimming back drop layer */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5000; /* Positions high over frozen headers grid elements */
+    padding: 24px;
+}
+
+.premium-modal-card-box {
+    background-color: #ffffff;
+    border-radius: 4px;
+    border: 1px solid #eaeaea;
+    max-width: 850px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    animation: slideUpTransition 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUpTransition {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-close-trigger-btn {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    font-size: 28px;
+    color: #888888;
+    cursor: pointer;
+    z-index: 10;
+    line-height: 1;
+}
+.modal-close-trigger-btn:hover { color: #a30000; }
+
+.modal-split-layout-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    width: 100%;
+}
+
+.modal-graphic-frame {
+    background-color: #ffffff;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid #eaeaea;
+    aspect-ratio: 1 / 1;
+}
+.modal-graphic-frame img {
+    max-width: 100%;
+    max-height: 320px;
+    object-fit: contain;
+}
+
+.modal-specs-content-pane {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+}
+
+.modal-brand-lbl-badge {
+    font-size: 11px;
+    font-weight: 700;
+    color: #666666;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+}
+
+.modal-headline-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: #000000;
+    line-height: 1.3;
+    margin-bottom: 4px;
+}
+
+.modal-measurement-spec-lbl {
+    font-size: 13px;
+    color: #888888;
+    font-weight: 600;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.modal-paragraph-desc-text {
+    font-size: 13px;
+    color: #555555;
+    line-height: 1.6;
+    margin-bottom: 28px;
+}
+
+.modal-transaction-action-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #eaeaea;
+    padding-top: 20px;
+    margin-top: auto;
+}
+
+.modal-price-display-tag {
+    font-size: 22px;
+    font-weight: 900;
+    color: #000000;
+}
+
+.modal-commit-add-to-bag-btn {
+    background-color: #000000;
+    color: #ffffff;
+    border: none;
+    padding: 12px 24px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+.modal-commit-add-to-bag-btn:hover { background-color: #a30000; }
+
+/* 📱 MOBILE RESPONSIVENESS CAPABILITIES OVERRIDES */
+@media (max-width: 768px) {
+    .premium-modal-overlay { padding: 12px; }
+    .modal-split-layout-grid { grid-template-columns: 1fr; }
+    .modal-graphic-frame { border-right: none; border-bottom: 1px solid #eaeaea; padding: 20px; }
+    .modal-specs-content-pane { padding: 24px; }
+}

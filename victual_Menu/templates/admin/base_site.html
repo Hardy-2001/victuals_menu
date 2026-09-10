@@ -1,0 +1,41 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <!-- 🔮 Connect your custom Glassmorphic design sheet safely -->
+    <link rel="stylesheet" type="text/css" href="{% static 'super_admin/css/admin_glass.css' %}">
+{% endblock %}
+
+{% block content %}
+    <!-- Render all native admin form data sheets wide across 100% space natively -->
+    {{ block.super }}
+
+    <!-- 🛰️ THE CYBER FLOATING COCKPIT RADAR WIDGET (RE-POSITIONED SAFELY TO AVOID GRID CONTRACTION) -->
+    <div class="radar-floating-hud-panel">
+        <div class="cyber-radar-widget">
+            <!-- Clickable Interactive Selector Nodes -->
+            <div class="radar-node-btn node-blue" onclick="setAdminTheme('blue')" title="Activate Cyber Blue"></div>
+            <div class="radar-node-btn node-emerald" onclick="setAdminTheme('emerald')" title="Activate Emerald Green"></div>
+            <div class="radar-node-btn node-purple" onclick="setAdminTheme('purple')" title="Activate Cosmic Purple"></div>
+            <div class="radar-node-btn node-amber" onclick="setAdminTheme('amber')" title="Activate Amber Orange"></div>
+
+            <!-- Shield icon core indicator matching your style reference -->
+            <i class="bi bi-shield-check" style="font-size: 2.2rem; color: var(--matrix-glow); opacity: 0.75; transition: all 0.4s ease;"></i>
+        </div>
+    </div>
+
+    <!-- 🧠 REAL-TIME THEME CONSOLE STATE CHANGER INTERACTOR -->
+    <script>
+        function setAdminTheme(themeName) {
+            document.body.setAttribute('data-admin-theme', themeName);
+            localStorage.setItem('victuals_admin_theme', themeName);
+        }
+
+        // Auto-load your last selected style parameter right on startup loops
+        document.addEventListener("DOMContentLoaded", function() {
+            const savedTheme = localStorage.getItem('victuals_admin_theme') || 'blue';
+            document.body.setAttribute('data-admin-theme', savedTheme);
+        });
+    </script>
+{% endblock %}

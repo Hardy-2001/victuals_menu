@@ -1,0 +1,369 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>{% if platform_config.tenant_identity.developer_name %}{{ platform_config.tenant_identity.developer_name }}{% else %}Terminal Core Node{% endif %} Portfolio Hub</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="developer portfolio, high-tech, multi-tenant saas, corex nigeria" name="keywords">
+    <meta content="Premium high-tech automated terminal system tracking software engineering project configurations." name="description">
+
+    <!-- Favicon static routing rails -->
+    <link href="{% static 'modern4/img/favicon.ico' %}" rel="icon">
+
+    <!-- 🟢 INSTANT LIGHTNING SPEED RE-ROUTING FIX: Reuses your working local modern4 asset vaults with zero web dependencies! -->
+    <link href="{% static 'modern4/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'modern4/css/style.css' %}" rel="stylesheet">
+
+    <!-- Premium Cyber Terminal Master Aesthetic Stylesheet -->
+    <link href="{% static 'modern5/css/style.css' %}" rel="stylesheet">
+</head>
+
+<body style="background-color: #050508 !important; color: #e2e8f0 !important;">
+
+    <!-- Top Platform Communications Bar Start -->
+    <div class="container-fluid bg-transparent py-3 px-4 position-relative z-index-2">
+        <div class="row align-items-center">
+            <div class="col-md-6 text-start">
+                <div class="d-inline-flex align-items-center me-4">
+                    <span class="pulse-dot me-2"></span>
+                    <!-- 🛰️ DYNAMIC FIELD: Active Network Status Label -->
+                    <small class="text-uppercase tracking-wider font-monospace text-muted">{{ platform_config.uptime_status_label }}</small>
+                </div>
+                <div class="d-inline-flex align-items-center d-none d-md-inline-flex">
+                    <i class="fa fa-map-marker-alt text-info me-2"></i>
+                    <!-- 🛰️ DYNAMIC FIELD: Base Operational Workspace Location City -->
+                    <small class="font-monospace text-light opacity-75">{{ platform_config.base_operation_city }}</small>
+                </div>
+            </div>
+            <div class="col-md-6 text-end">
+                <div class="d-inline-flex align-items-center me-3">
+                    <i class="fa fa-envelope text-info me-2"></i>
+                    <!-- 🛰️ DYNAMIC FIELD: Developer Public Digital Mailbox Node -->
+                    <small class="font-monospace"><a href="mailto:{{ platform_config.contact_email }}" class="text-light text-decoration-none opacity-75">{{ platform_config.contact_email }}</a></small>
+                </div>
+                <div class="d-inline-flex align-items-center">
+                    <!-- 🛰️ DYNAMIC LINKS: External Social Repository Pipelines Handles -->
+                    <a class="text-light opacity-50 hover-opacity-100 me-3" href="{% if platform_config.github_url %}{{ platform_config.github_url }}{% else %}#{% endif %}" target="_blank"><i class="fab fa-github"></i></a>
+                    <a class="text-light opacity-50 hover-opacity-100 me-3" href="{% if platform_config.linkedin_url %}{{ platform_config.linkedin_url }}{% else %}#{% endif %}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    <a class="text-light opacity-50 hover-opacity-100" href="{% if platform_config.twitter_x_url %}{{ platform_config.twitter_x_url }}{% else %}#{% endif %}" target="_blank"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Top Platform Communications Bar End -->
+
+    <!-- Main Hero Cockpit Framework Section Start -->
+    <div class="container py-5 my-5 position-relative z-index-2">
+        <div class="row align-items-center g-5">
+            <!-- Left Side: Interactive IDE Syntax Highlighted Console Panel -->
+            <div class="col-lg-7">
+                <div class="glass-panel ide-box overflow-hidden">
+                    <!-- Console Header Chrome Window Dots Bar -->
+                    <div class="bg-dark bg-opacity-50 px-4 py-3 border-bottom border-secondary border-opacity-25 d-flex align-items-center justify-content-between">
+                        <div>
+                            <span class="ide-dot red"></span>
+                            <span class="ide-dot yellow"></span>
+                            <span class="ide-dot green"></span>
+                        </div>
+                        <!-- 🛰️ DYNAMIC FIELD: Custom IDE Console File Tab Title String -->
+                        <span class="font-monospace text-muted small">{{ platform_config.ide_window_title }}</span>
+                    </div>
+                    <!-- Console Code Display Canvas Inner Body Area -->
+                    <div class="p-4">
+                        <!-- 🛰️ DYNAMIC FIELD: Raw JSON Specs Matrix Write-up Frame String -->
+                        <pre class="terminal-text m-0 fs-6"><code>{% if platform_config.ide_custom_json_writeup %}{{ platform_config.ide_custom_json_writeup }}{% else %}{
+  "status": "Online / Open for Projects",
+  "core_stack": ["Python", "Django", "PostgreSQL"],
+  "architecture": "Clean Multi-Tenant Grid Layers"
+}{% endif %}</code></pre>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-5 text-center text-lg-start">
+                <div class="d-flex justify-content-center justify-content-lg-start mb-4">
+                    <div class="profile-ring" style="width: 160px; height: 160px;">
+                        <!-- 🛰️ DYNAMIC FIELD: High-Res Glassmorphic Portrait Headshot Image Upload Slot -->
+                        <img class="profile-avatar h-100" src="{% if platform_config.developer_avatar %}{{ platform_config.developer_avatar.url }}{% else %}{% static 'modern5/img/default-dev.jpg' %}{% endif %}" alt="Developer Portrait Node">
+                    </div>
+                </div>
+                <!-- 🛰️ DYNAMIC FIELD: Headline Title Marketing Typography String -->
+                <h1 class="display-5 text-white fw-bold mb-3">
+                    {% if platform_config.hero_headline_text %}{{ platform_config.hero_headline_text }}{% else %}Hello World, I'm an Expert Tech Builder Node{% endif %}
+                </h1>
+                <!-- 🛰️ DYNAMIC FIELD: Subheadline Technical Context Overview Summary -->
+                <p class="lead text-light opacity-75 mb-4">
+                    {% if platform_config.hero_subheadline_summary %}{{ platform_config.hero_subheadline_summary }}{% else %}Specializing in automated database architecture sharding, multi-tenant middleware networks, and premium scalable solutions.{% endif %}
+                </p>
+                <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start">
+                    <a href="#projects" class="btn btn-cyber-primary py-3 px-4">View Project Vault</a>
+                    <a href="#contact" class="btn btn-outline-light py-3 px-4 border-opacity-25 font-monospace text-uppercase" style="font-size: 0.85rem; letter-spacing: 1px;">Contact Node</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Main Hero Cockpit Framework Section End -->
+
+
+
+
+
+    <!-- Real-Time Server Counter Metrics Section Start -->
+    <div class="container my-5 position-relative z-index-2">
+        <div class="row g-4 text-center">
+            <div class="col-md-4">
+                <div class="glass-panel p-4 bg-dark bg-opacity-25">
+                    <!-- 🛰️ DYNAMIC FIELD: Production Builds Count -->
+                    <h2 class="display-6 text-info font-monospace fw-bold mb-1">{{ platform_config.count_production_builds }}</h2>
+                    <small class="text-uppercase tracking-wider text-muted font-monospace">Production Builds</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="glass-panel p-4 bg-dark bg-opacity-25">
+                    <!-- 🛰️ DYNAMIC FIELD: Reusable Modules Count -->
+                    <h2 class="display-6 text-success font-monospace fw-bold mb-1">{{ platform_config.count_reusable_modules }}</h2>
+                    <small class="text-uppercase tracking-wider text-muted font-monospace">Reusable Modules</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="glass-panel p-4 bg-dark bg-opacity-25">
+                    <!-- 🛰️ DYNAMIC FIELD: Happy Merchants Count -->
+                    <h2 class="display-6 font-monospace fw-bold mb-1" style="color: var(--cyber-purple);">{{ platform_config.count_happy_merchants }}</h2>
+                    <small class="text-uppercase tracking-wider text-muted font-monospace">Happy Clients</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Real-Time Server Counter Metrics Section End -->
+
+
+
+
+
+    <!-- Skills Progress Section Start -->
+    <div class="container py-5 position-relative z-index-2" id="skills">
+        <div class="glass-panel p-5 bg-dark bg-opacity-50">
+            <h3 class="text-white font-monospace mb-4"><i class="fa fa-code-branch text-info me-3"></i>Verified Technology Stack Matrix</h3>
+            <div class="row g-4">
+                <!-- 🏢 DYNAMIC LOOP COUPLING: Iterates through developer tech stack items -->
+                {% if developer_skills %}
+                    {% for skill in developer_skills %}
+                    <div class="col-md-6 font-monospace">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-light"><i class="{{ skill.icon_choice|default:'fa fa-code' }} text-info me-2"></i>{{ skill.skill_name }}</span>
+                            <span class="text-muted">{{ skill.skill_proficiency_percent }}%</span>
+                        </div>
+                        <div class="progress bg-dark bg-opacity-50" style="height: 6px; border-radius: 3px;">
+                            <div class="progress-bar" role="progressbar" style="width: {{ skill.skill_proficiency_percent }}%; background: linear-gradient(90deg, var(--neon-blue), var(--cyber-purple));" aria-valuenow="{{ skill.skill_proficiency_percent }}" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <!-- Default Technical Baseline Fallbacks -->
+                    <div class="col-md-6 font-monospace">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-light"><i class="fab fa-python text-info me-2"></i>Python Architecture Nodes</span>
+                            <span class="text-muted">95%</span>
+                        </div>
+                        <div class="progress bg-dark bg-opacity-50" style="height: 6px;"><div class="progress-bar" style="width: 95%; background: var(--neon-blue);"></div></div>
+                    </div>
+                    <div class="col-md-6 font-monospace">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-light"><i class="fa fa-database text-info me-2"></i>Multi-Tenant Sharding</span>
+                            <span class="text-muted">90%</span>
+                        </div>
+                        <div class="progress bg-dark bg-opacity-50" style="height: 6px;"><div class="progress-bar" style="width: 90%; background: var(--neon-blue);"></div></div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <!-- Skills Progress Section End -->
+
+
+
+
+    <!-- Case Studies Bento-Grid Section Start -->
+    <div class="container py-5 position-relative z-index-2" id="projects">
+        <h3 class="text-white font-monospace mb-4"><i class="fa fa-layer-group text-info me-3"></i>Project Bento Vault Core</h3>
+        <div class="row g-4">
+            <!-- 🏢 DYNAMIC LOOP COUPLING: Iterates through bento grid projects -->
+            {% if bento_projects %}
+                {% for project in bento_projects %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="glass-panel bento-card h-100 overflow-hidden d-flex flex-column">
+                        <div class="position-relative overflow-hidden" style="max-height: 200px;">
+                            <img class="img-fluid w-100" src="{{ project.showcase_thumbnail.url }}" alt="{{ project.project_title }}">
+                        </div>
+                        <div class="p-4 d-flex flex-column flex-grow-1">
+                            <span class="badge bg-dark border border-secondary border-opacity-25 font-monospace text-info mb-2 align-self-start">{{ project.tech_tags_csv }}</span>
+                            <h5 class="text-white mb-2">{{ project.project_title }}</h5>
+                            <p class="text-muted small mb-4 flex-grow-1">{{ project.project_summary }}</p>
+                            <div class="d-flex gap-2 mt-auto">
+                                {% if project.source_code_url %}<a href="{{ project.source_code_url }}" target="_blank" class="btn btn-cyber-primary py-2 px-3 flex-fill text-center">Source</a>{% endif %}
+                                {% if project.live_demo_url %}<a href="{{ project.live_demo_url }}" target="_blank" class="btn btn-outline-light py-2 px-3 border-opacity-25 font-monospace text-uppercase flex-fill text-center" style="font-size: 0.75rem;">Demo</a>{% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <!-- Default Framework Showcase Portfolio Card Fallback -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="glass-panel bento-card h-100 p-4">
+                        <span class="badge bg-dark text-info font-monospace mb-2">Django, Middleware, Python</span>
+                        <h5 class="text-white">Corex Subdomain Cloud Matrix</h5>
+                        <p class="text-muted small">Automated multi-tenant web application layer providing case-insensitive dynamic routing paths.</p>
+                        <a href="#" class="btn btn-cyber-primary py-2 w-100 text-center mt-3">Locked Shell</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <!-- Case Studies Bento-Grid Section End -->
+
+
+
+
+    <!-- Inbound Contract Request Section Start -->
+    <div class="container py-5 my-5 position-relative z-index-2" id="contact">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="glass-panel p-5 bg-dark bg-opacity-70">
+                    <h3 class="text-white font-monospace text-center mb-4"><i class="fa fa-envelope-open text-info me-3"></i>Initialize Project Consultation Node</h3>
+
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-success bg-dark border border-success text-success font-monospace mb-4">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <!-- 🔒 SECURE TRANSACTION INTAKE POST MATRIX ENGINE ROUTE -->
+                    <form action="{% url 'modern5_submit_contract_brief' active_tenant.portfolio_slug %}" method="POST">
+                        {% csrf_token %}
+                        <div class="row g-3 font-monospace">
+                            <div class="col-md-6">
+                                <label class="form-label text-muted small text-uppercase">Client Identity Name</label>
+                                <input type="text" name="name" class="form-control bg-dark bg-opacity-50 border-secondary border-opacity-25 text-white py-3" placeholder="e.g. Chidi Okafor" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label text-muted small text-uppercase">Digital Mailbox Endpoint</label>
+                                <input type="email" name="email" class="form-control bg-dark bg-opacity-50 border-secondary border-opacity-25 text-white py-3" placeholder="e.g. chidi@company.com" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label text-muted small text-uppercase">Project Budget Parameters (Estimate)</label>
+                                <select name="budget" class="form-select bg-dark bg-opacity-50 border-secondary border-opacity-25 text-white py-3">
+                                    <option value="₦250,000 - ₦500,000">₦250,000 - ₦500,000</option>
+                                    <option value="₦500,000 - ₦1,000,000" selected>₦500,000 - ₦1,000,000</option>
+                                    <option value="₦1,000,000 - ₦3,000,000">₦1,000,000 - ₦3,000,000</option>
+                                    <option value="₦3,000,000+">₦3,000,000+</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label text-muted small text-uppercase">System Specs Requirements Brief</label>
+                                <textarea name="brief" class="form-control bg-dark bg-opacity-50 border-secondary border-opacity-25 text-white p-3" rows="5" placeholder="Describe the structural parameters of your requested system layout..." required></textarea>
+                            </div>
+                            <div class="col-12 mt-4">
+                                <button type="submit" class="btn btn-cyber-primary w-100 py-3">Transmit Project Specs Packet</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Inbound Contract Request Section End -->
+
+    <!-- Footer Copyright Layout Strip Start -->
+    <div class="container-fluid bg-transparent border-top border-secondary border-opacity-10 py-4 position-relative z-index-2 font-monospace text-center">
+        <small class="text-muted">&copy; 2026 Corex Network Node Engine [<a href="/" class="text-info text-decoration-none">{{ active_tenant.developer_name }}</a>]. All Systems Active.</small>
+    </div>
+
+
+
+
+    <!-- 🎛️ SELF-CONTAINED CUSTOM TERMINAL AUTOMATION SCRIPTS ENGINE -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            console.log("System Status: modern5 Local Portfolio Matrix Initialized.");
+
+            // 🪐 1. STICKY GLASS NAVIGATION NAVIGATION PROTOCOL
+            const navbar = document.querySelector('.navbar');
+            if (navbar) {
+                window.addEventListener('scroll', function () {
+                    if (window.scrollY > 45) {
+                        navbar.classList.add('sticky-top', 'shadow-sm', 'bg-dark', 'bg-opacity-95');
+                    } else {
+                        navbar.classList.remove('sticky-top', 'shadow-sm', 'bg-dark', 'bg-opacity-95');
+                    }
+                });
+            }
+
+            // 🪐 2. AUTOMATED TERMINAL SYNTAX TYPEWRITER LOOP
+            const terminalCode = document.querySelector('.terminal-text code');
+            if (terminalCode) {
+                const rawText = terminalCode.innerHTML;
+                terminalCode.innerHTML = '';
+                let index = 0;
+
+                function typeTerminalEffect() {
+                    if (index < rawText.length) {
+                        // Handle character-by-character injection matrix strings safely
+                        if (rawText.substring(index, index + 4) === "&lt;") {
+                            terminalCode.innerHTML += "<"; index += 4;
+                        } else if (rawText.substring(index, index + 4) === "&gt;") {
+                            terminalCode.innerHTML += ">"; index += 4;
+                        } else if (rawText.substring(index, index + 5) === "&amp;") {
+                            terminalCode.innerHTML += "&"; index += 5;
+                        } else {
+                            terminalCode.innerHTML += rawText.charAt(index);
+                            index++;
+                        }
+                        setTimeout(typeTerminalEffect, 15); // Controls code text execution speed vectors
+                    }
+                }
+                // Trigger typing sequence loop node
+                setTimeout(typeTerminalEffect, 600);
+            }
+
+            // 🪐 3. REAL-TIME LIVE NETWORK PING TICKER REFRESHER
+            const terminalBox = document.querySelector('.bg-black.bg-opacity-70');
+            if (terminalBox) {
+                setInterval(function() {
+                    const randomPing = Math.floor(Math.random() * (95 - 45 + 1)) + 45;
+                    const logLines = terminalBox.querySelectorAll('div');
+                    if (logLines.length > 4) {
+                        // Dynamically update the very last live ping log row entry to prove constant uptime tracking
+                        logLines[logLines.length - 1].innerHTML = `<i class="fa fa-angle-right me-2 text-info"></i>Reply from 154.68.224.98: bytes=32 time=${randomPing}ms TTL=245`;
+                    }
+                }, 3000); // Refreshes latency speed copy metrics tokens every 3 seconds dynamically
+            }
+        });
+
+         document.addEventListener("DOMContentLoaded", function () {
+            const slides = document.querySelectorAll('#customHeroSlider .custom-slide');
+            if (slides.length > 0) {
+                let currentSlideIndex = 0;
+
+                function transitionSlidesNext() {
+                    // Hide active slide layer
+                    slides[currentSlideIndex].style.opacity = '0';
+
+                    // Increment track array position loop pointer metrics
+                    currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+
+                    // Display next incoming slide layout panel
+                    slides[currentSlideIndex].style.opacity = '1';
+                }
+
+                // Rotates slides cleanly every 4 seconds dynamically with zero dependency links
+                setInterval(transitionSlidesNext, 4000);
+            }
+        });
+    </script>
+</body>
+</html>
+

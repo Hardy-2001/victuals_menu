@@ -1,0 +1,328 @@
+/* 🛒 ESSENZA-INSPIRED CLEAN DETAIL VIEW LAYOUT ENGINE */
+
+.grocery-detail-canvas {
+    width: 100%;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 40px;
+    background-color: #fcfcfc;
+}
+
+/* --- 📝 MAIN DETAILED SPECIFICATION CARD WRAPPER --- */
+.grocery-detail-wrapper {
+    width: 100%;
+    background-color: #ffffff;
+    border: 1px solid #eaeaea;
+    border-radius: 4px;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr; /* Side-by-side splitting layout for desktops/laptops */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.01);
+    overflow: hidden;
+}
+
+/* --- 📸 THUMBNAIL EXHIBITION FRAME --- */
+.detail-image-viewport {
+    background-color: #ffffff;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-right: 1px solid #eaeaea;
+    min-height: 500px;
+}
+
+.detail-image-viewport img {
+    max-width: 100%;
+    max-height: 455px;
+    object-fit: contain;
+}
+
+.back-nav-tag {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: #111111;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    z-index: 10;
+    transition: background 0.2s ease;
+}
+
+.back-nav-tag:hover {
+    background: #a30000;
+}
+
+/* --- 📝 MAIN DATA INSIGNIAS PANEL --- */
+.detail-info-pane {
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: left;
+}
+
+.detail-brand-lbl {
+    font-size: 12px;
+    font-weight: 700;
+    color: #a30000;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+}
+
+.detail-headline-title {
+    font-size: 32px;
+    font-weight: 900;
+    color: #000000;
+    line-height: 1.2;
+    margin-bottom: 8px;
+}
+
+.detail-spec-lbl {
+    font-size: 14px;
+    color: #777777;
+    font-weight: 600;
+    margin-bottom: 32px;
+    display: block;
+}
+
+/* --- 💵 PRICING MATRIX ROW --- */
+.detail-pricing-row {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    border-top: 1px solid #eaeaea;
+    border-bottom: 1px solid #eaeaea;
+    padding: 24px 0;
+    margin-bottom: 32px;
+}
+
+.detail-price-text {
+    font-size: 34px;
+    font-weight: 900;
+    color: #000000;
+}
+
+/* ➕ RECTANGLE QUANTITY COUNTER CONTROLS */
+.inline-qty-picker {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    background-color: #ffffff;
+    overflow: hidden;
+}
+
+.inline-qty-btn {
+    background: transparent;
+    border: none;
+    color: #111111;
+    font-size: 18px;
+    font-weight: bold;
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.inline-qty-btn:hover {
+    background-color: #f5f5f5;
+}
+
+.inline-qty-display {
+    font-size: 15px;
+    font-weight: 800;
+    padding: 0 12px;
+    min-width: 36px;
+    text-align: center;
+    color: #000000;
+}
+
+.description-header-lbl {
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #888888;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+}
+
+.description-paragraph-text {
+    font-size: 15px;
+    color: #333333;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+.detail-commit-add-to-bag-btn {
+    background-color: #000000;
+    color: #ffffff;
+    border: none;
+    padding: 16px;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 4px;
+    transition: background 0.2s ease;
+    width: 100%;
+    margin-top: auto;
+}
+
+.detail-commit-add-to-bag-btn:hover {
+    background-color: #a30000;
+}
+
+/* --- 🛒 SPLIT WINDOW HORIZONTAL RECOMMENDATIONS TRAIN --- */
+.cross-sell-section {
+    grid-column: span 2;
+    border-top: 1px solid #eaeaea;
+    padding: 40px 48px;
+    background-color: #fafafa;
+}
+
+.cross-sell-headline {
+    font-size: 15px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #111111;
+    letter-spacing: 0.04em;
+    margin-bottom: 24px;
+}
+
+.horizontal-rail-train {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 8px;
+}
+
+.horizontal-rail-train::-webkit-scrollbar {
+    display: none;
+}
+
+.rail-item-card {
+    width: 180px;
+    flex-shrink: 0;
+    background-color: #ffffff;
+    border: 1px solid #eaeaea;
+    border-radius: 4px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: box-shadow 0.2s ease;
+}
+
+.rail-thumbnail-box {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: #ffffff;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.rail-thumbnail-box img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.rail-metadata-box {
+    padding: 14px;
+    text-align: left;
+}
+
+.rail-product-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #222222;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 4px;
+}
+
+.rail-product-price {
+    font-size: 14px;
+    font-weight: 800;
+    color: #000000;
+}
+
+/* --- 📱 MOBILE DEVICE VIEWPORT SMOOTHING LAYER (CRITICAL FIXES) --- */
+@media (max-width: 768px) {
+    body {
+        padding: 0; /* Cleans up accidental side scroll leaks */
+        background-color: #ffffff;
+    }
+    .grocery-detail-canvas {
+        padding: 0; /* Forces edge-to-edge smartphone interface layout */
+        margin: 0;
+    }
+    .grocery-detail-wrapper {
+        grid-template-columns: 1fr; /* 🟢 Dynamic conversion to clean 1-column mobile stack! */
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+    }
+    .detail-image-viewport {
+        border-right: none;
+        border-bottom: 1px solid #eaeaea;
+        min-height: 280px;
+        max-height: 350px;
+        padding: 16px;
+        background-color: #ffffff;
+    }
+    .detail-image-viewport img {
+        max-height: 250px;
+    }
+    .back-nav-tag {
+        top: 16px;
+        left: 16px;
+        padding: 6px 12px;
+        font-size: 11px;
+    }
+    .detail-info-pane {
+        padding: 24px 20px 40px 20px; /* Expands spacing comfort around smartphone edges */
+    }
+    .detail-brand-lbl {
+        margin-bottom: 6px;
+    }
+    .detail-headline-title {
+        font-size: 24px; /* Perfectly sized smartphone title font scaling */
+    }
+    .detail-spec-lbl {
+        margin-bottom: 20px;
+    }
+    .detail-pricing-row {
+        padding: 16px 0;
+        margin-bottom: 24px;
+    }
+    .detail-price-text {
+        font-size: 28px;
+    }
+    .description-paragraph-text {
+        font-size: 14px;
+        margin-bottom: 32px;
+    }
+    .cross-sell-section {
+        grid-column: span 1;
+        padding: 32px 20px;
+    }
+    .rail-item-card {
+        width: 140px; /* Perfectly scaled recommendation squares for thumb swiping */
+    }
+}

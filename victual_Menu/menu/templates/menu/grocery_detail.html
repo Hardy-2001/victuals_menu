@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{{ product.name }} — Premium Specifications</title>
+
+    <!-- 🎨 STATIC LINKS -->
+    <link rel="stylesheet" href="{% static 'menu/grocery_style.css' %}">
+    <link rel="stylesheet" href="{% static 'menu/grocery_detail.css' %}">
+</head>
+<body style="background-color: #fcfcfc;">
+
+    <div class="grocery-detail-canvas">
+
+        <div class="grocery-detail-wrapper">
+
+            <!-- 📸 LEFT SIDE: IMAGE VIEWPORT -->
+            <div class="detail-image-viewport">
+                <a href="/store/{{ tenant.slug }}/" class="back-nav-tag">← Storefront</a>
+
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% else %}
+                    <div style="font-size:64px; color:#cccccc;">📦</div>
+                {% endif %}
+            </div>
+
+            <!-- 📝 RIGHT SIDE: CORE PRODUCT METRICS -->
+            <div class="detail-info-pane">
+                <div class="detail-brand-lbl">
+                    {% if product.brand_name %}{{ product.brand_name }}{% else %}ESSENTIAL SUPPLY{% endif %}
+                </div>
+
+                <h1 class="detail-headline-title">{{ product.name }}</h1>
+
+                <span class="detail-spec-lbl">
+                    Specification Size: {% if product.unit_size %}{{ product.unit_size }}{% else %}Per Individual Pack Unit{% endif %}
+                </span>
+
+                <!-- 💵 PRICING & QUANTITY COUNTERS SELECTION ROW -->
+                <div class="detail-pricing-row">
+                    <span class="detail-price-text">₦{{ product.price }}</span>
+
+                    <div class="inline-qty-picker">
+                        <button class="inline-qty-btn" onclick="adjustPurchaseQuantity(-1)">-</button>
+                        <span class="inline-qty-display" id="orderQtyDisplay">1</span>
+                        <button class="inline-qty-btn" onclick="adjustPurchaseQuantity(1)">+</button>
+                    </div>
+                </div>
+
+                <div class="description-header-lbl">Product Description</div>
+                <p class="description-paragraph-text">
+                    {% if product.description %}
+                        {{ product.description }}
+                    {% else %}
+                        Premium authentic provisions stock inventory module, fully authenticated and sourced directly from centralized retail logistics channels. Completely batch-tested, shelf-preserved, and ready for immediate nationwide delivery routes.
+                    {% endif %}
+                </p>
+
+                <!-- 🎯 FIXED ACTION BUTTON: Saves items to localStorage bag and redirects back to storefront! -->
+                <button class="detail-commit-add-to-bag-btn" onclick="saveItemToCartBagAndReturn()">
+                    Add to Shopping Bag
+                </button>
+            </div>
+
+            <!-- 🛒 FULL WIDTH BASE: RECOMENDATION RAIL (FIXED FROM ROGUE TEXT GLITCHES) -->
+            {% if similar_products %}
+            <div class="cross-sell-section">
+                <h3 class="cross-sell-headline">Similar Items in This Aisle</h3>
+                <div class="horizontal-rail-train">
+                    {% for item in similar_products %}
+                        <a href="/store/{{ tenant.slug }}/product/{{ item.id }}/" class="rail-item-card">
+                            <div class="rail-thumbnail-box">
+                                {% if item.image %}
+                                    <img src="{{ item.image.url }}" alt="{{ item.name }}">
+                                {% else %}
+                                    <div style="font-size:24px; color:#cccccc;">📦</div>
+                                {% endif %}
+                            </div>
+                            <div class="rail-metadata-box">
+                                <div class="rail-product-name">{{ item.name }}</div>
+                                <div class="rail-product-price">₦{{ item.price }}</div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    <!-- 🔮 PERSISTENT STORAGE SYNC ENGINE JAVASCRIPT -->
+    <script>
+        let currentPurchaseQty = 1;
+        const fallbackStockCapValue = {% if product.stock_count %}{{ product.stock_count }}{% else %}150{% endif %};
+
+        function adjustPurchaseQuantity(amount) {
+            currentPurchaseQty += amount;
+            if (currentPurchaseQty < 1) currentPurchaseQty = 1;
+            if (currentPurchaseQty > fallbackStockCapValue) currentPurchaseQty = fallbackStockCapValue;
+            document.getElementById('orderQtyDisplay').innerText = currentPurchaseQty;
+        }
+
+        // 🎯 THE BACKWARDS CART SYNC ENGINE:
+        function saveItemToCartBagAndReturn() {
+            const rawProductName = "{{ product.name }}";
+            const unitPriceValue = {{ product.price }};
+
+            // Retrieve any existing items currently saved inside browser storage
+            let currentCartData = localStorage.getItem('grocery_cart_storage');
+            let cartArray = currentCartData ? JSON.parse(currentCartData) : [];
+
+            let existingIdx = cartArray.findIndex(item => item.name === rawProductName);
+            if (existingIdx > -1) {
+                cartArray[existingIdx].quantity += currentPurchaseQty;
+            } else {
+                cartArray.push({
+                    name: rawProductName,
+                    price: unitPriceValue,
+                    quantity: currentPurchaseQty
+                });
+            }
+
+            // Save back into local session memory tracker
+            localStorage.setItem('grocery_cart_storage', JSON.stringify(cartArray));
+
+            // 🚀 Bounces them smoothly back to the store front catalog where they can see their items stacked!
+            window.location.href = "/store/{{ tenant.slug }}/";
+        }
+    </script>
+</body>
+</html>

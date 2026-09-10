@@ -1,0 +1,835 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>{{ hospital_profile.tenant_identity.hospital_name }} — Medical Portal</title>
+  <meta name="description" content="{{ hospital_profile.hero_sub_headline|truncatewords:20 }}">
+  <meta name="keywords" content="hospital, clinic, medical, healthcare, doctors">
+
+  <!-- Favicons -->
+  <link href="{% static 'modern3/assets/img/favicon.png' %}" rel="icon">
+  <link href="{% static 'modern3/assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'modern3/assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'modern3/assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'modern3/assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'modern3/assets/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+  <link href="{% static 'modern3/assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'modern3/assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="{% static 'modern3/assets/css/main.css' %}" rel="stylesheet">
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header sticky-top">
+
+    <div class="topbar d-flex align-items-center">
+      <div class="container d-flex justify-content-center justify-content-md-between">
+        <div class="contact-info d-flex align-items-center">
+          <i class="bi bi-envelope d-flex align-items-center">
+            <a href="mailto:{{ hospital_profile.hospital_email }}">{{ hospital_profile.hospital_email }}</a>
+          </i>
+          <i class="bi bi-phone d-flex align-items-center ms-4">
+            <span>{{ hospital_profile.emergency_phone_line }}</span>
+          </i>
+        </div>
+        <div class="social-links d-none d-md-flex align-items-center">
+          <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
+          <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+        </div>
+      </div>
+    </div><!-- End Top Bar -->
+    <div class="branding d-flex align-items-center">
+
+      <div class="container position-relative d-flex align-items-center justify-content-between">
+       <!-- 🎯 REPLACE YOUR OLD LOGO SUB-SECTION IN index.html WITH THIS REMIX VERSION: -->
+
+        <a href="#" class="logo d-flex align-items-center me-auto">
+          <!-- 📸 THE LOGO ENGINE: If the agent uploads an icon image, it populates right here natively! -->
+          {% if hospital_profile.hospital_logo %}
+            <img src="{{ hospital_profile.hospital_logo.url }}" alt="Logo" style="max-height: 40px; margin-right: 10px; border-radius: 6px;">
+          {% endif %}
+          <h1 class="sitename">{{ hospital_profile.tenant_identity.hospital_name }}</h1>
+        </a>
+
+
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            <li><a href="#hero" class="active">Home<br></a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#departments">Departments</a></li>
+            <li><a href="#doctors">Doctors</a></li>
+            <li class="dropdown"><a href="#"><span>Options</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+              <ul>
+                <li><a href="#faqs">Frequently Asked Questions</a></li>
+                <li><a href="#testimonials">Patient Testimonials</a></li>
+                <li><a href="#gallery">Facility Gallery</a></li>
+              </ul>
+            </li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+
+        <a class="cta-btn d-none d-sm-block" href="#appointment">Make an Appointment</a>
+
+      </div>
+
+    </div>
+
+  </header>
+  <main class="main">
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero section light-background">
+
+              <!-- 🎯 REPLACE YOUR OLD BACKGROUND IMG TAG WITH THIS DYNAMIC VERSION: -->
+        {% if hospital_profile.hero_background_image %}
+          <img src="{{ hospital_profile.hero_background_image.url }}" alt="" data-aos="fade-in">
+        {% else %}
+          <img src="{% static 'modern3/assets/img/hero-bg.jpg' %}" alt="" data-aos="fade-in">
+        {% endif %}
+
+
+      <div class="container position-relative">
+
+        <div class="welcome position-relative" data-aos="fade-down" data-aos-delay="100">
+          <h2>{{ hospital_profile.hero_title|upper }}</h2>
+          <p>{{ hospital_profile.hero_sub_headline }}</p>
+        </div><!-- End Welcome -->
+
+        <div class="content row gy-4">
+          <div class="col-lg-4 d-flex align-items-stretch">
+            <div class="why-box" data-aos="zoom-out" data-aos-delay="200">
+              <h3>{{ hospital_profile.why_choose_us_headline }}</h3>
+              <p>
+                {{ hospital_profile.why_choose_us_body_text }}
+              </p>
+              <div class="text-center">
+                <a href="#about" class="more-btn"><span>Learn More</span> <i class="bi bi-chevron-right"></i></a>
+              </div>
+            </div>
+          </div><!-- End Why Box -->
+
+          <div class="col-lg-8 d-flex align-items-stretch">
+            <div class="d-flex flex-column justify-content-center">
+              <div class="row gy-4">
+
+                <div class="col-xl-4 d-flex align-items-stretch">
+                  <div class="icon-box" data-aos="zoom-out" data-aos-delay="300">
+                    <i class="bi bi-clipboard-data"></i>
+                    <h4>{{ hospital_profile.value_card_one_title }}</h4>
+                    <p>{{ hospital_profile.value_card_one_body }}</p>
+                  </div>
+                </div><!-- End Icon Box -->
+
+                <div class="col-xl-4 d-flex align-items-stretch">
+                  <div class="icon-box" data-aos="zoom-out" data-aos-delay="400">
+                    <i class="bi bi-gem"></i>
+                    <h4>{{ hospital_profile.value_card_two_title }}</h4>
+                    <p>{{ hospital_profile.value_card_two_body }}</p>
+                  </div>
+                </div><!-- End Icon Box -->
+                <div class="col-xl-4 d-flex align-items-stretch">
+                  <div class="icon-box" data-aos="zoom-out" data-aos-delay="500">
+                    <i class="bi bi-inboxes"></i>
+                    <h4>{{ hospital_profile.value_card_three_title }}</h4>
+                    <p>{{ hospital_profile.value_card_three_body }}</p>
+                  </div>
+                </div><!-- End Icon Box -->
+
+              </div>
+            </div>
+          </div>
+        </div><!-- End  Content-->
+
+      </div>
+
+    </section><!-- /Hero Section -->
+
+    <!-- About Section -->
+    <section id="about" class="about section">
+
+      <div class="container">
+
+        <div class="row gy-4 gx-5">
+
+          <div class="col-lg-6 position-relative align-self-start" data-aos="fade-up" data-aos-delay="200">
+            <!-- 📸 DYNAMIC IMAGE: Load admin profile photo upload, or default if blank -->
+            {% if hospital_profile.about_showcase_image %}
+              <img src="{{ hospital_profile.about_showcase_image.url }}" class="img-fluid" alt="Hospital Profile">
+            {% else %}
+              <img src="{% static 'modern3/assets/img/about.jpg' %}" class="img-fluid" alt="Default About">
+            {% endif %}
+
+            <!-- 🎬 INTERACTIVE POP-UP: Video link sourced right from the profile model dashboard -->
+            <a href="{{ hospital_profile.about_video_url }}" class="glightbox pulsating-play-btn"></a>
+          </div>
+
+          <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
+            <h3>About Us</h3>
+            <p>
+              {{ hospital_profile.about_main_description }}
+            </p>
+
+            <!-- 🏥 HARDCODED LOCAL ENGLISH FEATURES BLOCK (Clean fallback placeholders) -->
+            <ul>
+              <li>
+                <i class="fa-solid fa-vial-circle-check"></i>
+                <div>
+                  <h5>Fully Certified Diagnostics & Clinical Testing</h5>
+                  <p>Equipped with international state-of-the-art diagnostic facilities for prompt testing results.</p>
+                </div>
+              </li>
+              <li>
+                <i class="fa-solid fa-pump-medical"></i>
+                <div>
+                  <h5>Emergency Dispatch & Intensive Medical Operations</h5>
+                  <p>Highly streamlined critical response infrastructure operational 24 hours a day, 7 days a week.</p>
+                </div>
+              </li>
+              <li>
+                <i class="fa-solid fa-heart-circle-xmark"></i>
+                <div>
+                  <h5>Comprehensive Healthcare Treatment Programs</h5>
+                  <p>Dedicated medical professionals tracking individual care parameters with ultimate excellence.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- /About Section -->
+
+    <!-- Stats Section -->
+    <section id="stats" class="stats section light-background">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
+            <i class="fa-solid fa-user-doctor"></i>
+            <div class="stats-item">
+              <!-- 📊 DYNAMIC COUNTER: Pulls value from admin dashboard fields -->
+              <span data-purecounter-start="0" data-purecounter-end="{{ hospital_profile.count_doctors }}" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Doctors</p>
+            </div>
+          </div><!-- End Stats Item -->
+
+          <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
+            <i class="fa-regular fa-hospital"></i>
+            <div class="stats-item">
+              <!-- 📊 DYNAMIC COUNTER: Pulls value from admin dashboard fields -->
+              <span data-purecounter-start="0" data-purecounter-end="{{ hospital_profile.count_departments }}" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Departments</p>
+            </div>
+          </div><!-- End Stats Item -->
+
+          <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
+            <i class="fas fa-flask"></i>
+            <div class="stats-item">
+              <!-- 📊 DYNAMIC COUNTER: Pulls value from admin dashboard fields -->
+              <span data-purecounter-start="0" data-purecounter-end="{{ hospital_profile.count_research_labs }}" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Research Labs</p>
+            </div>
+          </div><!-- End Stats Item -->
+
+          <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
+            <i class="fas fa-award"></i>
+            <div class="stats-item">
+              <!-- 📊 DYNAMIC COUNTER: Pulls value from admin dashboard fields -->
+              <span data-purecounter-start="0" data-purecounter-end="{{ hospital_profile.count_awards }}" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Awards</p>
+            </div>
+          </div><!-- End Stats Item -->
+
+        </div>
+
+      </div>
+    </section><!-- /Stats Section -->
+
+    <!-- Services Section -->
+    <section id="services" class="services section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Services</h2>
+        <p>Comprehensive healthcare operations and professional clinical treatments available at our facility.</p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <!-- 📁 DYNAMIC LOOP: Renders every service added by the agent for this specific tenant -->
+          {% for service in hospital_services %}
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="service-item position-relative">
+              <div class="icon">
+                <!-- 🎨 DYNAMIC BADGE: Renders the precise icon class selected in the admin dashboard -->
+                <i class="fas {{ service.icon_choice|default:'fa-heartbeat' }}"></i>
+              </div>
+              <a href="#appointment" class="stretched-link">
+                <h3>{{ service.service_name }}</h3>
+              </a>
+              <p>{{ service.service_description }}</p>
+            </div>
+          </div><!-- End Service Item -->
+          {% empty %}
+          <div class="col-12 text-center py-4">
+            <p class="text-muted">No medical services have been added to this profile yet.</p>
+          </div>
+          {% endfor %}
+
+        </div>
+
+      </div>
+        </div><!-- End Row Grid Loop Matrix -->
+
+      </div>
+
+    </section><!-- /Services Section -->
+    <!-- Appointment Section -->
+    <section id="appointment" class="appointment section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Book an Appointment</h2>
+        <p>Schedule your professional clinical checkup or medical consultation dynamically below.</p>
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <!-- 🚀 SERVER ROUTING: Wired to send data directly to your upcoming python booking view link -->
+        <form action="{% url 'book_appointment' hospital_profile.hospital_slug %}" method="post" role="form" class="django-booking-form">
+          {% csrf_token %}
+
+          <div class="row">
+            <div class="col-md-4 form-group">
+              <input type="text" name="name" class="form-control" id="name" placeholder="Patient's Full Name" required>
+            </div>
+            <div class="col-md-4 form-group mt-3 mt-md-0">
+              <input type="email" class="form-control" name="email" id="email" placeholder="Patient's Contact Email" required>
+            </div>
+            <div class="col-md-4 form-group mt-3 mt-md-0">
+              <input type="tel" class="form-control" name="phone" id="phone" placeholder="Active Phone Number (e.g. 080...)" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 form-group mt-3">
+              <input type="datetime-local" name="date" class="form-control datepicker" id="date" placeholder="Appointment Date" required>
+            </div>
+            <div class="col-md-4 form-group mt-3">
+              <select name="department" id="department" class="form-select" required>
+                <option value="">Select Medical Department</option>
+                <!-- 📁 DYNAMIC MENU FIELDS LOOP: Pulls live departments from database -->
+                {% for dept in hospital_departments %}
+                  <option value="{{ dept.name }}">{{ dept.name }}</option>
+                {% empty %}
+                  <option value="General Consultation">General Consultation Clinic</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-md-4 form-group mt-3">
+              <select name="doctor" id="doctor" class="form-select" required>
+                <option value="">Select Preferred Specialist</option>
+                <!-- 📁 DYNAMIC MENU FIELDS LOOP: Pulls live medical team from database -->
+                {% for doc in hospital_doctors %}
+                  <option value="{{ doc.doctor_name }}">{{ doc.doctor_name }} ({{ doc.medical_title }})</option>
+                {% empty %}
+                  <option value="Available Duty Doctor">Duty Medical Consultant On-Call</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="form-group mt-3">
+            <textarea class="form-control" name="message" rows="5" placeholder="Brief outline of symptoms or medical brief history (Optional)"></textarea>
+          </div>
+
+          <!-- 📥 LIVE DISPATCH ALERTS STREAM -->
+          <div class="mt-3">
+            {% if messages %}
+              {% for message in messages %}
+                {% if 'appointment' in message.tags %}
+                  <div class="alert alert-success text-center" style="border-radius: 8px; font-weight: 500;">
+                    {{ message }}
+                  </div>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+            <div class="text-center"><button type="submit" class="btn btn-primary" style="background: #1977cc; border: 0; padding: 10px 35px; color: #fff; transition: 0.4s; border-radius: 50px;">Make an Appointment</button></div>
+          </div>
+        </form>
+
+      </div>
+
+    </section><!-- /Appointment Section -->
+
+    <!-- Departments Section -->
+    <section id="departments" class="departments section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Departments</h2>
+        <p>Explore our specialized corporate medical wings and high-end clinical treatment operations.</p>
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row">
+          <div class="col-lg-3">
+            <ul class="nav nav-tabs flex-column">
+              <!-- 📁 DYNAMIC MENU TABS LOOP: Compiles clicking links cleanly from your database values -->
+              {% for dept in hospital_departments %}
+              <li class="nav-item">
+                <a class="nav-link {% if forloop.first %}active show{% endif %}" data-bs-toggle="tab" href="#departments-tab-{{ dept.id }}">{{ dept.name }}</a>
+              </li>
+              {% empty %}
+              <li class="nav-item">
+                <a class="nav-link active show" data-bs-toggle="tab" href="#departments-tab-default">General Clinic</a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="col-lg-9 mt-4 mt-lg-0">
+            <div class="tab-content">
+
+              <!-- 📁 DYNAMIC PANELS MATRIX: Renders content areas smoothly matching each left side menu link -->
+              {% for dept in hospital_departments %}
+              <div class="tab-pane {% if forloop.first %}active show{% endif %}" id="departments-tab-{{ dept.id }}">
+                <div class="row">
+                  <div class="col-lg-8 details order-2 order-lg-1">
+                    <h3>{{ dept.headline }}</h3>
+                    <p class="fst-italic">Specialized clinical treatment program under our {{ dept.name }} division track.</p>
+                    <p>{{ dept.description }}</p>
+                  </div>
+                  <div class="col-lg-4 text-center order-1 order-lg-2">
+                    {% if dept.showcase_photo %}
+                      <img src="{{ dept.showcase_photo.url }}" alt="{{ dept.name }}" class="img-fluid" style="border-radius: 12px; object-fit: cover; max-height: 250px;">
+                    {% else %}
+                      <img src="{% static 'modern3/assets/img/departments-1.jpg' %}" alt="Default Department" class="img-fluid" style="border-radius: 12px;">
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              {% empty %}
+              <!-- Standard default display if field agents have not initialized department data sheets -->
+              <div class="tab-pane active show" id="departments-tab-default">
+                <div class="row">
+                  <div class="col-lg-8 details order-2 order-lg-1">
+                    <h3>Comprehensive General Outpatient Medical Care Clinic</h3>
+                    <p class="fst-italic">Providing complete diagnostic reviews, preventive screening, and routine healthcare consultations.</p>
+                    <p>Our unified operational facilities host state-of-the-art emergency setups, general practitioners, and screening spaces designed to support and monitor continuous patient recovery parameters smoothly around the clock.</p>
+                  </div>
+                  <div class="col-lg-4 text-center order-1 order-lg-2">
+                    <img src="{% static 'modern3/assets/img/departments-1.jpg' %}" alt="Default Clinic" class="img-fluid" style="border-radius: 12px;">
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+
+            </div>
+          </div>
+        </div><!-- End Row Split Layout -->
+
+      </div>
+
+    </section><!-- /Departments Section -->
+    <!-- Doctors Section -->
+    <section id="doctors" class="doctors section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Medical Team Specialists</h2>
+        <p>Consult with our qualified, highly experienced healthcare consultants and practitioner directors.</p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <!-- 📁 DYNAMIC DOCTORS MATRIX LOOP: Iterates cleanly through your registered medical experts -->
+          {% for doc in hospital_doctors %}
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="team-member d-flex align-items-start">
+              <div class="pic">
+                {% if doc.profile_photo %}
+                  <img src="{{ doc.profile_photo.url }}" class="img-fluid" alt="{{ doc.doctor_name }}" style="object-fit: cover; width: 150px; height: 150px; border-radius: 8px;">
+                {% else %}
+                  <img src="{% static 'modern3/assets/img/doctors/doctors-1.jpg' %}" class="img-fluid" alt="Default Doctor">
+                {% endif %}
+              </div>
+              <div class="member-info">
+                <h4>{{ doc.doctor_name }}</h4>
+                <span>{{ doc.medical_title }}</span>
+                <p>{{ doc.doctor_biography }}</p>
+                <div class="social">
+                  {% if doc.twitter_link %}<a href="{{ doc.twitter_link }}" target="_blank"><i class="bi bi-twitter-x"></i></a>{% endif %}
+                  {% if doc.facebook_link %}<a href="{{ doc.facebook_link }}" target="_blank"><i class="bi bi-facebook"></i></a>{% endif %}
+                  {% if doc.instagram_link %}<a href="{{ doc.instagram_link }}" target="_blank"><i class="bi bi-instagram"></i></a>{% endif %}
+                  {% if doc.linkedin_link %}<a href="{{ doc.linkedin_link }}" target="_blank"><i class="bi bi-linkedin"></i></a>{% endif %}
+                </div>
+              </div>
+            </div>
+          </div><!-- End Team Member -->
+          {% empty %}
+          <div class="col-12 text-center py-4">
+            <p class="text-muted">No medical practitioners have been registered to this facility board directory yet.</p>
+          </div>
+          {% endfor %}
+
+        </div>
+
+      </div>
+
+    </section><!-- /Doctors Section -->
+    <!-- Faq Section -->
+    <section id="faq" class="faq section light-background">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Frequently Asked Questions</h2>
+        <p>Common administrative inquiries and operational health service guidelines outlined for our patients.</p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="row justify-content-center">
+
+          <div class="col-lg-10" data-aos="fade-up" data-aos-delay="100">
+
+            <div class="faq-container">
+
+              <!-- 📁 DYNAMIC FAQ ACCORDION LOOP: Automatically generates sliders from your backend entries -->
+              {% for faq in hospital_faqs %}
+              <div class="faq-item {% if forloop.first %}faq-active{% endif %}">
+                <h3>{{ faq.question_text }}</h3>
+                <div class="faq-content">
+                  <p>{{ faq.answer_text }}</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End Faq item-->
+              {% empty %}
+              <div class="text-center py-4">
+                <p class="text-muted">No operational frequently asked questions have been registered yet.</p>
+              </div>
+              {% endfor %}
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section><!-- /Faq Section -->
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials section">
+
+      <div class="container">
+
+        <div class="row align-items-center">
+
+          <div class="col-lg-5 info" data-aos="fade-up" data-aos-delay="100">
+            <h3>Testimonials</h3>
+            <p>
+              Read through genuine reviews and success stories submitted by patients treated under our dynamic healthcare program frameworks.
+            </p>
+          </div>
+
+          <div class="col-lg-7" data-aos="fade-up" data-aos-delay="200">
+
+            <div class="swiper init-swiper">
+              <script type="application/json" class="swiper-config">
+                {
+                  "loop": true,
+                  "speed": 600,
+                  "autoplay": {
+                    "delay": 5000
+                  },
+                  "slidesPerView": "auto",
+                  "pagination": {
+                    "el": ".swiper-pagination",
+                    "type": "bullets",
+                    "clickable": true
+                  }
+                }
+              </script>
+              <div class="swiper-wrapper">
+
+                <!-- 📁 DYNAMIC TESTIMONIALS SLIDER LOOP: Generates patient stories straight from admin entries -->
+                {% for review in hospital_testimonials %}
+                <div class="swiper-slide">
+                  <div class="testimonial-item">
+                    <div class="d-flex">
+                      {% if review.patient_avatar %}
+                        <img src="{{ review.patient_avatar.url }}" class="testimonial-img flex-shrink-0" alt="{{ review.patient_name }}" style="object-fit: cover; width: 90px; height: 90px; border-radius: 50%;">
+                      {% else %}
+                        <img src="{% static 'modern3/assets/img/testimonials/testimonials-1.jpg' %}" class="testimonial-img flex-shrink-0" alt="Default Avatar">
+                      {% endif %}
+                      <div>
+                        <h3>{{ review.patient_name }}</h3>
+                        <h4>{{ review.patient_title_or_role }}</h4>
+                        <div class="stars">
+                          <!-- 🎯 DYNAMIC RATING STARS GENERATOR -->
+                          {% if review.rating_stars == 5 %}
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                          {% elif review.rating_stars == 4 %}
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                          {% elif review.rating_stars == 3 %}
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                          {% else %}
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                    <p>
+                      <i class="bi bi-quote quote-icon-left"></i>
+                      <span>{{ review.review_text }}</span>
+                      <i class="bi bi-quote quote-icon-right"></i>
+                    </p>
+                  </div>
+                </div><!-- End testimonial item -->
+                {% empty %}
+                <div class="swiper-slide">
+                  <div class="testimonial-item text-center py-4">
+                    <p class="text-muted">No patient success stories or reviews have been registered for this platform board yet.</p>
+                  </div>
+                </div>
+                {% endfor %}
+
+              </div><!-- End Swiper Wrapper -->
+              <div class="swiper-pagination"></div>
+            </div><!-- End Swiper init Container -->
+
+          </div>
+        </div><!-- End Row Grid Split Layout -->
+
+      </div>
+
+    </section><!-- /Testimonials Section -->
+    <!-- Gallery Section -->
+    <section id="gallery" class="gallery section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Facility Gallery</h2>
+        <p>Take a virtual look inside our modern clinical wards, laboratories, and specialized treatment facilities.</p>
+      </div><!-- End Section Title -->
+
+      <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row g-0">
+
+          <!-- 📁 DYNAMIC GALLERY MATRIX LOOP: Auto-generates grid photo cards from backend entries -->
+          {% for item in hospital_gallery %}
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              <a href="{{ item.gallery_photo.url }}" class="glightbox" data-gallery="images-gallery" {% if item.image_caption %}data-title="{{ item.image_caption }}"{% endif %}>
+                <img src="{{ item.gallery_photo.url }}" alt="{{ item.image_caption|default:'Hospital Facility' }}" class="img-fluid" style="width: 100%; height: 220px; object-fit: cover;">
+              </a>
+            </div>
+          </div><!-- End Gallery Item -->
+          {% empty %}
+          <div class="col-12 text-center py-4">
+            <p class="text-muted">No facility photos have been uploaded to this gallery yet.</p>
+          </div>
+          {% endfor %}
+
+        </div>
+
+      </div>
+
+    </section><!-- /Gallery Section -->
+    <!-- Contact Section -->
+    <section id="contact" class="contact section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>{{ hospital_profile.contact_headline }}</h2>
+        <p>{{ hospital_profile.contact_description }}</p>
+      </div><!-- End Section Title -->
+
+      <div class="mb-5" data-aos="fade-up" data-aos-delay="200">
+        <!-- 🗺️ DYNAMIC MAP EMBED: Renders the custom Google Maps iframe URL provided by the field agent -->
+        <iframe style="border:0; width: 100%; height: 270px;" src="{{ hospital_profile.google_maps_embed_url }}" frameborder="0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div><!-- End Google Maps -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-4">
+            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
+              <i class="bi bi-geo-alt flex-shrink-0"></i>
+              <div>
+                <h3>Location</h3>
+                <p>{{ hospital_profile.hospital_physical_address }}</p>
+              </div>
+            </div><!-- End Info Item -->
+
+            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
+              <i class="bi bi-telephone flex-shrink-0"></i>
+              <div>
+                <h3>Call Us</h3>
+                <p>{{ hospital_profile.emergency_phone_line }}</p>
+              </div>
+            </div><!-- End Info Item -->
+
+            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="500">
+              <i class="bi bi-envelope flex-shrink-0"></i>
+              <div>
+                <h3>Email Us</h3>
+                <p>{{ hospital_profile.hospital_email }}</p>
+              </div>
+            </div><!-- End Info Item -->
+
+          </div>
+
+          <div class="col-lg-8">
+            <!-- 🚀 SERVER ROUTING: Configured to fire visitor submissions straight into your dynamic contact backend mailbox -->
+            <form action="{% url 'submit_message' hospital_profile.hospital_slug %}" method="post" role="form" class="django-contact-form" data-aos="fade-up" data-aos-delay="200">
+              {% csrf_token %}
+              <div class="row gy-4">
+
+                <div class="col-md-6">
+                  <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+                </div>
+
+                <div class="col-md-6 ">
+                  <input type="email" class="form-control" name="email" placeholder="Your Email" required>
+                </div>
+
+                <div class="col-md-12">
+                  <input type="text" class="form-control" name="subject" placeholder="Subject" required>
+                </div>
+
+                <div class="col-md-12">
+                  <textarea class="form-control" name="message" rows="6" placeholder="Message" required></textarea>
+                </div>
+
+                <div class="col-md-12 text-center">
+                  <!-- 📥 LIVE DISPATCH MAILBOX MESSAGE ALERTS -->
+                  {% if messages %}
+                    {% for message in messages %}
+                      {% if 'contact' in message.tags %}
+                        <div class="alert alert-success text-center mb-3" style="border-radius: 8px; font-weight: 500;">
+                          {{ message }}
+                        </div>
+                      {% endif %}
+                    {% endfor %}
+                  {% endif %}
+
+                  <button type="submit" class="btn btn-primary" style="background: #1977cc; border: 0; padding: 10px 35px; color: #fff; transition: 0.4s; border-radius: 50px;">Send Message</button>
+                </div>
+
+              </div>
+            </form>
+          </div><!-- End Contact Form -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Contact Section -->
+  </main>
+
+  <footer id="footer" class="footer light-background">
+
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-4 col-md-6 footer-about">
+          <a href="#" class="logo d-flex align-items-center">
+            <span class="sitename">{{ hospital_profile.tenant_identity.hospital_name }}</span>
+          </a>
+          <div class="footer-contact pt-3">
+            <!-- 🏥 DYNAMIC NIGERIAN PHYSICAL ADDRESS PARAMETERS -->
+            <p>{{ hospital_profile.hospital_physical_address }}</p>
+            <p class="mt-3"><strong>Phone:</strong> <span>{{ hospital_profile.emergency_phone_line }}</span></p>
+            <p><strong>Email:</strong> <span>{{ hospital_profile.hospital_email }}</span></p>
+          </div>
+          <div class="social-links d-flex mt-4">
+            <a href="#"><i class="bi bi-twitter-x"></i></a>
+            <a href="#"><i class="bi bi-facebook"></i></a>
+            <a href="#"><i class="bi bi-instagram"></i></a>
+            <a href="#"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Useful Links</h4>
+          <ul>
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#about">About us</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#">Terms of service</a></li>
+            <li><a href="#">Privacy policy</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Medical Units</h4>
+          <ul>
+            <li><a href="#departments">General Consultation</a></li>
+            <li><a href="#departments">Cardiology Clinic</a></li>
+            <li><a href="#departments">Emergency Ward</a></li>
+            <li><a href="#departments">Laboratory & Research</a></li>
+            <li><a href="#departments">Pediatrics Care</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Patient Support</h4>
+          <ul>
+            <li><a href="#appointment">Book Appointment</a></li>
+            <li><a href="#faq">FAQs Helpline</a></li>
+            <li><a href="#testimonials">Patient Reviews</a></li>
+            <li><a href="#contact">Emergency Help Desk</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container copyright text-center mt-4">
+      <!-- 🎯 DYNAMIC FOOTER LOGO: Pulls your tenant's actual hospital branding name natively -->
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">{{ hospital_profile.tenant_identity.hospital_name }}</strong> <span>All Rights Reserved</span></p>
+
+    </div>
+
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'modern3/assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'modern3/assets/vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'modern3/assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'modern3/assets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+  <script src="{% static 'modern3/assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+
+  <!-- Main JS File -->
+  <script src="{% static 'modern3/assets/js/main.js' %}"></script>
+
+</body>
+</html>

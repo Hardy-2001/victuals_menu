@@ -1,0 +1,287 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{{ store.restaurant_name }} — Professional Food Ordering Deck</title>
+
+    <!-- 🎨 STATIC LINK: Connections to your clean standalone restaurant style sheet -->
+    <link rel="stylesheet" href="{% static 'advance2/css/restaurant_style.css' %}">
+</head>
+<body>
+
+    <!-- 🏙️ MASTER TOP ACTIONS HEADER BAR (STICKY FROZEN — FIXED OPENING TAGS) -->
+    <div class="food-master-sticky-header">
+        <header class="food-top-action-row">
+
+            <!-- BRAND IDENTITY SPACE WITH LOGO TEXT AND PICTURE IMAGE -->
+            <div class="food-brand-logo-area">
+                {% if store.restaurant_logo %}
+                    <img src="{{ store.restaurant_logo.url }}" alt="{{ store.restaurant_name }} Logo" class="food-merchant-icon-pic">
+                {% else %}
+                    <div style="font-size: 24px; background: #e5e7eb; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 50%;">🍔</div>
+                {% endif %}
+                <h1 class="food-merchant-name-title">{{ store.restaurant_name }}</h1>
+            </div>
+
+            <!-- 🎯 NEW: PROFESSIONAL INLINE SEARCH PILL COMPONENT -->
+            <div class="food-search-container-box">
+                <input type="text" id="foodCatalogSearchInput" onkeyup="filterFoodCatalogItems()" class="food-search-input-field" placeholder="Search for dishes, rice, swallow, chicken, drinks...">
+                <button class="food-search-trigger-circle" aria-label="Search">🔍</button>
+            </div>
+
+            <!-- 🛒 HEADER INTERACTIVE SHOPPING BAG ANCHOR -->
+            <div class="food-header-cart-box" onclick="openFoodShoppingBagModal()">
+                <span>🛒 Basket</span>
+                <span id="foodHeaderCartBadge" class="food-cart-counter-badge">0</span>
+            </div>
+        </header>
+
+
+        <!-- 📁 HORIZONTAL INLINE CATEGORIES NAVIGATION STRIP -->
+        <nav class="food-category-nav-strip">
+            {% for category in categories %}
+                <a href="#food_shelf_{{ category.id }}" onclick="event.preventDefault(); smoothScrollToFoodShelf('food_shelf_{{ category.id }}');" class="food-nav-category-link">
+                    {{ category.name }}
+                </a>
+            {% endfor %}
+        </nav>
+    </div>
+
+    <!-- 📦 MAIN FOOD SHOWCASE CANVAS (NO HERO BANNER SECTION AS REQUESTED!) -->
+    <main class="food-main-workspace">
+
+        <!-- DYNAMIC LOOP TRACK FOR FOOD CATEGORY SECTIONS -->
+        {% for category in categories %}
+            {% if category.menu_items.all %}
+            <section class="food-shelf-row-section" id="food_shelf_{{ category.id }}">
+
+                <!-- Category Section Title Label Line -->
+                <h2 class="food-section-title-line">{{ category.name }}</h2>
+
+                <!-- 🛒 HIGH-DENSITY PRODUCT SECTIONS GRID -->
+                <div class="food-equipment-grid">
+                    {% for item in category.menu_items.all %}
+
+                    <!-- 📦 DISH CARD MODULE ASSET BLOCK -->
+                    <div class="food-product-showcase-card product-food-node" data-name="{{ item.name }}" onclick="addFoodItemToBag('{{ item.name }}', {{ item.price }})">
+
+                        <!-- Left Aligned Core Metadata Labels Pane -->
+                        <div class="food-card-meta-pane">
+                            <h3 class="food-card-item-title">{{ item.name }}</h3>
+                            <p class="food-card-item-description">
+                                {% if item.description %}{{ item.description }}{% else %}Freshly prepared commercial-grade menu dish item cooked with premium local ingredients.{% endif %}
+                            </p>
+                            <div class="food-bold-active-price">₦{{ item.price }}</div>
+                        </div>
+
+                        <!-- Right Aligned Thumbnail Frame Container -->
+                        <div class="food-image-frame">
+                            {% if item.image %}
+                                <img src="{{ item.image.url }}" alt="{{ item.name }}" loading="lazy">
+                            {% else %}
+                                <div style="font-size: 32px; color: #cbd5e1;">🍲</div>
+                            {% endif %}
+
+                            <!-- Floating Add Button overlay pinned over the layout thumbnail -->
+                            <button class="food-floating-add-btn" onclick="event.stopPropagation(); addFoodItemToBag('{{ item.name }}', {{ item.price }});">
+                                ADD
+                            </button>
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+                </div>
+
+            </section>
+            {% endif %}
+        {% empty %}
+            <div class="gym-empty-catalog-fallback" style="text-align: center; color: #9ca3af; padding: 100px 0; font-size: 15px; font-weight: 600;">
+                Welcome to your Professional Restaurant Engine! <br><br>Log into the MODERN2 dashboard section to register categories and food menu items.
+            </div>
+        {% endfor %}
+
+    </main>
+
+    <!-- 🏙️ COMPACT CORPORATE STATIC FOOTER PANEL -->
+    <footer class="restaurant-corporate-footer">
+        <div class="footer-restaurant-details">
+            <strong>{{ store.restaurant_name }}</strong><br>
+            📞 Phone: {{ store.footer_phone_line }}<br>
+            📍 Address: {{ store.footer_physical_address }}<br><br>
+            <small style="color: #9ca3af; font-weight: 500;">Powered by MODERN2 Multi-Tenant Delivery Suite</title></small>
+        </div>
+    </footer>
+
+    <!-- 🛒 PREMIUM ORDER PREVIEW DRAWER BOX OVERLAY -->
+    <div id="foodCartModalOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 5000; padding: 20px;" onclick="closeFoodShoppingBagModal()">
+        <div style="background-color: #ffffff; border-radius: 12px; max-width: 460px; width: 100%; padding: 32px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); position: relative;" onclick="event.stopPropagation();">
+            <button style="position: absolute; top: 16px; right: 20px; background: transparent; border: none; font-size: 24px; color: #9ca3af; cursor: pointer;" onclick="closeFoodShoppingBagModal()">×</button>
+
+            <h2 style="font-size: 18px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.02em; margin-bottom: 20px; color: #111827; border-bottom: 2px solid #00a660; padding-bottom: 8px; text-align: left;">
+                🍳 Your Dinner Basket
+            </h2>
+
+            <!-- Dynamic Food Items Container -->
+            <div id="foodModalItemsList" style="max-height: 260px; overflow-y: auto; margin-bottom: 24px;"></div>
+
+            <!-- Pricing Calculations Total Bill Summary Invoice Row -->
+            <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #e5e7eb; padding-top: 16px; margin-bottom: 24px;">
+                <span style="font-size: 13px; font-weight: 800; color: #4b5563; text-transform: uppercase;">Subtotal Invoice:</span>
+                <span id="foodModalTotalBillTag" style="font-size: 20px; font-weight: 900; color: #00a660; font-family: monospace;">₦0.00</span>
+            </div>
+
+            <!-- WhatsApp Dispatch Confirmation Button -->
+            <button style="width: 100%; background-color: #00a660; color: #ffffff; border: none; padding: 14px; border-radius: 6px; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; cursor: pointer;" onclick="dispatchFoodWhatsAppManifest()">
+                Confirm & Send Order via WhatsApp →
+            </button>
+        </div>
+    </div>
+    </div>
+
+        <!-- 🔮 REAL-TIME BASKET MATHS, LOCAL STORAGE CACHE SYNC & DISPATCH LOGIC -->
+    <script>
+        let restaurantFoodBagArray = [];
+
+        // ⚡ AUTOMATED LOAD SYNC: Automatically boots up any saved kitchen selections on page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            let runningStorageData = localStorage.getItem('modern2_restaurant_storage');
+            if (runningStorageData) {
+                restaurantFoodBagArray = JSON.parse(runningStorageData);
+                updateFoodHeaderCartBadgeValue();
+            }
+        });
+
+        function addFoodItemToBag(name, price) {
+            let existingIndex = restaurantFoodBagArray.findIndex(item => item.name === name);
+            if (existingIndex > -1) {
+                restaurantFoodBagArray[existingIndex].quantity += 1;
+            } else {
+                restaurantFoodBagArray.push({ name: name, price: price, quantity: 1 });
+            }
+
+            // Sync into master local session storage to avoid cache fragmentation
+            localStorage.setItem('modern2_restaurant_storage', JSON.stringify(restaurantFoodBagArray));
+            updateFoodHeaderCartBadgeValue();
+
+            // Premium micro-interaction toast notification layout confirmation alert
+            alert(`🍛 Added 1x ${name} to your basket order details!`);
+        }
+
+        function updateFoodHeaderCartBadgeValue() {
+            const badge = document.getElementById('foodHeaderCartBadge');
+            let absoluteUnitsCount = restaurantFoodBagArray.reduce((acc, curr) => acc + curr.quantity, 0);
+            badge.innerText = absoluteUnitsCount;
+        }
+
+        function openFoodShoppingBagModal() {
+            if (restaurantFoodBagArray.length === 0) {
+                alert("Your basket is currently empty! Add delicious meals from the list first.");
+                return;
+            }
+
+            const listContainer = document.getElementById('foodModalItemsList');
+            const billTag = document.getElementById('foodModalTotalBillTag');
+
+            listContainer.innerHTML = "";
+            let revenueAccumulator = 0;
+
+            restaurantFoodBagArray.forEach((product, idx) => {
+                let costSum = product.price * product.quantity;
+                revenueAccumulator += costSum;
+
+                listContainer.innerHTML += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f3f4f6;">
+                        <div style="text-align: left; max-width: 65%;">
+                            <div style="font-size: 13px; font-weight: 700; color: #111827;">${product.name}</div>
+                            <div style="font-size: 11px; color: #6b7280;">₦${product.price.toLocaleString()} x ${product.quantity}</div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <span style="font-size: 13px; font-weight: 800; color: #00a660; font-family: monospace;">₦${costSum.toLocaleString()}</span>
+                            <button onclick="removeFoodItemRow(${idx})" style="background:transparent; border:none; color:#dc2626; font-weight:bold; cursor:pointer;">🗑️</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            billTag.innerText = `₦${revenueAccumulator.toLocaleString()}`;
+            document.getElementById('foodCartModalOverlay').style.display = "flex";
+        }
+
+        function removeFoodItemRow(index) {
+            restaurantFoodBagArray.splice(index, 1);
+            localStorage.setItem('modern2_restaurant_storage', JSON.stringify(restaurantFoodBagArray));
+            updateFoodHeaderCartBadgeValue();
+            if (restaurantFoodBagArray.length === 0) {
+                closeFoodShoppingBagModal();
+            } else {
+                openFoodShoppingBagModal();
+            }
+        }
+
+        function closeFoodShoppingBagModal() {
+            document.getElementById('foodCartModalOverlay').style.display = "none";
+        }
+
+        function dispatchFoodWhatsAppManifest() {
+            if (restaurantFoodBagArray.length === 0) return;
+
+            let summaryMessage = `Hello Chef! I would like to place a new food order from your kitchen menu:\n\n`;
+            let runningFinancialTotal = 0;
+
+            restaurantFoodBagArray.forEach((item, idx) => {
+                let itemTotalCost = item.price * item.quantity;
+                runningFinancialTotal += itemTotalCost;
+                summaryMessage += `${idx + 1}. 🍛 ${item.name} (x${item.quantity}) — ₦${itemTotalCost.toLocaleString()}\n`;
+            });
+
+            summaryMessage += `\n💰 Gross Total Bill: ₦${runningFinancialTotal.toLocaleString()}\n\n`;
+            summaryMessage += `Kindly confirm food preparation status and dispatch logistics coordinates options.`;
+
+            localStorage.removeItem('modern2_restaurant_storage');
+            const targetPhoneCoordinates = "{{ store.footer_phone_line }}";
+            window.location.href = "whatsapp://send?phone=" + targetPhoneCoordinates + "&text=" + encodeURIComponent(summaryMessage);
+        }
+
+        function smoothScrollToFoodShelf(id) {
+            const target = document.getElementById(id);
+            if (target) {
+                const offsetBuffer = 140;
+                const scrollPos = target.getBoundingClientRect().top + window.pageYOffset - offsetBuffer;
+                window.scrollTo({ top: scrollPos, behavior: 'smooth' });
+            }
+        }
+                // 🔍 REAL-TIME DISH KEYWORD FILTER ENGINE
+        function filterFoodCatalogItems() {
+            const textInputValue = document.getElementById('foodCatalogSearchInput').value.toLowerCase();
+            const foodCards = document.querySelectorAll('.product-food-node');
+
+            foodCards.forEach(card => {
+                const dishTitleText = card.getAttribute('data-name').toLowerCase();
+
+                // Inspect if product data attributes contain search strings
+                if (dishTitleText.includes(textInputValue)) {
+                    card.style.display = "flex";
+                    card.setAttribute('data-visible', 'true');
+                } else {
+                    card.style.display = "none";
+                    card.setAttribute('data-visible', 'false');
+                }
+            });
+
+            // Cleanly collapse any food section rows if they contain zero active search matches
+            document.querySelectorAll('.food-shelf-row-section').forEach(section => {
+                const visibleCards = section.querySelectorAll('.product-food-node[data-visible="true"]');
+                if (textInputValue !== "" && visibleCards.length === 0) {
+                    section.style.display = "none";
+                } else {
+                    section.style.display = "block";
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>
