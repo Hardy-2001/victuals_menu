@@ -165,16 +165,16 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+
+# ==============================================================================
+# 🎨 ABSOLUTE FINAL PRODUCTION STATIC ASSET Blueprints
+# ==============================================================================
 import os
 
-import os
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Media Assets Parameters Configuration
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-
-
-
-# 🎯 FORCE DJANGO ADMIN LOGOUT BUTTONS TO ROUTE DIRECTLY BACK TO YOUR LANDING HUB:
 LOGOUT_REDIRECT_URL = '/'
