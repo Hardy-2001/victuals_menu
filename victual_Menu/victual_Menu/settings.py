@@ -179,8 +179,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGOUT_REDIRECT_URL = '/'
 
-
-# 🟢 Tells WhiteNoise to compress and cache your visual design sheets automatically!
 STORAGES = {
     "default": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
@@ -189,3 +187,6 @@ STORAGES = {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
+
+# 🟢 THE INSTANT MANIFEST FIX: Tells WhiteNoise to ignore missing map files!
+WHITENOISE_MANIFEST_STRICT = False
