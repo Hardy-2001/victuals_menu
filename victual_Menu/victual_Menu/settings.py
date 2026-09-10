@@ -74,7 +74,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     # 🌐 POSITION #1: CAPTURES RAW CUSTOM SUBDOMAINS INSTANTLY BEFORE COMMONMIDDLEWARE
     'super_admin.middleware.MultiTenantSubdomainRouterMiddleware',
-
+        'whitenoise.middleware.WhiteNoiseMiddleware',
     # Standard Internal Django Security & Framework Layers Follow Below Safely
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -178,3 +178,14 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGOUT_REDIRECT_URL = '/'
+
+
+# 🟢 Tells WhiteNoise to compress and cache your visual design sheets automatically!
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
