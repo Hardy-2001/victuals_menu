@@ -183,10 +183,8 @@ STORAGES = {
     "default": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
     },
+    # 🟢 THE INSTANT FIX: Changed from CompressedManifestStaticFilesStorage to CompressedStaticFilesStorage
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
     },
 }
-
-# 🟢 THE INSTANT MANIFEST FIX: Tells WhiteNoise to ignore missing map files!
-WHITENOISE_MANIFEST_STRICT = False
