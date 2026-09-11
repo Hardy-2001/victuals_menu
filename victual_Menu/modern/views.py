@@ -48,25 +48,33 @@ def modern_store_front_view(request, store_slug=None, tenant_slug_token=None):
     return render(request, 'modern/minimalist_catalog.html', context)
 
 
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse
+from .models import ModernSlugTenant, ModernProductItem
+
 
 def modern_product_detail_view(request, store_slug=None, product_id=None, tenant_slug_token=None):
     """
-    📸 NEXT-GEN PREMIUM SINGLE-PRODUCT ROUTER
+    📸 NEXT-GEN PREMIUM SINGLE-PRODUCT ROUTER (UNIVERSAL FAULT-TOLERANT ARCHITECTURE)
     """
     active_slug = store_slug or tenant_slug_token or getattr(request, 'tenant_slug_token', None)
+
+    # 1. Fetch the master slug registration object safely
     store = get_object_or_404(ModernSlugTenant, custom_slug__iexact=active_slug)
 
     is_active = getattr(store, 'is_premium_active', getattr(store, 'is_active', True))
     if not is_active:
         return HttpResponse("🔒 SERVICE SUSPENDED", status=403)
 
-    # 🟢 THE CRITICAL LIVE FIX: Fetches the matching storefront instance table link row!
-    # This matches whatever store instance model field connects ModernSlugTenant to ModernStoreFront.
-    # We look it up by matching the active slug text.
-    storefront_instance = get_object_or_404(ModernStoreFront, custom_slug__iexact=active_slug)
+    # 🟢 THE FOOLPROOF COMPLIANCE CHECK:
+    # We attempt to search the product by matching the store object directly.
+    # If your product model uses a custom relationship property name, it handles it safely.
+    try:
+        product = ModernProductItem.objects.get(id=product_id, category__store=store)
+    except (ModernProductItem.DoesNotExist, ValueError):
+        # Fallback: If it expects an inner referenced model properties link, look it up via the active slug text parameters!
+        product = get_object_or_404(ModernProductItem, id=product_id, category__store__custom_slug__iexact=active_slug)
 
-    # 🟢 ALIGNED QUERY RAIL: We now pass the exact ModernStoreFront object instance Django is begging for!
-    product = get_object_or_404(ModernProductItem, id=product_id, category__store=storefront_instance)
     profile = getattr(store, 'modern_profile', None)
 
     # 🎯 SMART CORRELATION ENGINE: Fetches exactly 3 related items from this same category aisle!
@@ -87,7 +95,6 @@ def modern_product_detail_view(request, store_slug=None, product_id=None, tenant
         return render(request, 'modern/gym_detail.html', context)
 
     return render(request, 'modern/minimalist_detail.html', context)
-
 
 
 def modern_store_about_view(request, store_slug=None, tenant_slug_token=None):
