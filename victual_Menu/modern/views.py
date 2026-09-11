@@ -52,28 +52,32 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .models import ModernSlugTenant, ModernProductItem
 
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse
+from .models import ModernSlugTenant, ModernProductItem
+
 
 def modern_product_detail_view(request, store_slug=None, product_id=None, tenant_slug_token=None):
     """
-    📸 NEXT-GEN PREMIUM SINGLE-PRODUCT ROUTER (UNIVERSAL FAULT-TOLERANT ARCHITECTURE)
+    📸 NEXT-GEN PREMIUM SINGLE-PRODUCT ROUTER (TEXT-BASED MATCH ALIGNMENT ENGINE)
     """
     active_slug = store_slug or tenant_slug_token or getattr(request, 'tenant_slug_token', None)
 
-    # 1. Fetch the master slug registration object safely
+    # 1. Fetch the master slug tracking configuration object safely
     store = get_object_or_404(ModernSlugTenant, custom_slug__iexact=active_slug)
 
     is_active = getattr(store, 'is_premium_active', getattr(store, 'is_active', True))
     if not is_active:
         return HttpResponse("🔒 SERVICE SUSPENDED", status=403)
 
-    # 🟢 THE FOOLPROOF COMPLIANCE CHECK:
-    # We attempt to search the product by matching the store object directly.
-    # If your product model uses a custom relationship property name, it handles it safely.
-    try:
-        product = ModernProductItem.objects.get(id=product_id, category__store=store)
-    except (ModernProductItem.DoesNotExist, ValueError):
-        # Fallback: If it expects an inner referenced model properties link, look it up via the active slug text parameters!
-        product = get_object_or_404(ModernProductItem, id=product_id, category__store__custom_slug__iexact=active_slug)
+    # 🟢 THE FOOLPROOF FIX: We filter the product by its ID and match the active slug string!
+    # By traversing down the relation string path (category -> store -> custom_slug),
+    # we bypass passing the wrong model object class entirely!
+    product = get_object_or_404(
+        ModernProductItem,
+        id=product_id,
+        category__store__custom_slug__iexact=active_slug
+    )
 
     profile = getattr(store, 'modern_profile', None)
 
