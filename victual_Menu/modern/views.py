@@ -48,15 +48,9 @@ def modern_store_front_view(request, store_slug=None, tenant_slug_token=None):
     return render(request, 'modern/minimalist_catalog.html', context)
 
 
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
-# Make sure to import ModernStoreFront along with your other models!
-from .models import ModernSlugTenant, ModernProductItem, ModernStoreFront
-
-
 def modern_product_detail_view(request, store_slug=None, product_id=None, tenant_slug_token=None):
     """
-    📸 NEXT-GEN PREMIUM SINGLE-PRODUCT ROUTER (MATCHING OBJECT OBJECT INSTANCES)
+    📸 NEXT-GEN PREMIUM SINGLE-PRODUCT ROUTER (EXACT MULTI-MODEL OBJECT JOIN PATH)
     """
     active_slug = store_slug or tenant_slug_token or getattr(request, 'tenant_slug_token', None)
 
@@ -67,12 +61,14 @@ def modern_product_detail_view(request, store_slug=None, product_id=None, tenant
     if not is_active:
         return HttpResponse("🔒 SERVICE SUSPENDED", status=403)
 
-    # 🟢 THE ALIGNED FIX: Look up the exact ModernStoreFront object instance Django is begging for!
-    # We query it by matching its slug text field against the active incoming slug string.
-    tenant = get_object_or_404(ModernStoreFront, custom_slug__iexact=active_slug)
-
-    # 🟢 PERFECT MATCH: We pass the correct 'tenant' object into the category relation track!
-    product = get_object_or_404(ModernProductItem, id=product_id, category__store=tenant)
+    # 🟢 THE MASTER DATABASE JOIN FIX:
+    # We trace down your precise relation properties tree:
+    # category -> store -> tenant_identity -> custom_slug
+    product = get_object_or_404(
+        ModernProductItem,
+        id=product_id,
+        category__store__tenant_identity__custom_slug__iexact=active_slug
+    )
 
     profile = getattr(store, 'modern_profile', None)
 
