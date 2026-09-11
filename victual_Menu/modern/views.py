@@ -3,6 +3,10 @@ from django.http import HttpResponse
 from .models import ModernStoreFront, ModernCategory, ModernProductItem, ModernSlugTenant
 
 
+
+
+
+
 def modern_store_front_view(request, store_slug=None, tenant_slug_token=None):
     """
     👑 NEXT-GEN PREMIUM ARCHETYPE VIEW ROUTER
@@ -44,6 +48,7 @@ def modern_store_front_view(request, store_slug=None, tenant_slug_token=None):
     return render(request, 'modern/minimalist_catalog.html', context)
 
 
+
 def modern_product_detail_view(request, store_slug=None, product_id=None, tenant_slug_token=None):
     """
     📸 NEXT-GEN PREMIUM SINGLE-PRODUCT ROUTER
@@ -55,7 +60,13 @@ def modern_product_detail_view(request, store_slug=None, product_id=None, tenant
     if not is_active:
         return HttpResponse("🔒 SERVICE SUSPENDED", status=403)
 
-    product = get_object_or_404(ModernProductItem, id=product_id, category__store=store)
+    # 🟢 THE CRITICAL LIVE FIX: Fetches the matching storefront instance table link row!
+    # This matches whatever store instance model field connects ModernSlugTenant to ModernStoreFront.
+    # We look it up by matching the active slug text.
+    storefront_instance = get_object_or_404(ModernStoreFront, custom_slug__iexact=active_slug)
+
+    # 🟢 ALIGNED QUERY RAIL: We now pass the exact ModernStoreFront object instance Django is begging for!
+    product = get_object_or_404(ModernProductItem, id=product_id, category__store=storefront_instance)
     profile = getattr(store, 'modern_profile', None)
 
     # 🎯 SMART CORRELATION ENGINE: Fetches exactly 3 related items from this same category aisle!
@@ -76,6 +87,7 @@ def modern_product_detail_view(request, store_slug=None, product_id=None, tenant
         return render(request, 'modern/gym_detail.html', context)
 
     return render(request, 'modern/minimalist_detail.html', context)
+
 
 
 def modern_store_about_view(request, store_slug=None, tenant_slug_token=None):
