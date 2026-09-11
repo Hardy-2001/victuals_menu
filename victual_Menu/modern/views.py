@@ -50,34 +50,29 @@ def modern_store_front_view(request, store_slug=None, tenant_slug_token=None):
 
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
-from .models import ModernSlugTenant, ModernProductItem
-
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
-from .models import ModernSlugTenant, ModernProductItem
+# Make sure to import ModernStoreFront along with your other models!
+from .models import ModernSlugTenant, ModernProductItem, ModernStoreFront
 
 
 def modern_product_detail_view(request, store_slug=None, product_id=None, tenant_slug_token=None):
     """
-    📸 NEXT-GEN PREMIUM SINGLE-PRODUCT ROUTER (TEXT-BASED MATCH ALIGNMENT ENGINE)
+    📸 NEXT-GEN PREMIUM SINGLE-PRODUCT ROUTER (MATCHING OBJECT OBJECT INSTANCES)
     """
     active_slug = store_slug or tenant_slug_token or getattr(request, 'tenant_slug_token', None)
 
-    # 1. Fetch the master slug tracking configuration object safely
+    # 1. Fetch the master slug registration object safely
     store = get_object_or_404(ModernSlugTenant, custom_slug__iexact=active_slug)
 
     is_active = getattr(store, 'is_premium_active', getattr(store, 'is_active', True))
     if not is_active:
         return HttpResponse("🔒 SERVICE SUSPENDED", status=403)
 
-    # 🟢 THE FOOLPROOF FIX: We filter the product by its ID and match the active slug string!
-    # By traversing down the relation string path (category -> store -> custom_slug),
-    # we bypass passing the wrong model object class entirely!
-    product = get_object_or_404(
-        ModernProductItem,
-        id=product_id,
-        category__store__custom_slug__iexact=active_slug
-    )
+    # 🟢 THE ALIGNED FIX: Look up the exact ModernStoreFront object instance Django is begging for!
+    # We query it by matching its slug text field against the active incoming slug string.
+    tenant = get_object_or_404(ModernStoreFront, custom_slug__iexact=active_slug)
+
+    # 🟢 PERFECT MATCH: We pass the correct 'tenant' object into the category relation track!
+    product = get_object_or_404(ModernProductItem, id=product_id, category__store=tenant)
 
     profile = getattr(store, 'modern_profile', None)
 
