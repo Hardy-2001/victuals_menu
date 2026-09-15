@@ -7,8 +7,6 @@ from .models import (
     Modern6PropertyListing,
     Modern6TourAppointment
 )
-
-
 # ==============================================================================
 # 💎 PART 1: LUXURY REAL ESTATE DISPLAY ENGINE VIEW
 # ==============================================================================

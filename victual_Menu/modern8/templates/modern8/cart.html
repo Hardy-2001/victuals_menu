@@ -1,0 +1,422 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Untree.co">
+  <link rel="shortcut icon" href="{% if platform_config.studio_logo %}{{ platform_config.studio_logo.url }}{% else %}{% static 'modern8/images/favicon.png' %}{% endif %}">
+
+  <meta name="description" content="Premium Furniture Studio Shopping Cart" />
+  <meta name="keywords" content="bootstrap, bootstrap5, django, saas, multi-tenant" />
+
+  <!-- Core Layout Asset Module Rails -->
+  <link href="{% static 'modern8/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="https://cloudflare.com" rel="stylesheet">
+  <link href="{% static 'modern8/css/tiny-slider.css' %}" rel="stylesheet">
+  <link href="{% static 'modern8/css/style.css' %}" rel="stylesheet">
+
+  <title>Shopping Cart — {{ platform_config.studio_name }}</title>
+
+  <style>
+    /* 🎨 BRAND COLOR CONFIGURATION INTERCEPTORS */
+    .custom-navbar { background: {{ platform_config.primary_color }} !important; }
+    .hero { background: {{ platform_config.primary_color }} !important; }
+    .btn-secondary { background: {{ platform_config.primary_color }} !important; border-color: {{ platform_config.primary_color }} !important; }
+    .btn-whatsapp { background: #25D366 !important; border-color: #25D366 !important; color: white !important; }
+    .btn-whatsapp:hover { background: #1ebd56 !important; color: white !important; }
+
+    /* 🛋️ NEW MODULAR FLOATING CARD GRIDS LAYOUT ACCENTS */
+    .cart-card-item {
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        border: 1px solid #eaeaea;
+        transition: all 0.3s ease;
+    }
+    .cart-card-item:hover {
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        transform: translateY(-2px);
+    }
+    .cart-product-img {
+        width: 130px;
+        height: 130px;
+        object-fit: cover;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+    }
+    .quantity-amount-input {
+        max-width: 50px !important;
+        font-weight: bold;
+    }
+    .btn-remove-card {
+        color: #dc3545;
+        font-weight: bold;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+    .btn-remove-card:hover { color: #a71d2a; }
+    .selected-highlight-badge { font-size: 11px; padding: 4px 8px; border-radius: 20px; }
+  </style>
+</head>
+
+<body>
+
+    <!-- Start Header/Navigation Navbar Section -->
+  <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+    <div class="container">
+
+      <!-- 🟢 LOGO ENGINE ALIGNMENT: Routes cleanly via subdomains and displays custom company branding -->
+      <a class="navbar-brand" href="{% url 'modern8:storefront_with_slug' slug=active_tenant.studio_slug %}">
+        {% if platform_config.studio_logo %}
+          <img src="{{ platform_config.studio_logo.url }}" alt="{{ platform_config.studio_name }}" style="max-height: 40px; width: auto; object-fit: contain;">
+        {% else %}
+          {{ platform_config.studio_name }}<span>.</span>
+        {% endif %}
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsFurni">
+        <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+          <!-- 🟢 FIXED HOME ROUTE PARAMETER: Perfectly tracking through your middleware slug layers -->
+          <li><a class="nav-link" href="{% url 'modern8:storefront_with_slug' slug=active_tenant.studio_slug %}">Home</a></li>
+          <li><a class="nav-link" href="{% url 'modern8:shop' slug=active_tenant.studio_slug %}">Shop</a></li>
+          <li><a class="nav-link" href="{% url 'modern8:about' slug=active_tenant.studio_slug %}">About us</a></li>
+          <li><a class="nav-link" href="{% url 'modern8:services' slug=active_tenant.studio_slug %}">Services</a></li>
+          <li><a class="nav-link" href="{% url 'modern8:blog' slug=active_tenant.studio_slug %}">Blog</a></li>
+          <li><a class="nav-link" href="{% url 'modern8:contact' slug=active_tenant.studio_slug %}">Contact us</a></li>
+        </ul>
+
+        <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+          <li><a class="nav-link" href="#"><img src="{% static 'modern8/images/user.svg' %}" alt="Customer Portal Profile Anchor"></a></li>
+          <li class="nav-item active"><a class="nav-link" href="{% url 'modern8:cart' slug=active_tenant.studio_slug %}"><img src="{% static 'modern8/images/cart.svg' %}" alt="Active Shopping Cart Asset Banner"></a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- End Header/Navigation Navbar Section -->
+
+
+  <!-- Start Hero Section -->
+  <div class="hero">
+    <div class="container">
+      <div class="row justify-content-between">
+        <div class="col-lg-5">
+          <div class="intro-excerpt">
+            <h1>Shopping Cart</h1>
+            <p class="mb-4">Review your selected showroom pieces, adjust quantities, and instantly compile your invoice order straight to our sales rep on WhatsApp.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Hero Section -->
+
+
+  <!-- Start Shopping Cart Card Section Wrapper -->
+  <div class="untree_co-section before-footer-section">
+    <div class="container">
+      <div class="row">
+
+        <!-- Left Side: Dynamic Cards List Deck -->
+        <div class="col-lg-7 mb-5">
+          {% for product in product_listings %}
+          <div class="cart-card-item p-3 mb-4 d-flex flex-column flex-sm-row align-items-center justify-content-between cart-item-row {% if selected_furniture_item.pk == product.pk %}border border-success{% endif %}"
+               data-product-name="{{ product.product_title }}"
+               data-price="{{ product.price_numeric }}">
+
+            <!-- Left Info Block: Image + Title Strings -->
+            <div class="d-flex flex-column flex-sm-row align-items-center text-center text-sm-start mb-3 mb-sm-0">
+              {% if product.product_thumbnail %}
+                <img src="{{ product.product_thumbnail.url }}" alt="{{ product.product_title }}" class="cart-product-img me-0 me-sm-4 mb-3 mb-sm-0 shadow-sm">
+              {% else %}
+                <img src="{% static 'modern8/images/product-1.png' %}" alt="Placeholder" class="cart-product-img me-0 me-sm-4 mb-3 mb-sm-0 shadow-sm">
+              {% endif %}
+
+              <div>
+                <h3 class="h5 text-black mb-1 font-weight-bold">{{ product.product_title }}</h3>
+                <div class="text-success mb-2 font-weight-bold">₦{{ product.price_numeric }}</div>
+                {% if selected_furniture_item.pk == product.pk %}
+                  <span class="badge bg-success selected-highlight-badge text-white">Active Choice</span>
+                {% endif %}
+              </div>
+            </div>
+
+            <!-- Right Controls Block: Quantity Buttons + Running Rows Total Math -->
+            <div class="d-flex align-items-center justify-content-between justify-content-sm-end w-100 w-sm-auto">
+              <!-- Counter Controls Input Box Layout -->
+              <div class="input-group d-flex align-items-center quantity-container me-4" style="max-width: 120px;">
+                <button class="btn btn-sm btn-outline-black decrease-qty-btn px-2" type="button">&minus;</button>
+                <input type="text" class="form-control form-control-sm text-center quantity-amount-input border-black" value="{% if selected_furniture_item.pk == product.pk %}1{% else %}0{% endif %}" readonly>
+                <button class="btn btn-sm btn-outline-black increase-qty-btn px-2" type="button">&plus;</button>
+              </div>
+
+              <!-- Live calculated row accumulation box -->
+              <div class="text-black font-weight-bold me-4 item-row-total-display" style="min-width: 90px; text-align: right;">₦0.00</div>
+
+              <!-- Clean Trash/Deselect action link -->
+              <div>
+                <a href="#" class="btn-remove-card remove-item-btn" title="Remove Item"><i class="fas fa-trash-alt"></i></a>
+              </div>
+            </div>
+
+          </div>
+          {% empty %}
+          <div class="p-5 bg-white text-center rounded border shadow-sm">
+            <img src="{% static 'modern8/images/cart.svg' %}" alt="Empty Cart" class="mb-3 opacity-50" style="width: 50px;">
+            <h4 class="text-muted font-weight-bold">Your Showroom Cart is Empty</h4>
+            <p class="text-muted mb-0">Head back to our product catalog grid to select items for inquiry.</p>
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- Right Side: Sticky Checkout Pricing Invoice Summaries Box Panel -->
+        <div class="col-lg-5">
+          <div class="p-4 bg-white rounded border shadow-sm sticky-top" style="top: 20px; z-index: 10;">
+            <h3 class="text-black h4 text-uppercase border-bottom pb-3 mb-4 font-weight-bold">Order Summary</h3>
+
+            <div class="d-flex justify-content-between mb-3 border-bottom pb-2">
+              <span class="text-muted">Subtotal</span>
+              <strong class="text-black h5 mb-0" id="cart-subtotal-display">₦0.00</strong>
+            </div>
+
+            <div class="d-flex justify-content-between mb-4">
+              <span class="text-black font-weight-bold">Total Estimated Invoice</span>
+              <strong class="text-success h4 mb-0 font-weight-bold" id="cart-total-display">₦0.00</strong>
+            </div>
+
+            <!-- THE WHATSAPP DISCUSS CHECKOUT BUTTON -->
+            <button class="btn btn-lg py-3 btn-block btn-whatsapp font-weight-bold w-100 d-flex align-items-center justify-content-center shadow-sm" type="button" id="whatsapp-checkout-trigger">
+              <span class="fab fa-whatsapp me-2 fs-5"></span> Discuss Order on WhatsApp
+            </button>
+
+            <div class="text-center mt-3">
+              <a href="{% url 'modern8:shop' slug=active_tenant.studio_slug %}" class="text-decoration-none text-muted small"><i class="fas fa-arrow-left me-1"></i> Continue Shopping</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Start Footer Section -->
+  <footer class="footer-section">
+    <div class="container relative">
+      <div class="sofa-img">
+        <img src="{% static 'modern8/images/sofa.png' %}" alt="Footer Display Sofa Layout graphic" class="img-fluid">
+      </div>
+
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="subscription-form">
+            <h3 class="d-flex align-items-center"><span class="me-1"><img src="{% static 'modern8/images/envelope-outline.svg' %}" alt="Envelope Icon" class="img-fluid"></span><span>Subscribe to Newsletter</span></h3>
+
+            {% if messages %}
+              {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  {{ message }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              {% endfor %}
+            {% endif %}
+
+            <form action="{% url 'modern8:subscribe' %}" method="POST" class="row g-3">
+              {% csrf_token %}
+              <div class="col-auto">
+                <input type="text" name="subscriber_name" class="form-control" placeholder="Enter your name" required>
+              </div>
+              <div class="col-auto">
+                <input type="email" name="subscriber_email" class="form-control" placeholder="Enter your email" required>
+              </div>
+              <div class="col-auto">
+                <button type="submit" class="btn btn-primary">
+                  <span class="fa fa-paper-plane"></span>
+                </button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-5 mb-5">
+        <div class="col-lg-4">
+          <div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">{{ platform_config.studio_name }}<span>.</span></a></div>
+          <p class="mb-4">Donec facilisis quam ut purus rutrum lobortis. Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique.</p>
+
+          <ul class="list-unstyled custom-social">
+            <li><a href="#"><span class="fa fa-brands fa-facebook-f"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-twitter"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-instagram"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-linkedin"></span></a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-8">
+          <div class="row links-wrap">
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="#">About us</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Contact us</a></li>
+              </ul>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="#">Support</a></li>
+                <li><a href="#">Knowledge base</a></li>
+                <li><a href="#">Live chat</a></li>
+              </ul>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="#">Jobs</a></li>
+                <li><a href="#">Our team</a></li>
+                <li><a href="#">Leadership</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+              </ul>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="#">Nordic Chair</a></li>
+                <li><a href="#">Kruzo Aero</a></li>
+                <li><a href="#">Ergonomic Chair</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-top copyright">
+        <div class="row pt-4">
+          <div class="col-lg-6">
+            <p class="mb-0">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Distributed By ThemeWagon</p>
+          </div>
+          <div class="col-lg-6 text-start text-lg-end">
+            <ul class="list-unstyled inline-menu mb-0">
+              <li class="list-inline-item"><a href="#">Terms &amp; Conditions</a></li>
+              <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+  <!-- End Footer Section -->
+
+  <!-- JavaScript Framework Support Inclusions -->
+  <script src="{% static 'modern8/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'modern8/js/tiny-slider.js' %}"></script>
+  <script src="{% static 'modern8/js/custom.js' %}"></script>
+
+  <!-- ⚡ CORRECTED DYNAMIC INVOICE CALCULATOR ENGINE -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const subtotalDisplay = document.getElementById('cart-subtotal-display');
+        const totalDisplay = document.getElementById('cart-total-display');
+        const checkoutBtn = document.getElementById('whatsapp-checkout-trigger');
+
+        function recalculateCartTotals() {
+            let runningCartSum = 0;
+            document.querySelectorAll('.cart-item-row').forEach(row => {
+                const itemBasePrice = parseFloat(row.getAttribute('data-price')) || 0;
+                const itemActiveQuantity = parseInt(row.querySelector('.quantity-amount-input').value) || 0;
+                const totalItemRowCost = itemBasePrice * itemActiveQuantity;
+
+                row.querySelector('.item-row-total-display').innerText = "₦" + totalItemRowCost.toLocaleString('en-US', {minimumFractionDigits: 2});
+                runningCartSum += totalItemRowCost;
+            });
+
+            const localizedFinalSum = "₦" + runningCartSum.toLocaleString('en-US', {minimumFractionDigits: 2});
+            subtotalDisplay.innerText = localizedFinalSum;
+            totalDisplay.innerText = localizedFinalSum;
+        }
+
+        // Run calculations immediately on initialization load
+        recalculateCartTotals();
+
+        // Attach Click and Toggle Controllers to active row templates
+        document.querySelectorAll('.cart-item-row').forEach(row => {
+            const inputField = row.querySelector('.quantity-amount-input');
+
+            row.querySelector('.increase-qty-btn').addEventListener('click', function() {
+                inputField.value = parseInt(inputField.value) + 1;
+                recalculateCartTotals();
+            });
+
+            row.querySelector('.decrease-qty-btn').addEventListener('click', function() {
+                let currentVal = parseInt(inputField.value);
+                if (currentVal > 0) {
+                    inputField.value = currentVal - 1;
+                    recalculateCartTotals();
+                }
+            });
+
+            row.querySelector('.remove-item-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                inputField.value = 0;
+                row.style.opacity = '0.3';
+                row.style.pointerEvents = 'none';
+                recalculateCartTotals();
+            });
+        });
+
+        // WHATSAPP INVOICE GENERATOR REDIRECTION LOGIC
+        checkoutBtn.addEventListener('click', function() {
+            let activeItemsLines = [];
+            let aggregateFinalSum = 0;
+            let counterIndex = 1;
+
+            document.querySelectorAll('.cart-item-row').forEach(row => {
+                const qtyNum = parseInt(row.querySelector('.quantity-amount-input').value) || 0;
+
+                if (qtyNum > 0) {
+                    const titleStr = row.getAttribute('data-product-name');
+                    const costNum = parseFloat(row.getAttribute('data-price')) || 0;
+                    const rowTotal = costNum * qtyNum;
+
+                    aggregateFinalSum += rowTotal;
+                    activeItemsLines.push(`${counterIndex}. *${titleStr}* (Qty: ${qtyNum}) -> ₦${rowTotal.toLocaleString()}`);
+                    counterIndex++;
+                }
+            });
+
+            if (activeItemsLines.length === 0) {
+                alert("Your shopping cart selection is empty! Increase product quantities before checking out.");
+                return;
+            }
+
+            const storeNameDisplay = "{{ platform_config.studio_name|escapejs }}";
+            let customTextMessageInvoice = `*📦 NEW ORDER INQUIRY — ${storeNameDisplay.toUpperCase()}*\n\n`;
+            customTextMessageInvoice += `Hello, I would like to purchase these specific custom furniture pieces from your showroom catalog:\n\n`;
+            customTextMessageInvoice += activeItemsLines.join('\n') + `\n\n`;
+            customTextMessageInvoice += `*💵 AGGREGATE INVOICE:* ₦${aggregateFinalSum.toLocaleString()}\n\n`;
+            customTextMessageInvoice += `Please confirm availability and dispatch options so we can finish payment configurations details.`;
+
+            let masterMerchantHotline = "{{ platform_config.studio_hotline|escapejs }}".replace(/\D/g, "");
+
+            if (!masterMerchantHotline.startsWith("234") && masterMerchantHotline.startsWith("0")) {
+                masterMerchantHotline = "234" + masterMerchantHotline.substring(1);
+            } else if (!masterMerchantHotline.startsWith("234")) {
+                masterMerchantHotline = "234" + masterMerchantHotline;
+            }
+
+            // 🟢 FIXED: Added the explicit forward slash right inside the string path!
+            const encodedWhatsAppURI = "https://wa.me/" + masterMerchantHotline + "?text=" + encodeURIComponent(customTextMessageInvoice);
+            window.open(encodedWhatsAppURI, '_blank');
+
+        });
+    });
+  </script>
+</body>
+</html>

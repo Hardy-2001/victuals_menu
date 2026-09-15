@@ -1,0 +1,248 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Untree.co">
+  <link rel="shortcut icon" href="{% if platform_config.studio_logo %}{{ platform_config.studio_logo.url }}{% else %}{% static 'modern8/images/favicon.png' %}{% endif %}">
+
+  <meta name="description" content="Premium Furniture Studio Shop Workspace" />
+  <meta name="keywords" content="bootstrap, bootstrap5, django, saas, multi-tenant" />
+
+  <!-- Core Theme Layout Asset Modules -->
+  <link href="{% static 'modern8/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="https://cloudflare.com" rel="stylesheet">
+  <link href="{% static 'modern8/css/tiny-slider.css' %}" rel="stylesheet">
+  <link href="{% static 'modern8/css/style.css' %}" rel="stylesheet">
+
+  <title>Shop Catalog — {{ platform_config.studio_name }}</title>
+
+  <style>
+    /* 🎨 SAAS ENVIRONMENT ACCENT ALIGNMENTS */
+    .custom-navbar { background: {{ platform_config.primary_color }} !important; }
+    .hero { background: {{ platform_config.primary_color }} !important; }
+    .btn-secondary { background: {{ platform_config.primary_color }} !important; border-color: {{ platform_config.primary_color }} !important; }
+  </style>
+</head>
+
+<body>
+
+   <!-- Start Header/Navigation Navbar Section -->
+  <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+    <div class="container">
+
+      <!-- 🟢 LOGO ENGINE ALIGNMENT: Routes cleanly via subdomains and displays custom company branding -->
+      <a class="navbar-brand" href="{% url 'modern8:storefront_with_slug' slug=active_tenant.studio_slug %}">
+        {% if platform_config.studio_logo %}
+          <img src="{{ platform_config.studio_logo.url }}" alt="{{ platform_config.studio_name }}" style="max-height: 40px; width: auto; object-fit: contain;">
+        {% else %}
+          {{ platform_config.studio_name }}<span>.</span>
+        {% endif %}
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsFurni">
+        <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+          <!-- 🟢 FIXED HOME ROUTE PARAMETER: Perfectly tracking through your middleware slug layers -->
+          <li><a class="nav-link" href="{% url 'modern8:storefront_with_slug' slug=active_tenant.studio_slug %}">Home</a></li>
+          <li><a class="nav-link" href="{% url 'modern8:shop' slug=active_tenant.studio_slug %}">Shop</a></li>
+          <li><a class="nav-link" href="{% url 'modern8:about' slug=active_tenant.studio_slug %}">About us</a></li>
+          <li><a class="nav-link" href="{% url 'modern8:services' slug=active_tenant.studio_slug %}">Services</a></li>
+          <li><a class="nav-link" href="{% url 'modern8:blog' slug=active_tenant.studio_slug %}">Blog</a></li>
+          <li><a class="nav-link" href="{% url 'modern8:contact' slug=active_tenant.studio_slug %}">Contact us</a></li>
+        </ul>
+
+        <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+          <li><a class="nav-link" href="#"><img src="{% static 'modern8/images/user.svg' %}" alt="Customer Portal Profile Anchor"></a></li>
+          <li class="nav-item active"><a class="nav-link" href="{% url 'modern8:cart' slug=active_tenant.studio_slug %}"><img src="{% static 'modern8/images/cart.svg' %}" alt="Active Shopping Cart Asset Banner"></a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- End Header/Navigation Navbar Section -->
+
+
+  <!-- Start Hero Section -->
+  <div class="hero">
+    <div class="container">
+      <div class="row justify-content-between">
+        <div class="col-lg-5">
+          <div class="intro-excerpt">
+            <h1>Shop Catalog</h1>
+            <p class="mb-4">Explore our exclusive, high-end collection of handcrafted interior furnishings tailored for comfort and luxury.</p>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <!-- Banner Spacing Placeholder Element -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Hero Section -->
+
+  <!-- Start Product Grid Section -->
+  <div class="untree_co-section product-section before-footer-section">
+    <div class="container">
+
+      <!-- Start Category Navigation Filter Bar Aisle -->
+      <div class="row mb-5">
+        <div class="col-12 text-center">
+          <div class="btn-group filter-button-group" role="group" aria-label="Furniture Category Segments">
+            <a href="{% url 'modern8:storefront' %}" class="btn btn-outline-dark {% if not selected_category %}active{% endif %}">Show All</a>
+            {% for cat in studio_categories %}
+              <a href="?category_slug={{ cat.category_slug }}" class="btn btn-outline-dark {% if selected_category == cat.category_slug %}active{% endif %}">
+                {{ cat.category_name }}
+              </a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <!-- End Category Navigation Filter Bar Aisle -->
+
+      <div class="row">
+        <!-- Start Dynamic Product Loop Canvas Grid -->
+        {% for product in product_listings %}
+        <div class="col-12 col-md-4 col-lg-3 mb-5">
+<a class="product-item" href="{% url 'modern8:cart' slug=active_tenant.studio_slug %}">
+            <img src="{{ product.product_thumbnail.url }}" class="img-fluid product-thumbnail" alt="{{ product.product_title }}">
+            <h3 class="product-title">{{ product.product_title }}</h3>
+            <strong class="product-price">₦{{ product.price_numeric }}</strong>
+
+            <span class="icon-cross">
+              <img src="{% static 'modern8/images/cross.svg' %}" class="img-fluid" alt="Add Aisle Target Cross Icon">
+            </span>
+          </a>
+        </div>
+        {% empty %}
+        <!-- Empty Inventory State Fallback Card Deck Banner -->
+        <div class="col-12 text-center py-5">
+          <div class="p-5 bg-light rounded shadow-sm">
+            <img src="{% static 'modern8/images/bag.svg' %}" alt="Empty Showcase Icon" class="mb-3" style="width: 48px; opacity: 0.5;">
+            <h4 class="text-muted font-weight-bold">No Premium Items Available</h4>
+            <p class="text-muted mb-0">This merchant catalog section hasn't loaded any showroom pieces inside this product group category yet.</p>
+          </div>
+        </div>
+        {% endfor %}
+        <!-- End Dynamic Product Loop -->
+      </div>
+
+    </div>
+  </div>
+  <!-- End Product Grid Section -->
+
+
+   <!-- Start Footer Section -->
+  <footer class="footer-section">
+    <div class="container relative">
+      <div class="sofa-img">
+        <img src="{% static 'modern8/images/sofa.png' %}" alt="Footer Display Sofa Layout graphic" class="img-fluid">
+      </div>
+
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="subscription-form">
+            <h3 class="d-flex align-items-center"><span class="me-1"><img src="{% static 'modern8/images/envelope-outline.svg' %}" alt="Envelope Icon" class="img-fluid"></span><span>Subscribe to Newsletter</span></h3>
+
+            {% if messages %}
+              {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  {{ message }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              {% endfor %}
+            {% endif %}
+
+            <!-- LIVE NEWSLETTER CAPTURE STRINGS ENGINE -->
+            <form action="{% url 'modern8:subscribe' %}" method="POST" class="row g-3">
+              {% csrf_token %}
+              <div class="col-auto">
+                <input type="text" name="subscriber_name" class="form-control" placeholder="Enter your name" required>
+              </div>
+              <div class="col-auto">
+                <input type="email" name="subscriber_email" class="form-control" placeholder="Enter your email" required>
+              </div>
+              <div class="col-auto">
+                <button type="submit" class="btn btn-primary">
+                  <span class="fa fa-paper-plane"></span>
+                </button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-5 mb-5">
+        <div class="col-lg-4">
+          <!-- 🟢 FIXED DYNAMIC LOGO ENGINE ALIGNMENT -->
+          <div class="mb-4 footer-logo-wrap">
+            <a href="{% url 'modern8:storefront_with_slug' slug=active_tenant.studio_slug %}" class="footer-logo">
+              {% if platform_config.studio_logo %}
+                <img src="{{ platform_config.studio_logo.url }}" alt="{{ platform_config.studio_name }}" style="max-height: 40px; width: auto; object-fit: contain;">
+              {% else %}
+                {{ platform_config.studio_name }}<span>.</span>
+              {% endif %}
+            </a>
+          </div>
+
+          <!-- Dynamic description pulled directly from your dashboard configuration metrics -->
+          <p class="mb-4">{{ platform_config.hero_subhead_copy }}</p>
+
+          <ul class="list-unstyled custom-social">
+            <li><a href="#"><span class="fa fa-brands fa-facebook-f"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-twitter"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-instagram"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-linkedin"></span></a></li>
+          </ul>
+        </div>
+        <!-- Right Side: Cleaned Navigation Channels Matrix -->
+        <div class="col-lg-8">
+          <div class="row links-wrap justify-content-end">
+
+            <!-- Pillar Column 1: Core Navigation -->
+            <div class="col-6 col-sm-6 col-md-4">
+              <ul class="list-unstyled">
+                <li><a href="{% url 'modern8:storefront_with_slug' slug=active_tenant.studio_slug %}">Home</a></li>
+                <li><a href="{% url 'modern8:shop' slug=active_tenant.studio_slug %}">Shop Page</a></li>
+                <li><a href="{% url 'modern8:about' slug=active_tenant.studio_slug %}">About us</a></li>
+                <li><a href="{% url 'modern8:services' slug=active_tenant.studio_slug %}">Services</a></li>
+              </ul>
+            </div>
+
+            <!-- Pillar Column 2: Studio Information -->
+            <div class="col-6 col-sm-6 col-md-4">
+              <ul class="list-unstyled">
+                <li><a href="{% url 'modern8:blog' slug=active_tenant.studio_slug %}">Design Blog</a></li>
+                <li><a href="{% url 'modern8:contact' slug=active_tenant.studio_slug %}">Contact us</a></li>
+                <li><a href="{% url 'modern8:cart' slug=active_tenant.studio_slug %}">Shopping Cart</a></li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- 🟢 BASE SIGNATURE MATRIX: Cleaned and updated for Corex Systems Server channels -->
+      <div class="border-top copyright">
+        <div class="row pt-4">
+          <div class="col-lg-6">
+            <p class="mb-0">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Distributed By Corex Server</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+  <!-- End Footer Section -->
+
+  <!-- Theme Infrastructure JavaScript Runner Scripts -->
+  <script src="{% static 'modern8/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'modern8/js/tiny-slider.js' %}"></script>
+  <script src="{% static 'modern8/js/custom.js' %}"></script>
+</body>
+</html>
+

@@ -59,7 +59,8 @@ INSTALLED_APPS = [
     'modern4',
     'modern5',
     'modern6',
-    'modern7'
+    'modern7',
+    'modern8',
 ]
 
 # 🎯 INJECT THIS CUSTOM ROUTER ENGINE INSIDE YOUR settings.py MIDDLEWARE ARRAY:
@@ -112,12 +113,17 @@ WSGI_APPLICATION = 'victual_Menu.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
 
+import dj_database_url
+import os
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        # FALLBACK ENGINE: If no cloud variable is found, your laptop uses your local SQLite file safely!
+        default=f"sqlite:///{os.path.join(BASE_DIR, 'db.sqlite3')}",
+        conn_max_age=600
+    )
 }
+
 
 
 # Password validation
