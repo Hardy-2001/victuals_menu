@@ -35,11 +35,12 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
-    '.localhost',  # 🟢 Handles subdomains locally (e.g., school.localhost:8000)
+    '.localhost',
     'ngrok-free.dev',
-    '.ngrok-free.dev',  # 🟢 Handles external subdomains via active live ngrok test tunnel
+    '.ngrok-free.dev',
     'corex.ng',
-    '.corex.ng'  # 🟢 Automatically allows INFINITE subdomains across the whole corex network!
+    '.corex.ng' ,
+     '*'
 ]
 
 # Application definition
