@@ -1,0 +1,297 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ platform_config.store_logo_text|default:"TailStore" }} — Premium Apparel</title>
+
+    <!-- Favicon link -->
+    <link rel="icon" type="image/x-icon" href="{% if platform_config.store_logo %}{{ platform_config.store_logo.url }}{% else %}{% static 'modern9/images/favicon.png' %}{% endif %}">
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cloudflare.com">
+
+    <!-- 🚀 OUR CUSTOM STYLESHEET VAULT -->
+    <link rel="stylesheet" href="{% static 'modern9/css/styles.css' %}">
+</head>
+<body>
+
+    <!-- Start Custom Header / Top Navigation Bar -->
+    <header class="apparel-header">
+        <div class="apparel-container">
+            <div class="apparel-navbar">
+
+                <!-- Left: Dynamic Brand Logo Layout Slot -->
+                <a href="{% url 'modern9:storefront_with_slug' slug=active_tenant.brand_slug %}" class="brand-logo-anchor">
+                    {{ platform_config.store_logo_text|default:"COREX" }}<span>.</span>
+                </a>
+
+                <!-- Center: Clean Horizontal Navigation Menu Links -->
+                <nav>
+                    <ul class="navbar-links-list">
+                        <li><a href="{% url 'modern9:storefront_with_slug' slug=active_tenant.brand_slug %}" class="navbar-item-link active-page">Home</a></li>
+                        <li><a href="{% url 'modern9:shop' slug=active_tenant.brand_slug %}" class="navbar-item-link">Shop All</a></li>
+                    </ul>
+                </nav>
+
+                <!-- Right: Profile Icons & Active Item Bag Count -->
+                <div class="navbar-action-icons">
+                    <a href="{% url 'modern9:cart' slug=active_tenant.brand_slug %}" class="shopping-bag-badge-wrapper">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="shopping-bag-count-indicator">0</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </header>
+    <!-- Start Split-Hero Presentation Section Container -->
+    <section class="apparel-hero-section">
+        <div class="apparel-container">
+            <div class="corex-grid-2">
+
+                <!-- Left Content Column Text Box Panel -->
+                <div class="hero-text-panel">
+                    <h1>Trendsetting <span>{{ platform_config.hero_title_accent|default:"Women" }}</span> Fashion</h1>
+                    <p>{{ platform_config.hero_description_copy|default:"Experience the best in sportswear and luxury casual apparel with our latest curated local design collections." }}</p>
+                    <a href="{% url 'modern9:shop' slug=active_tenant.brand_slug %}" class="apparel-btn-primary">Shop Now</a>
+                </div>
+
+                <!-- Right Content Column: Anti-Stretch Image Module Block -->
+                <div class="corex-image-wrapper">
+                    {% if platform_config.hero_slide_image %}
+                        <img src="{{ platform_config.hero_slide_image.url }}" alt="Premium Lookbook Dynamic Display Banner" class="corex-img-contained">
+                    {% else %}
+                        <img src="{% static 'modern9/images/hero-placeholder.jpg' %}" alt="Default Apparel Frame" class="corex-img-contained">
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- End Split-Hero Presentation Section Container -->
+
+    <!-- Start Dynamic Spotlight Categories Section Grid Deck -->
+    <section class="apparel-container">
+        <div class="section-headline-block">
+            <h2>📁 Shop By Category</h2>
+            <p>Explore our handpicked apparel segments curated natively for regional style delivery.</p>
+        </div>
+
+        <div class="apparel-product-grid">
+            <!-- 🟢 DYNAMIC CATEGORY MASTER LOOP DECK -->
+            {% for category in shop_categories %}
+            <div class="apparel-product-card">
+                <div class="card-image-frame">
+                    {% if category.category_image %}
+                        <img src="{{ category.category_image.url }}" alt="{{ category.category_name }}">
+                    {% else %}
+                        <img src="{% static 'modern9/images/category-placeholder.jpg' %}" alt="Placeholder Image">
+                    {% endif %}
+                </div>
+
+                <div class="card-content-box">
+                    <div>
+                        <h3 class="card-product-title" style="font-size: 16px; margin-bottom: 12px;">{{ category.category_name }}</h3>
+                    </div>
+                    <a href="{% url 'modern9:shop' slug=active_tenant.brand_slug %}?category_slug={{ category.category_slug }}" class="apparel-btn-primary" style="padding: 10px 20px; font-size: 12px; margin: 0 auto; width: max-content;">
+                        Explore
+                    </a>
+                </div>
+            </div>
+            {% empty %}
+            <div style="grid-column: 1 / -1; text-align: center; padding: 24px; background-color: #f9f9f9; border-radius: 8px; color: #4c4d56; font-size: 14px; font-weight: 500; border: 1px dashed #E5E5E5;">
+                No custom apparel category slots registered on your management board yet.
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    <!-- End Dynamic Spotlight Categories Section Grid Deck -->
+
+
+    <!-- Start Popular Products Showcase Section -->
+    <section class="apparel-container" style="margin-top: 64px;">
+        <div class="section-headline-block">
+            <h2>🔥 Popular Products</h2>
+            <p>The highest velocity fashion items moving across regional showrooms right now.</p>
+        </div>
+
+        <div class="apparel-product-grid">
+            <!-- 🟢 POPULAR PRODUCTS SELECTION TRACK LOOP -->
+            {% for product in shop_products %}
+                {% if product.is_popular %}
+                <div class="apparel-product-card">
+                    <div class="card-image-frame">
+                        <img src="{{ product.product_thumbnail.url }}" alt="{{ product.product_title }}">
+                    </div>
+
+                    <div class="card-content-box">
+                        <div>
+                            <span class="card-category-tag">{{ product.dynamic_category.category_name }}</span>
+                            <h4 class="card-product-title" title="{{ product.product_title }}">{{ product.product_title }}</h4>
+
+                            <div class="card-price-row">
+                                <span>₦{{ product.current_price|floatformat:2 }}</span>
+                                {% if product.old_slashed_price %}
+                                    <span class="slashed-price">₦{{ product.old_slashed_price|floatformat:2 }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <a href="{% url 'modern9:cart' slug=active_tenant.brand_slug %}?product_pk={{ product.pk }}" class="apparel-btn-primary" style="padding: 10px 16px; font-size: 11px; width: 100%;">
+                            <i class="fas fa-shopping-cart" style="margin-right: 6px;"></i> Add To Bag
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+            {% empty %}
+                <div style="grid-column: 1 / -1; text-align: center; padding: 16px; color: #4c4d56; font-style: italic; font-size: 14px;">
+                    No popular items flagged in your showroom tracks yet.
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+    <!-- End Popular Products Showcase Section -->
+
+    <!-- Start Promotional Mid-Banner Split Divider -->
+    <section class="apparel-hero-section" style="margin-top: 64px; text-align: center; background-position: center; background-size: cover; position: relative;">
+        <div class="apparel-container" style="position: relative; z-index: 5; max-width: 650px; margin: 0 auto;">
+            <h2 class="brand-logo-anchor" style="font-size: 32px; margin-bottom: 12px; color: #010717;">
+                {{ platform_config.promo_headline|default:"Welcome to Our Shop" }}
+            </h2>
+            <p style="font-size: 14px; color: #4c4d56; margin-bottom: 24px; line-height: 1.6;">
+                Discover curated luxury fashion lines designed locally and distributed securely nationwide by Corex shipping fulfillment networks.
+            </p>
+            <a href="{% url 'modern9:shop' slug=active_tenant.brand_slug %}" class="apparel-btn-primary">Explore Catalog</a>
+        </div>
+    </section>
+    <!-- End Promotional Mid-Banner Split Divider -->
+
+    <!-- Start Latest Products Showcase Section -->
+    <section class="apparel-container">
+        <div class="section-headline-block">
+            <h2>🌟 Latest Products</h2>
+            <p>Fresh style inventories newly unboxed across our active fulfillment hubs.</p>
+        </div>
+
+        <div class="apparel-product-grid">
+            <!-- 🟢 LATEST ARRIVALS SELECTION TRACK LOOP -->
+            {% for product in shop_products %}
+                {% if product.is_latest %}
+                <div class="apparel-product-card">
+                    <div class="card-image-frame">
+                        <img src="{{ product.product_thumbnail.url }}" alt="{{ product.product_title }}">
+                    </div>
+
+                    <div class="card-content-box">
+                        <div>
+                            <span class="card-category-tag">{{ product.dynamic_category.category_name }}</span>
+                            <h4 class="card-product-title" title="{{ product.product_title }}">{{ product.product_title }}</h4>
+
+                            <div class="card-price-row">
+                                <span>₦{{ product.current_price|floatformat:2 }}</span>
+                                {% if product.old_slashed_price %}
+                                    <span class="slashed-price">₦{{ product.old_slashed_price|floatformat:2 }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <a href="{% url 'modern9:cart' slug=active_tenant.brand_slug %}?product_pk={{ product.pk }}" class="apparel-btn-primary" style="padding: 10px 16px; font-size: 11px; width: 100%;">
+                            <i class="fas fa-shopping-cart" style="margin-right: 6px;"></i> Add To Bag
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+            {% empty %}
+                <div style="grid-column: 1 / -1; text-align: center; padding: 16px; color: #4c4d56; font-style: italic; font-size: 14px;">
+                    No fresh inventories logged into this collection section yet.
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+    <!-- End Latest Products Showcase Section -->
+
+    <!-- Start Join Our Newsletter Lead Capture Section -->
+    <section class="apparel-footer" style="padding: 48px 0; background-color: #010717; color: #ffffff; margin-top: 64px; margin-bottom: 0;">
+        <div class="apparel-container">
+            <div class="corex-grid-2">
+
+                <div>
+                    <h2 class="brand-logo-anchor" style="color: #ffffff; font-size: 24px; margin-bottom: 8px;">📩 Join Our Style Club & Save</h2>
+                    <p style="color: #4c4d56; font-size: 14px;">Subscribe to receive exclusive lookbook updates and an instant discount voucher toward your first premium order.</p>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end;">
+                    <form action="{% url 'modern9:subscribe' slug=active_tenant.brand_slug %}" method="POST" style="display: flex; width: 100%; max-width: 400px; border-radius: 6px; overflow: hidden; border: 1px solid #E5E5E5;">
+                        {% csrf_token %}
+                        <input type="email" name="subscriber_email" required style="width: 100%; padding: 12px; background-color: #ffffff; color: #010717; border: none; font-size: 14px; outline: none;" placeholder="Enter your email address">
+                        <button type="submit" class="apparel-btn-primary" style="border-radius: 0; padding: 0 24px; font-size: 12px;">Subscribe</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- End Join Our Newsletter Lead Capture Section -->
+
+    <!-- Start Multi-Column Footer Corporate Matrix Section -->
+    <footer class="apparel-footer" style="margin-top: 0; background-color: #f9f9f9;">
+        <div class="apparel-container">
+            <div class="corex-footer-grid">
+
+                <!-- Column 1: Brand Profile Details (Spans 2 columns) -->
+                <div class="footer-column-profile">
+                    <h4 class="brand-logo-anchor" style="font-size: 18px; margin-bottom: 16px;">{{ platform_config.store_logo_text|default:"COREX" }}<span>.</span></h4>
+                    <p class="footer-text-paragraph" style="margin-bottom: 16px;">Bringing your premium apparel vision to life with bespoke designs, curated tailoring, and luxury style lines crafted to elevate your wardrobe footprint natively.</p>
+                </div>
+
+                <!-- Column 2: Shopping Links -->
+                <div>
+                    <h5 class="footer-column-title">Shop</h5>
+                    <ul class="footer-links-wrapper">
+                        <li><a href="{% url 'modern9:shop' slug=active_tenant.brand_slug %}" class="footer-item-link">All Products</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Quick Links -->
+                <div>
+                    <h5 class="footer-column-title">Company</h5>
+                    <ul class="footer-links-wrapper">
+                        <li><a href="{% url 'modern9:storefront_with_slug' slug=active_tenant.brand_slug %}" class="footer-item-link">Home Page</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Showroom Address & Contact Details -->
+                <div>
+                    <h5 class="footer-column-title">Contact Us</h5>
+                    <ul class="footer-links-wrapper" style="display: flex; flex-direction: column; gap: 8px;">
+                        <li class="footer-text-paragraph" style="font-size: 13px;"><i class="fas fa-map-marker-alt" style="margin-right: 8px; color: #ff0042;"></i>{{ platform_config.store_hq_address|default:"Lagos, Nigeria" }}</li>
+                        <li class="footer-text-paragraph" style="font-size: 13px;"><i class="fas fa-phone-alt" style="margin-right: 8px; color: #ff0042;"></i>{{ platform_config.store_hotline|default:"+234 800 900 1000" }}</li>
+                        <li class="footer-text-paragraph" style="font-size: 13px; word-break: break-all;"><i class="fas fa-envelope" style="margin-right: 8px; color: #ff0042;"></i>{{ platform_config.store_email|default:"support@corex.ng" }}</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- Base Signature Copyright Bar -->
+            <div class="footer-base-row">
+                <p>&copy; <script>document.write(new Date().getFullYear());</script> {{ platform_config.store_logo_text|default:"COREX" }}. All Rights Reserved. &mdash; Distributed by Corex Systems Server</p>
+                <div style="display: flex; gap: 16px; font-size: 18px; opacity: 0.5;">
+                    <i class="fab fa-cc-paypal"></i>
+                    <i class="fab fa-cc-stripe"></i>
+                    <i class="fab fa-cc-visa"></i>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+    <!-- End Multi-Column Footer Corporate Matrix Section -->
+
+    <!-- Theme JavaScript Core Logic Engines -->
+    <script src="{% static 'modern9/js/script.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,380 @@
+/* =========================================================================
+   👑 COREX DISTRIBUTED SERVER STANDARD THEME MATRIX (BUILT FROM SCRATCH)
+   ========================================================================= */
+
+/* 🟢 GLOBAL RESET RULES */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Manrope', sans-serif;
+    background-color: #ffffff;
+    color: #010717;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* 🏢 MAIN STRUCTURE CONTAINERS */
+.apparel-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ⚓ STICKY HEADER HORIZONTAL NAVBAR */
+.apparel-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #E5E5E5;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.apparel-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 75px;
+}
+
+.brand-logo-anchor {
+    font-size: 22px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #010717;
+    text-decoration: none;
+}
+
+.brand-logo-anchor span {
+    color: #ff0042; /* Premium Accent Color Token */
+}
+
+.navbar-links-list {
+    display: flex;
+    list-style: none;
+    gap: 32px;
+    align-items: center;
+}
+
+.navbar-item-link {
+    font-size: 14px;
+    font-weight: 600;
+    color: #4c4d56;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.navbar-item-link:hover,
+.navbar-item-link.active-page {
+    color: #ff0042;
+}
+
+.navbar-action-icons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.shopping-bag-badge-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: #f9f9f9;
+    border-radius: 50%;
+    color: #010717;
+    text-decoration: none;
+}
+
+.shopping-bag-badge-wrapper:hover {
+    background-color: #f1f1f1;
+}
+
+.shopping-bag-count-indicator {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #ff0042;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 700;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/* =========================================================================
+   🖼️ GRID BLOCKS & STACKING PROTECTORS (ANTI-STRETCH MATRIX)
+   ========================================================================= */
+
+/* Hero Split Presentation Layout */
+.apparel-hero-section {
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #E5E5E5;
+    padding: 60px 0;
+    margin-bottom: 64px;
+}
+
+.corex-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 48px;
+    align-items: center;
+}
+
+.hero-text-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.hero-text-panel h1 {
+    font-size: 42px;
+    font-weight: 800;
+    line-height: 1.2;
+    color: #010717;
+    letter-spacing: -1px;
+}
+
+.hero-text-panel h1 span {
+    color: #ff0042;
+}
+
+.hero-text-panel p {
+    font-size: 16px;
+    color: #4c4d56;
+    max-width: 500px;
+}
+
+/* Core Multi-purpose Button Links */
+.apparel-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ff0042;
+    color: #ffffff;
+    padding: 14px 28px;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 0.15s ease;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.apparel-btn-primary:hover {
+    background-color: #010717;
+}
+
+/* 🟢 ANTI-STRETCH CONTAINER MODULES */
+.corex-image-wrapper {
+    width: 100%;
+    height: 420px;
+    overflow: hidden;
+    border-radius: 12px;
+    background-color: #ffffff;
+    border: 1px solid #E5E5E5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.corex-img-contained {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* 🛑 STOPS INVENTORIES FROM STRETCHING VERTICALLY! */
+    padding: 12px;
+}
+
+/* =========================================================================
+   🛍️ SHOWROOM CATALOG DECKS & HOVER ITEM CARD BLOCKS
+   ========================================================================= */
+
+.section-headline-block {
+    margin-bottom: 32px;
+}
+
+.section-headline-block h2 {
+    font-size: 24px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #010717;
+}
+
+.section-headline-block p {
+    font-size: 14px;
+    color: #4c4d56;
+    margin-top: 4px;
+}
+
+/* Catalog Responsive Product Grid Layout */
+.apparel-product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+    margin-bottom: 64px;
+}
+
+.apparel-product-card {
+    background-color: #ffffff;
+    border: 1px solid #E5E5E5;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 16px;
+    transition: box-shadow 0.2s ease;
+}
+
+.apparel-product-card:hover {
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.05);
+}
+
+.card-image-frame {
+    position: relative;
+    width: 100%;
+    height: 240px;
+    overflow: hidden;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+}
+
+.card-image-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-content-box {
+    text-align: center;
+    padding-top: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+.card-category-tag {
+    font-size: 10px;
+    font-weight: 700;
+    color: #ff0042;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.card-product-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #010717;
+    margin-bottom: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-price-row {
+    font-size: 16px;
+    font-weight: 800;
+    color: #ff0042;
+    margin-bottom: 12px;
+}
+
+.card-price-row .slashed-price {
+    font-size: 12px;
+    color: #4c4d56;
+    text-decoration: line-through;
+    margin-left: 8px;
+    font-weight: 500;
+}
+
+/* =========================================================================
+   🏢 CORPORATE MULTI-COLUMN FOOTER SYSTEM
+   ========================================================================= */
+
+.apparel-footer {
+    background-color: #f9f9f9;
+    border-top: 1px solid #E5E5E5;
+    padding: 64px 0 32px 0;
+    margin-top: 64px;
+}
+
+.corex-footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    margin-bottom: 48px;
+}
+
+.footer-column-profile {
+    grid-column: span 2;
+}
+
+@media (max-width: 768px) {
+    .footer-column-profile {
+        grid-column: span 1;
+    }
+    .corex-footer-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.footer-column-title {
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #4c4d56;
+    margin-bottom: 16px;
+}
+
+.footer-text-paragraph {
+    font-size: 14px;
+    color: #4c4d56;
+    line-height: 1.6;
+}
+
+.footer-links-wrapper {
+    list-style: none;
+}
+
+.footer-links-wrapper li {
+    margin-bottom: 10px;
+}
+
+.footer-item-link {
+    font-size: 14px;
+    color: #4c4d56;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.footer-item-link:hover {
+    color: #ff0042;
+}
+
+.footer-base-row {
+    border-top: 1px solid #E5E5E5;
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 12px;
+    color: #4c4d56;
+}

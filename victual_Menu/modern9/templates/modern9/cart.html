@@ -1,0 +1,336 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" href="{% if platform_config.store_logo %}{{ platform_config.store_logo.url }}{% else %}{% static 'modern9/images/favicon.png' %}{% endif %}">
+
+  <meta name="description" content="Premium Apparel Shopping Bag & WhatsApp Checkout Tunnel" />
+  <meta name="keywords" content="bootstrap, bootstrap5, django, saas, whatsapp, checkout" />
+
+    <!-- 📁 FIXED PATH ASSET HOOKS: Mapped directly to your actual PyCharm folder tree files -->
+  <!-- Load Tailwind Base styles from your local folder -->
+  <link href="{% static 'modern9/css/tailwind.css' %}" rel="stylesheet">
+
+  <!-- Load your main custom design style file (Fixed with the correct 's' at the end) -->
+  <link href="{% static 'modern9/css/styles.css' %}" rel="stylesheet">
+
+  <!-- Load your secondary custom style sheet additions -->
+  <link href="{% static 'modern9/css/custom.css' %}" rel="stylesheet">
+
+  <!-- Global FontAwesome Icons for layout elements -->
+  <link href="https://cloudflare.com" rel="stylesheet">
+
+  <title>Shopping Bag — {{ platform_config.store_logo_text }}</title>
+
+  <style>
+    .custom-navbar { background: #111111 !important; }
+    .btn-dark-premium { background: #111111 !important; color: #ffffff !important; border: 1px solid #111111; }
+    .btn-dark-premium:hover { background: #333333 !important; }
+    .btn-whatsapp-checkout { background: #25D366 !important; color: #ffffff !important; border: 1px solid #25D366; font-weight: bold; }
+    .btn-whatsapp-checkout:hover { background: #128C7E !important; border: 1px solid #128C7E; }
+    .cart-table th { background: #111111; color: #ffffff; text-transform: uppercase; font-size: 12px; letter-spacing: 1px; }
+  </style>
+</head>
+
+<body>
+
+  <!-- Start Header/Navigation Navbar Section -->
+  <nav class="navbar navbar-expand-md navbar-dark custom-navbar sticky-top py-3" aria-label="TailStore Navigation Base">
+    <div class="container">
+      <a class="navbar-brand font-weight-bold tracking-wider" href="{% url 'modern9:storefront_with_slug' slug=active_tenant.brand_slug %}">
+        {{ platform_config.store_logo_text }}<span>.</span>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsTailStore" aria-controls="#navbarsTailStore" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsTailStore">
+        <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+          <li><a class="nav-link" href="{% url 'modern9:storefront_with_slug' slug=active_tenant.brand_slug %}">Home</a></li>
+          <li><a class="nav-link" href="{% url 'modern9:shop' slug=active_tenant.brand_slug %}">Shop Pages</a></li>
+          <li><a class="nav-link" href="#">Men's Collection</a></li>
+          <li><a class="nav-link" href="#">Women's Aisle</a></li>
+          <li><a class="nav-link" href="#">Design Blog</a></li>
+        </ul>
+
+        <ul class="navbar-nav mb-2 mb-md-0 ms-5 d-flex align-items-center">
+          <li><a class="nav-link px-2" href="#"><i class="far fa-user text-white"></i></a></li>
+          <li class="position-relative ms-3">
+            <a class="nav-link px-2 bg-dark rounded-circle" href="#">
+              <i class="fas fa-shopping-bag text-white"></i>
+              <span class="badge bg-danger position-absolute top-0 start-100 translate-middle rounded-circle" style="font-size: 10px;">1</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- End Header/Navigation Navbar Section -->
+
+  <!-- Start Page Title Banner Header -->
+  <div class="bg-light border-bottom py-4 mb-5">
+    <div class="container">
+      <h1 class="h3 font-weight-bold text-dark text-uppercase tracking-wider mb-1"><i class="fas fa-shopping-basket me-2"></i> Review Your Order</h1>
+      <p class="text-muted small mb-0">Confirm your garment specifications before launching your instant secure WhatsApp dispatch request.</p>
+    </div>
+  </div>
+  <!-- End Page Title Banner Header -->
+
+
+  <!-- Start Cart Form Layout Container -->
+  <div class="container mb-5 pb-5">
+    <div class="row">
+      <div class="col-12 col-lg-8 mb-4">
+
+        <!-- MAIN CALCULATION INTERACTIVE CART INTERFACE -->
+        <div class="table-responsive bg-white rounded shadow-sm border p-1">
+          <table class="table table-borderless align-middle mb-0 cart-table">
+            <thead>
+              <tr class="border-bottom">
+                <th scope="col" class="p-3">Garment Item</th>
+                <th scope="col" class="p-3 text-center">Unit Price</th>
+                <th scope="col" class="p-3 text-center">Qty</th>
+                <th scope="col" class="p-3 text-end">Total Price</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <!-- 🟢 ORDER DISPLAY ITEM ROW: Pre-loading clicked garment metadata fields natively -->
+              <tr class="border-bottom">
+                <td class="p-3">
+                  <div class="d-flex align-items-center">
+                    {% if selected_furniture_item.product_thumbnail %}
+                      <img src="{{ selected_furniture_item.product_thumbnail.url }}" alt="{{ selected_furniture_item.product_title }}" class="img-fluid rounded border me-3" style="width: 70px; height: 80px; object-fit: cover;">
+                    {% else %}
+                      <img src="{% static 'modern9/images/product-placeholder.jpg' %}" alt="Apparel Thumbnail" class="img-fluid rounded border me-3" style="width: 70px; height: 80px; object-fit: cover;">
+                    {% endif %}
+                    <div>
+                      <h5 class="h6 font-weight-bold text-dark mb-1">{{ selected_furniture_item.product_title|default:"Summer Black Premium Gown" }}</h5>
+                      <span class="text-uppercase text-muted tracking-widest font-weight-bold" style="font-size: 10px;">{{ selected_furniture_item.dynamic_category.category_name|default:"Women Aisle" }}</span>
+                    </div>
+                  </div>
+                </td>
+
+                <td class="p-3 text-center">
+                  <span class="font-weight-bold text-secondary">₦{{ selected_furniture_item.price_numeric|default:"25000.00"|floatformat:2 }}</span>
+                </td>
+
+                <td class="p-3 text-center">
+                  <div class="d-inline-flex align-items-center border rounded bg-light px-2 py-1">
+                    <button type="button" class="btn btn-sm btn-link text-dark p-0 border-0 text-decoration-none" onclick="decrementQty()"><i class="fas fa-minus small"></i></button>
+                    <input type="text" id="cartProductQty" class="form-control form-control-sm bg-transparent border-0 text-center font-weight-bold p-0 mx-2" value="1" readonly style="width: 25px; box-shadow: none;">
+                    <button type="button" class="btn btn-sm btn-link text-dark p-0 border-0 text-decoration-none" onclick="incrementQty()"><i class="fas fa-plus small"></i></button>
+                  </div>
+                </td>
+
+                <td class="p-3 text-end">
+                  <span class="font-weight-bold text-success h6">₦<span id="displayLineTotal">{{ selected_furniture_item.price_numeric|default:"25000.00"|floatformat:2 }}</span></span>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Secondary Form Action Row Matrix -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center mt-3 gap-2">
+          <div class="input-group input-group-sm" style="max-width: 280px;">
+            <input type="text" class="form-control font-weight-bold" placeholder="Apply Discount Code" style="font-size: 12px;">
+            <button class="btn btn-dark btn-dark-premium text-uppercase font-weight-bold px-3" type="button" style="font-size: 11px;">Apply</button>
+          </div>
+          <a href="{% url 'modern9:shop' slug=active_tenant.brand_slug %}" class="btn btn-sm btn-outline-dark text-uppercase font-weight-bold px-4 py-2" style="font-size: 11px;"><i class="fas fa-arrow-left me-1"></i> Continue Shopping</a>
+        </div>
+
+      </div>
+
+              <!-- Right Column Sidebar: Dynamic Financial Summary & WhatsApp Router -->
+      <div class="col-12 col-lg-4">
+        <div class="card border-0 rounded shadow-sm border p-4 bg-white">
+          <h3 class="h6 font-weight-bold text-dark text-uppercase tracking-wider pb-3 border-bottom mb-3"><i class="fas fa-file-invoice-dollar me-2 text-muted"></i> Order Summary</h3>
+
+          <ul class="list-unstyled mb-4" style="font-size: 14px;">
+            <li class="d-flex justify-content-between mb-2">
+              <span class="text-muted">Subtotal (1 item)</span>
+              <span class="font-weight-bold text-dark">₦<span id="summarySubtotal">{{ selected_furniture_item.price_numeric|default:"25000.00" }}</span></span>
+            </li>
+            <li class="d-flex justify-content-between mb-2">
+              <span class="text-muted">Regional Logistics (VCO)</span>
+              <span class="text-success font-weight-bold text-uppercase" style="font-size: 11px;">Free Dispatch</span>
+            </li>
+            <li class="d-flex justify-content-between pt-3 border-top mt-3">
+              <span class="font-weight-bold text-dark h6">Estimated Total</span>
+              <span class="font-weight-bold text-success h5">₦<span id="summaryTotal">{{ selected_furniture_item.price_numeric|default:"25000.00" }}</span></span>
+            </li>
+          </ul>
+
+          <!-- 🟢 THE WHATSAPP REDIRECT TRAFFIC VECTOR BUTTON -->
+          <button type="button" class="btn btn-lg btn-whatsapp-checkout w-100 font-weight-bold py-3 text-uppercase shadow-sm mb-2" onclick="executeWhatsAppCheckout()" style="font-size: 13px;">
+            <i class="fab fa-whatsapp fa-lg me-2"></i> Checkout via WhatsApp
+          </button>
+          <p class="text-muted text-center mb-0" style="font-size: 10px;"><i class="fas fa-lock me-1"></i> Orders are compiled safely into instant chat dispatches.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Cart Form Layout Container -->
+
+  <!-- 🟢 WHATSAPP CHECKOUT ENGINE STRINGS GENERATOR SCRIPT -->
+  <script>
+    // Pull base structural value parameters safely off your database columns template configuration context
+    const unitPriceNumeric = parseFloat("{{ selected_furniture_item.price_numeric|default:'25000.00' }}");
+    const itemTitleString = "{{ selected_furniture_item.product_title|default:'Summer Black Premium Gown' }}";
+    const tenantBrandTitle = "{{ platform_config.store_logo_text|default:'TailStore' }}";
+    const hotlinePhoneNumber = "{{ platform_config.store_hotline|default:'+2349008007000' }}".replace(/[^0-9+]/g, '');
+
+    function incrementQty() {
+      let qtyInput = document.getElementById('cartProductQty');
+      let currentVal = parseInt(qtyInput.value);
+      qtyInput.value = currentVal + 1;
+      recalculateCartMetrics();
+    }
+
+    function decrementQty() {
+      let qtyInput = document.getElementById('cartProductQty');
+      let currentVal = parseInt(qtyInput.value);
+      if (currentVal > 1) {
+        qtyInput.value = currentVal - 1;
+        recalculateCartMetrics();
+      }
+    }
+
+    function recalculateCartMetrics() {
+      const activeQty = parseInt(document.getElementById('cartProductQty').value);
+      const computedTotal = (unitPriceNumeric * activeQty).toFixed(2);
+
+      // Update screen text content targets smoothly
+      document.getElementById('displayLineTotal').innerText = computedTotal;
+      document.getElementById('summarySubtotal').innerText = computedTotal;
+      document.getElementById('summaryTotal').innerText = computedTotal;
+    }
+
+    function executeWhatsAppCheckout() {
+      const activeQty = document.getElementById('cartProductQty').value;
+      const finalTotalAmount = document.getElementById('summaryTotal').innerText;
+
+      // 📝 COMPILE THE LUXURY APPAREL INVOICE STRING FOR THE MERCHANT'S CHAT LINE
+      let dispatchMessageBody = `Hello *${tenantBrandTitle}*, I want to place an order via Corex Server:\n\n`;
+      dispatchMessageBody += `📦 *Product Name:* ${itemTitleString}\n`;
+      dispatchMessageBody += `🔢 *Quantity Requested:* ${activeQty} unit(s)\n`;
+      dispatchMessageBody += `💰 *Total Invoice Price:* ₦${finalTotalAmount}\n\n`;
+      dispatchMessageBody += `Please confirm availability so I can share my delivery details right away!`;
+
+      // Translate the sentence into safe URL characters
+      const encodedUrlMessage = encodeURIComponent(dispatchMessageBody);
+      const targetWhatsAppApiUrl = `https://wa.me{hotlinePhoneNumber}?text=${encodedUrlMessage}`;
+
+      // Open a clean new tab streaming directly to the client's phone device app
+      window.open(targetWhatsAppApiUrl, '_blank');
+    }
+  </script>
+
+  <!-- Start Join Our Newsletter Lead Capture Section -->
+  <div class="bg-dark text-white py-5 border-top border-bottom mb-0">
+    <div class="container py-4">
+      <div class="row align-items-center justify-content-between">
+
+        <div class="col-lg-6 mb-4 mb-lg-0">
+          <h2 class="h3 font-weight-bold mb-2">📩 Join Our Style Club & Save</h2>
+          <p class="text-muted mb-0 mb-lg-0 small">Subscribe to receive exclusive lookbook updates and an instant ₦50,000 discount voucher toward your first order.</p>
+        </div>
+
+        <div class="col-lg-5">
+          <!-- NEWSLETTER SUBMISSION INBOUND LEAD CAPTURE FORM RAIL -->
+          <form action="#" method="POST" class="input-group">
+            {% csrf_token %}
+            <input type="email" name="subscriber_email" class="form-control form-control-lg border-0 bg-secondary text-white font-weight-bold" placeholder="Enter your email address" required style="font-size: 14px;">
+            <button type="submit" class="btn btn-light font-weight-bold px-4 text-uppercase" style="font-size: 12px;">Subscribe</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- End Join Our Newsletter Lead Capture Section -->
+
+  <!-- Start Multi-Column Footer Corporate Matrix Section -->
+  <footer class="bg-light border-top text-dark pt-5 pb-4">
+    <div class="container">
+      <div class="row g-4 mb-5">
+
+        <!-- Left Brand Profile Details Column -->
+        <div class="col-12 col-md-4">
+          <h4 class="h5 font-weight-bold mb-3 text-uppercase tracking-wider">{{ platform_config.store_logo_text }}<span>.</span></h4>
+          <p class="text-muted small mb-4">Bringing your premium vision to life with bespoke apparel, curated tailoring, and luxury style lines crafted to elevate your wardrobe footprint natively.</p>
+
+          <div class="d-flex g-3">
+            <a href="#" class="btn btn-sm btn-outline-dark rounded-circle me-2" style="width: 32px; height: 32px; padding: 5px 0;"><i class="fab fa-facebook-f small"></i></a>
+            <a href="#" class="btn btn-sm btn-outline-dark rounded-circle me-2" style="width: 32px; height: 32px; padding: 5px 0;"><i class="fab fa-twitter small"></i></a>
+            <a href="#" class="btn btn-sm btn-outline-dark rounded-circle me-2" style="width: 32px; height: 32px; padding: 5px 0;"><i class="fab fa-instagram small"></i></a>
+            <a href="#" class="btn btn-sm btn-outline-dark rounded-circle" style="width: 32px; height: 32px; padding: 5px 0;"><i class="fab fa-linkedin-in small"></i></a>
+          </div>
+        </div>
+
+        <!-- Middle Column 1: Shopping Links -->
+        <div class="col-6 col-md-2 offset-md-1">
+          <h5 class="h6 font-weight-bold mb-3 text-uppercase tracking-wider text-secondary" style="font-size: 12px;">Shop</h5>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="{% url 'modern9:shop' slug=active_tenant.brand_slug %}" class="text-muted text-decoration-none">All Products</a></li>
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Women's Wear</a></li>
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Men's Apparel</a></li>
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Accessories</a></li>
+          </ul>
+        </div>
+
+        <!-- Middle Column 2: Quick Links -->
+        <div class="col-6 col-md-2">
+          <h5 class="h6 font-weight-bold mb-3 text-uppercase tracking-wider text-secondary" style="font-size: 12px;">Company</h5>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="{% url 'modern9:storefront_with_slug' slug=active_tenant.brand_slug %}" class="text-muted text-decoration-none">Home Page</a></li>
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Our Story</a></li>
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Privacy Policy</a></li>
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Terms of Service</a></li>
+          </ul>
+        </div>
+
+        <!-- Right Column: Showroom Address & Contact Details -->
+        <div class="col-12 col-md-3">
+          <h5 class="h6 font-weight-bold mb-3 text-uppercase tracking-wider text-secondary" style="font-size: 12px;">Contact Us</h5>
+          <ul class="list-unstyled small text-muted">
+            <li class="mb-2 d-flex"><i class="fas fa-map-marker-alt me-2 mt-1"></i> <span>{{ platform_config.store_hq_address }}</span></li>
+            <li class="mb-2 d-flex"><i class="fas fa-phone-alt me-2 mt-1"></i> <span>{{ platform_config.store_hotline }}</span></li>
+            <li class="mb-2 d-flex"><i class="fas fa-envelope me-2 mt-1"></i> <span class="text-truncate">{{ platform_config.store_email }}</span></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Base Signature Layer Block Rules -->
+      <div class="border-top pt-4 copyright">
+        <div class="row align-items-center">
+          <div class="col-md-6 mb-2 mb-md-0">
+            <p class="mb-0 small text-muted">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Distributed by Corex Systems Server</p>
+          </div>
+          <div class="col-md-6 text-md-end text-start">
+            <div class="small text-muted">
+              <i class="fab fa-cc-paypal fa-2x me-2 opacity-50"></i>
+              <i class="fab fa-cc-stripe fa-2x me-2 opacity-50"></i>
+              <i class="fab fa-cc-visa fa-2x opacity-50"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+  <!-- End Multi-Column Footer Corporate Matrix Section -->
+
+  <!-- Theme Infrastructure JavaScript Runner Scripts -->
+  <script src="{% static 'modern9/js/script.js' %}"></script>
+  <script src="{% static 'modern9/js/tiny-slider.js' %}"></script>
+  <script src="{% static 'modern9/js/custom.js' %}"></script>
+</body>
+</html>
+

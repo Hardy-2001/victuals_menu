@@ -1,0 +1,327 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" href="{% if platform_config.store_logo %}{{ platform_config.store_logo.url }}{% else %}{% static 'modern9/images/favicon.png' %}{% endif %}">
+
+  <meta name="description" content="Premium Apparel Product Catalog Grid" />
+  <meta name="keywords" content="bootstrap, bootstrap5, django, saas, clothing, multi-tenant" />
+
+    <!-- 📁 FIXED PATH ASSET HOOKS: Mapped directly to your actual PyCharm folder tree files -->
+  <!-- Load Tailwind Base styles from your local folder -->
+  <link href="{% static 'modern9/css/tailwind.css' %}" rel="stylesheet">
+
+  <!-- Load your main custom design style file (Fixed with the correct 's' at the end) -->
+  <link href="{% static 'modern9/css/styles.css' %}" rel="stylesheet">
+
+  <!-- Load your secondary custom style sheet additions -->
+  <link href="{% static 'modern9/css/custom.css' %}" rel="stylesheet">
+
+  <!-- Global FontAwesome Icons for layout elements -->
+  <link href="https://cloudflare.com" rel="stylesheet">
+
+  <title>Apparel Catalog — {{ platform_config.store_logo_text }}</title>
+
+  <style>
+    /* 🎨 NAVIGATION AND DROPDOWN BUTTON BRAND ACCENTS */
+    .custom-navbar { background: #111111 !important; }
+    .btn-dark-premium { background: #111111 !important; color: #ffffff !important; border: 1px solid #111111; }
+    .btn-dark-premium:hover { background: #333333 !important; }
+    .filter-sidebar-card { background: #ffffff; border: 1px solid #eaeaea; border-radius: 8px; }
+    .product-grid-img-wrap { padding-top: 120%; position: relative; overflow: hidden; background-color: #f9f9f9; }
+  </style>
+</head>
+
+<body>
+
+  <!-- Start Header/Navigation Navbar Section -->
+  <nav class="navbar navbar-expand-md navbar-dark custom-navbar sticky-top py-3" aria-label="TailStore Navigation Base">
+    <div class="container">
+      <a class="navbar-brand font-weight-bold tracking-wider" href="{% url 'modern9:storefront_with_slug' slug=active_tenant.brand_slug %}">
+        {{ platform_config.store_logo_text }}<span>.</span>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsTailStore" aria-controls="#navbarsTailStore" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsTailStore">
+        <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+          <li><a class="nav-link" href="{% url 'modern9:storefront_with_slug' slug=active_tenant.brand_slug %}">Home</a></li>
+          <li class="nav-item active"><a class="nav-link" href="{% url 'modern9:shop' slug=active_tenant.brand_slug %}">Shop Pages</a></li>
+          <li><a class="nav-link" href="#">Men's Collection</a></li>
+          <li><a class="nav-link" href="#">Women's Aisle</a></li>
+          <li><a class="nav-link" href="#">Design Blog</a></li>
+        </ul>
+
+        <ul class="navbar-nav mb-2 mb-md-0 ms-5 d-flex align-items-center">
+          <li><a class="nav-link px-2" href="#"><i class="far fa-user text-white"></i></a></li>
+          <li class="position-relative ms-3">
+            <a class="nav-link px-2 bg-dark rounded-circle" href="#">
+              <i class="fas fa-shopping-bag text-white"></i>
+              <span class="badge bg-danger position-absolute top-0 start-100 translate-middle rounded-circle" style="font-size: 10px;">0</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- End Header/Navigation Navbar Section -->
+
+  <!-- Start Catalog Action Sub-Header Sorting Menu Bar -->
+  <div class="bg-light border-bottom py-3 mb-5">
+    <div class="container">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+        <div class="mb-3 mb-md-0">
+          <h1 class="h4 font-weight-bold text-dark mb-0 text-uppercase tracking-wider">Browse Apparel Catalog</h1>
+          <p class="text-muted small mb-0">Filter and discover curated Nigerian fashion lines seamlessly.</p>
+        </div>
+        
+        <div class="d-flex align-items-center">
+          <div class="dropdown me-3">
+            <button class="btn btn-sm btn-outline-dark dropdown-toggle font-weight-bold text-uppercase" type="button" id="sortDropdownMenu" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 11px;">
+              Sort By Latest
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="sortDropdownMenu" style="font-size: 13px;">
+              <li><a class="dropdown-item" href="?sort=latest">Sort by Latest</a></li>
+              <li><a class="dropdown-item" href="?sort=popularity">Sort by Popularity</a></li>
+              <li><a class="dropdown-item" href="?sort=alphabetic">Sort by A-Z Matrix</a></li>
+            </ul>
+          </div>
+          <button class="btn btn-sm btn-dark btn-dark-premium d-md-none font-weight-bold text-uppercase" type="button" data-bs-toggle="collapse" data-bs-target="#filterSidebarCollapse" style="font-size: 11px;"><i class="fas fa-filter me-1"></i> Filters</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Catalog Action Sub-Header Sorting Menu Bar -->
+
+
+  <!-- Start Main Catalog Split Layout Container -->
+  <div class="container mb-5 pb-5">
+    <div class="row">
+
+      <!-- Left Column Sidebar: Interactive Multi-Tenant Filters Grid -->
+      <div class="col-12 col-lg-3 mb-4 mb-lg-0 collapse d-lg-block" id="filterSidebarCollapse">
+        <div class="filter-sidebar-card p-4 shadow-sm position-sticky" style="top: 110px; z-index: 10;">
+
+          <!-- Category Filter Segment Block -->
+          <div class="mb-4 pb-4 border-bottom">
+            <h3 class="h6 font-weight-bold text-dark text-uppercase tracking-wider mb-3">📁 Categories</h3>
+            <ul class="list-unstyled mb-0 style-filter-list" style="font-size: 14px;">
+              <li class="mb-2">
+                <a href="{% url 'modern9:shop' slug=active_tenant.brand_slug %}" class="text-decoration-none {% if not selected_category %}text-dark font-weight-bold{% else %}text-muted{% endif %}">
+                  Show All Apparel
+                </a>
+              </li>
+
+              <!-- 🟢 DYNAMIC CATEGORY LOOP LINK DECK -->
+              {% for category in shop_categories %}
+              <li class="mb-2 d-flex justify-content-between align-items-center">
+                <a href="{% url 'modern9:shop' slug=active_tenant.brand_slug %}?category_slug={{ category.category_slug }}"
+                   class="text-decoration-none {% if selected_category == category.category_slug %}text-success font-weight-bold{% else %}text-muted{% endif %}">
+                  {{ category.category_name }}
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+
+          <!-- Localized Sizing Matrices Showcase Filter -->
+          <div class="mb-4 pb-4 border-bottom">
+            <h3 class="h6 font-weight-bold text-dark text-uppercase tracking-wider mb-3">📏 Available Sizes</h3>
+            <div class="d-flex flex-wrap gap-2">
+              <span class="badge border border-dark text-dark bg-light px-3 py-2 font-weight-bold" style="cursor: pointer; font-size: 11px;">S</span>
+              <span class="badge border border-secondary text-muted bg-white px-3 py-2 font-weight-bold" style="cursor: pointer; font-size: 11px;">M</span>
+              <span class="badge border border-secondary text-muted bg-white px-3 py-2 font-weight-bold" style="cursor: pointer; font-size: 11px;">L</span>
+              <span class="badge border border-secondary text-muted bg-white px-3 py-2 font-weight-bold" style="cursor: pointer; font-size: 11px;">XL</span>
+            </div>
+          </div>
+
+          <!-- Color Matrix Anchor Track -->
+          <div class="mb-4 pb-2">
+            <h3 class="h6 font-weight-bold text-dark text-uppercase tracking-wider mb-3">🎨 Regional Palette</h3>
+            <div class="d-flex gap-2">
+              <span class="rounded-circle d-inline-block border border-dark" style="width: 20px; height: 20px; background: #000000; cursor: pointer;" title="Classic Black"></span>
+              <span class="rounded-circle d-inline-block border" style="width: 20px; height: 20px; background: #ffffff; cursor: pointer;" title="Pure White"></span>
+              <span class="rounded-circle d-inline-block border" style="width: 20px; height: 20px; background: #01662a; cursor: pointer;" title="Lagos Green"></span>
+              <span class="rounded-circle d-inline-block border" style="width: 20px; height: 20px; background: #b80c0c; cursor: pointer;" title="Crimson Red"></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+              <!-- Right Column: Dynamic Multi-Tenant Product Grid -->
+      <div class="col-12 col-lg-9">
+        <div class="row g-4">
+          <!-- 🟢 DYNAMIC PRODUCT SELECTION MASTER LOOP -->
+          {% for product in shop_products %}
+          <div class="col-6 col-md-4">
+            <div class="card border-0 rounded shadow-sm overflow-hidden h-100 bg-white">
+
+              <!-- Product Image Wrapper with Promo Tag Indicators -->
+              <div class="product-grid-img-wrap">
+                <img src="{{ product.product_thumbnail.url }}" alt="{{ product.product_title }}" class="position-absolute w-100 h-100 top-0 start-0" style="object-fit: cover;">
+                {% if product.old_slashed_price %}
+                  <span class="badge bg-danger position-absolute top-0 start-0 m-3 px-3 py-2 font-weight-bold text-uppercase" style="font-size: 10px;">Sale</span>
+                {% endif %}
+              </div>
+
+              <!-- Card Body Content Core -->
+              <div class="card-body p-3 text-center d-flex flex-column justify-content-between">
+                <div>
+                  <span class="text-uppercase text-secondary tracking-widest font-weight-bold d-block mb-1" style="font-size: 10px;">{{ product.dynamic_category.category_name }}</span>
+                  <h4 class="h6 font-weight-bold text-dark text-truncate mb-2" title="{{ product.product_title }}">{{ product.product_title }}</h4>
+
+                  <div class="mb-3">
+                    <span class="text-success font-weight-bold h5">₦{{ product.current_price|floatformat:2 }}</span>
+                    {% if product.old_slashed_price %}
+                      <span class="text-muted small text-decoration-line-through ms-2">₦{{ product.old_slashed_price|floatformat:2 }}</span>
+                    {% endif %}
+                  </div>
+                </div>
+
+                <button class="btn btn-sm btn-dark btn-dark-premium w-100 font-weight-bold py-2 text-uppercase" style="font-size: 11px;"><i class="fas fa-shopping-cart me-2"></i> Add To Cart</button>
+              </div>
+
+            </div>
+          </div>
+          {% empty %}
+          <!-- Empty Catalog Fallback View State -->
+          <div class="col-12 text-center py-5">
+            <div class="p-5 bg-white rounded shadow-sm border border-dashed text-muted">
+              <i class="fas fa-folder-open fa-2x mb-3 text-secondary"></i>
+              <p class="font-weight-bold mb-1">No products found matching this filter track.</p>
+              <p class="small mb-0">Try checking another category segment or upload fresh garments into your inventory panel.</p>
+            </div>
+          </div>
+          {% endfor %}
+          <!-- End Dynamic Product Master Loop -->
+        </div>
+
+        <!-- Start Pagination Navigation Layer Block -->
+        <div class="row pt-5 mt-4">
+          <div class="col-12 d-flex justify-content-center">
+            <nav aria-label="Catalog Page Navigation">
+              <ul class="pagination pagination-sm mb-0">
+                <li class="page-item disabled"><a class="page-link font-weight-bold text-dark px-3 py-2" href="#" tabindex="-1">Previous</a></li>
+                <li class="page-item active"><a class="page-link font-weight-bold bg-dark border-dark px-3 py-2" href="#">1</a></li>
+                <li class="page-item"><a class="page-link font-weight-bold text-dark px-3 py-2" href="#">2</a></li>
+                <li class="page-item"><a class="page-link font-weight-bold text-dark px-3 py-2" href="#">3</a></li>
+                <li class="page-item"><a class="page-link font-weight-bold text-dark px-3 py-2" href="#">Next</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <!-- End Pagination Navigation Layer Block -->
+
+      </div>
+    </div>
+  </div>
+  <!-- End Main Catalog Split Layout Container -->
+
+  <!-- Start Join Our Newsletter Lead Capture Section -->
+  <div class="bg-dark text-white py-5 border-top border-bottom mb-0">
+    <div class="container py-4">
+      <div class="row align-items-center justify-content-between">
+
+        <div class="col-lg-6 mb-4 mb-lg-0">
+          <h2 class="h3 font-weight-bold mb-2">📩 Join Our Style Club & Save</h2>
+          <p class="text-muted mb-0 mb-lg-0 small">Subscribe to receive exclusive lookbook updates and an instant ₦50,000 discount voucher toward your first order.</p>
+        </div>
+
+        <div class="col-lg-5">
+          <!-- NEWSLETTER SUBMISSION INBOUND LEAD CAPTURE FORM RAIL -->
+          <form action="#" method="POST" class="input-group">
+            {% csrf_token %}
+            <input type="email" name="subscriber_email" class="form-control form-control-lg border-0 bg-secondary text-white font-weight-bold" placeholder="Enter your email address" required style="font-size: 14px;">
+            <button type="submit" class="btn btn-light font-weight-bold px-4 text-uppercase" style="font-size: 12px;">Subscribe</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- End Join Our Newsletter Lead Capture Section -->
+
+  <!-- Start Multi-Column Footer Corporate Matrix Section -->
+  <footer class="bg-light border-top text-dark pt-5 pb-4">
+    <div class="container">
+      <div class="row g-4 mb-5">
+
+        <!-- Left Brand Profile Details Column -->
+        <div class="col-12 col-md-4">
+          <h4 class="h5 font-weight-bold mb-3 text-uppercase tracking-wider">{{ platform_config.store_logo_text }}<span>.</span></h4>
+          <p class="text-muted small mb-4">Bringing your premium vision to life with bespoke apparel, curated tailoring, and luxury style lines crafted to elevate your wardrobe footprint natively.</p>
+
+          <div class="d-flex g-3">
+            <a href="#" class="btn btn-sm btn-outline-dark rounded-circle me-2" style="width: 32px; height: 32px; padding: 5px 0;"><i class="fab fa-facebook-f small"></i></a>
+            <a href="#" class="btn btn-sm btn-outline-dark rounded-circle me-2" style="width: 32px; height: 32px; padding: 5px 0;"><i class="fab fa-twitter small"></i></a>
+            <a href="#" class="btn btn-sm btn-outline-dark rounded-circle me-2" style="width: 32px; height: 32px; padding: 5px 0;"><i class="fab fa-instagram small"></i></a>
+            <a href="#" class="btn btn-sm btn-outline-dark rounded-circle" style="width: 32px; height: 32px; padding: 5px 0;"><i class="fab fa-linkedin-in small"></i></a>
+          </div>
+        </div>
+
+        <!-- Middle Column 1: Shopping Links -->
+        <div class="col-6 col-md-2 offset-md-1">
+          <h5 class="h6 font-weight-bold mb-3 text-uppercase tracking-wider text-secondary" style="font-size: 12px;">Shop</h5>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="{% url 'modern9:shop' slug=active_tenant.brand_slug %}" class="text-muted text-decoration-none">All Products</a></li>
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Women's Wear</a></li>
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Men's Apparel</a></li>
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Accessories</a></li>
+          </ul>
+        </div>
+
+        <!-- Middle Column 2: Quick Links -->
+        <div class="col-6 col-md-2">
+          <h5 class="h6 font-weight-bold mb-3 text-uppercase tracking-wider text-secondary" style="font-size: 12px;">Company</h5>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="{% url 'modern9:storefront_with_slug' slug=active_tenant.brand_slug %}" class="text-muted text-decoration-none">Home Page</a></li>
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Our Story</a></li>
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Privacy Policy</a></li>
+            <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Terms of Service</a></li>
+          </ul>
+        </div>
+
+        <!-- Right Column: Showroom Address & Contact Details -->
+        <div class="col-12 col-md-3">
+          <h5 class="h6 font-weight-bold mb-3 text-uppercase tracking-wider text-secondary" style="font-size: 12px;">Contact Us</h5>
+          <ul class="list-unstyled small text-muted">
+            <li class="mb-2 d-flex"><i class="fas fa-map-marker-alt me-2 mt-1"></i> <span>{{ platform_config.store_hq_address }}</span></li>
+            <li class="mb-2 d-flex"><i class="fas fa-phone-alt me-2 mt-1"></i> <span>{{ platform_config.store_hotline }}</span></li>
+            <li class="mb-2 d-flex"><i class="fas fa-envelope me-2 mt-1"></i> <span class="text-truncate">{{ platform_config.store_email }}</span></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Base Signature Layer Block Rules -->
+      <div class="border-top pt-4 copyright">
+        <div class="row align-items-center">
+          <div class="col-md-6 mb-2 mb-md-0">
+            <p class="mb-0 small text-muted">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Distributed by Corex Systems Server</p>
+          </div>
+          <div class="col-md-6 text-md-end text-start">
+            <div class="small text-muted">
+              <i class="fab fa-cc-paypal fa-2x me-2 opacity-50"></i>
+              <i class="fab fa-cc-stripe fa-2x me-2 opacity-50"></i>
+              <i class="fab fa-cc-visa fa-2x opacity-50"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+  <!-- End Multi-Column Footer Corporate Matrix Section -->
+
+  <!-- Theme Infrastructure JavaScript Runner Scripts -->
+  <script src="{% static 'modern9/js/script.js' %}"></script>
+  <script src="{% static 'modern9/js/tiny-slider.js' %}"></script>
+  <script src="{% static 'modern9/js/custom.js' %}"></script>
+</body>
+</html>
