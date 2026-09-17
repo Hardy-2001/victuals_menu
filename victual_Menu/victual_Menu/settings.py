@@ -202,6 +202,29 @@ STORAGES = {
     },
 }
 
+# ==============================================================================
+# ☁️ PERMANENT CLOUD MEDIA STORAGE CONFIGURATION MATRIX
+# ==============================================================================
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'bggsbtry',
+    'API_KEY': 'YOUR_ACTUAL_API_KEY_HERE',     # Keep your real API key here
+    'API_SECRET': 'YOUR_ACTUAL_API_SECRET_HERE', # Keep your real API secret here
+}
+
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+    },
+}
+
+# 🟢 FIXED: Fallback declaration compatibility string to smash the Cloudinary build check blocker!
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+
+
 # Static and media routing URLs config
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
