@@ -44,16 +44,21 @@ ALLOWED_HOSTS = [
 ]
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+
+    # 🚀 CLOUD STORAGE DRIVERS REGISTRY (Positioned directly above staticfiles core)
+    'cloudinary_storage',
+    'cloudinary',
     'django.contrib.staticfiles',
+
+    # Main App Suites
     'menu',
-     'modern',
+    'modern',
     'advance2',
     'super_admin',
     'modern3',
@@ -177,8 +182,27 @@ MAILERS = {
 # ==============================================================================
 # 🎨 ABSOLUTE FINAL PRODUCTION STATIC ASSET Blueprints
 # ==============================================================================
-import os
+# ☁️ PERMANENT CLOUD MEDIA STORAGE CONFIGURATION MATRIX
+# ==============================================================================
 
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'bggsbtry',
+    'API_KEY': '964211934149961',  # 🔑 Replace this with your live API Key
+    'API_SECRET': 'vlcCeXeVICjEoMNWMes_j_GKRDM',  # 🔒 Replace this with your live API Secret
+}
+
+STORAGES = {
+    # 🟢 FIXED: Tells Django to offload user media uploads to Cloudinary permanently!
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    # WhiteNoise compressed asset delivery layer for production static CSS/JS files
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+    },
+}
+
+# Static and media routing URLs config
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
@@ -186,13 +210,3 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGOUT_REDIRECT_URL = '/'
-
-STORAGES = {
-    "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
-    },
-    # 🟢 THE INSTANT FIX: Changed from CompressedManifestStaticFilesStorage to CompressedStaticFilesStorage
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
-    },
-}
