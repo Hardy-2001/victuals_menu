@@ -216,13 +216,14 @@ STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
+    # 🟢 FIXED: Switched to standard StaticFilesStorage to ignore broken dead links in older apps!
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+        "BACKEND": "whitenoise.storage.StaticFilesStorage",
     },
 }
 
-# 🟢 FIXED: Fallback declaration compatibility string to smash the Cloudinary build check blocker!
-STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+# 🟢 FIXED: Synchronized matching compatibility layer to drop strict compression failure crashes
+STATICFILES_STORAGE = "whitenoise.storage.StaticFilesStorage"
 
 
 # Static and media routing URLs config
