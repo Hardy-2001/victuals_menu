@@ -8,8 +8,8 @@ from .models import (
     Modern8FurnitureProductListing,
     Modern8FurnitureBlogArticle,
     Modern8NewsletterSubscription,
-    Modern8StudioTeamMember,  # 🟢 IMPORTED FOR DYNAMIC TEAM SHOWCASE
-    Modern8FurnitureTestimonial  # 🟢 IMPORTED FOR DYNAMIC CLIENT REVIEWS
+    Modern8StudioTeamMember,
+    Modern8FurnitureTestimonial
 )
 
 
@@ -19,8 +19,10 @@ from .models import (
 def get_furniture_store_context(request, slug=None):
     """🔒 HELPER: Safely extracts tenant data records uniformly for all sub-views"""
     tenant_slug = getattr(request, 'tenant_slug_token', slug)
-    if not tenant_slug or tenant_slug == 'modern8':
-        tenant_slug = 'furnify'  # Perfect local developer fallback sandbox token
+
+    # 🟢 FIXED: Prevent overriding the valid 'modern8' production slug with 'furnify'
+    if not tenant_slug:
+        tenant_slug = 'modern8'
 
     active_slug_record = get_object_or_404(Modern8FurnitureTenant, studio_slug__iexact=tenant_slug)
     platform_config = get_object_or_404(Modern8FurnitureStoreFront, tenant_identity=active_slug_record)
@@ -29,7 +31,7 @@ def get_furniture_store_context(request, slug=None):
     product_listings = Modern8FurnitureProductListing.objects.filter(store=platform_config, is_in_stock=True)
     studio_blogs = Modern8FurnitureBlogArticle.objects.filter(store=platform_config)[:3]
 
-    # 🟢 EXTRACT DYNAMIC DATA ENTRIES STAMPED FOR THE NEW SECTIONS
+    # Extract dynamic data entries stamped for the sections
     testimonials = Modern8FurnitureTestimonial.objects.filter(store=platform_config)
     studio_team_members = Modern8StudioTeamMember.objects.filter(store=platform_config)
 
@@ -39,17 +41,19 @@ def get_furniture_store_context(request, slug=None):
         'studio_categories': studio_categories,
         'product_listings': product_listings,
         'studio_blogs': studio_blogs,
-        'testimonials': testimonials,  # Added safely to context vault
-        'studio_team_members': studio_team_members,  # Added safely to context vault
+        'testimonials': testimonials,
+        'studio_team_members': studio_team_members,
     }
 
 
 # =========================================================================
 # 🛋️ PART 1: ADVANCED FURNITURE LANDING & FILTER ENGINE VIEW
 # =========================================================================
-
 def modern8_furniture_storefront_view(request, slug=None):
     """🏡 Renders your dynamic index.html layout home channel"""
+    # 🟢 FIXED: Automatically fallback to 'modern8' slug if None is passed on the live web
+    if not slug:
+        slug = 'modern8'
     context = get_furniture_store_context(request, slug)
 
     # Keep your original inline product category filtering logic fully active!
@@ -69,6 +73,8 @@ def modern8_furniture_storefront_view(request, slug=None):
 
 def modern8_shop_view(request, slug=None):
     """🛍️ Renders your dynamic shop.html product grids catalog"""
+    if not slug:
+        slug = 'modern8'
     context = get_furniture_store_context(request, slug)
     search_category_slug = request.GET.get('category_slug')
     if search_category_slug:
@@ -80,30 +86,40 @@ def modern8_shop_view(request, slug=None):
 
 def modern8_about_view(request, slug=None):
     """🏢 Renders your dynamic about.html corporate description matrix"""
+    if not slug:
+        slug = 'modern8'
     context = get_furniture_store_context(request, slug)
     return render(request, 'modern8/about.html', context)
 
 
 def modern8_services_view(request, slug=None):
     """🛠️ Renders your dynamic services.html 8-pillar highlight cards"""
+    if not slug:
+        slug = 'modern8'
     context = get_furniture_store_context(request, slug)
     return render(request, 'modern8/services.html', context)
 
 
 def modern8_blog_view(request, slug=None):
     """📰 Renders your dynamic blog.html media article boards"""
+    if not slug:
+        slug = 'modern8'
     context = get_furniture_store_context(request, slug)
     return render(request, 'modern8/blog.html', context)
 
 
 def modern8_contact_view(request, slug=None):
     """📞 Renders your dynamic contact.html phone hotline layout fields"""
+    if not slug:
+        slug = 'modern8'
     context = get_furniture_store_context(request, slug)
     return render(request, 'modern8/contact.html', context)
 
 
 def modern8_cart_view(request, slug=None):
     """🛒 Renders your dynamic cart.html interactive calculation table"""
+    if not slug:
+        slug = 'modern8'
     context = get_furniture_store_context(request, slug)
     return render(request, 'modern8/cart.html', context)
 
@@ -116,8 +132,10 @@ def modern8_submit_newsletter(request, slug=None):
     """📬 Captures customer footer inputs from screen cards and saves leads safely."""
     if request.method == "POST":
         tenant_slug = getattr(request, 'tenant_slug_token', slug)
-        if not tenant_slug or tenant_slug == 'modern8':
-            tenant_slug = 'furnify'
+
+        # 🟢 FIXED: Match our new production slug fallback logic perfectly
+        if not tenant_slug:
+            tenant_slug = 'modern8'
 
         active_slug_record = get_object_or_404(Modern8FurnitureTenant, studio_slug__iexact=tenant_slug)
         platform_config = get_object_or_404(Modern8FurnitureStoreFront, tenant_identity=active_slug_record)
@@ -141,6 +159,7 @@ def modern8_submit_newsletter(request, slug=None):
 # =========================================================================
 # 🔍 PART 3: PREMIUM FURNITURE ITEM DETAILS SHOWCASE VIEW
 # =========================================================================
+
 def modern8_furniture_detail_view(request, slug=None, pk=None):
     """
     🛒 REDIRECTING PRODUCT DETAIL VIEW FOR MODERN8
@@ -149,10 +168,12 @@ def modern8_furniture_detail_view(request, slug=None, pk=None):
     metadata context metrics and streams your interactive calculation cart page instead!
     """
     tenant_slug = getattr(request, 'tenant_slug_token', slug)
-    if not tenant_slug or tenant_slug == 'modern8':
-        tenant_slug = 'furnify'  # Perfect local fallback sandbox token
 
-    # 1. Fetch active isolated visual control deck entries safely
+    # 🟢 FIXED: Match our new production slug fallback logic perfectly
+    if not tenant_slug:
+        tenant_slug = 'modern8'
+
+        # 1. Fetch active isolated visual control deck entries safely
     active_slug_record = get_object_or_404(Modern8FurnitureTenant, studio_slug__iexact=tenant_slug)
     platform_config = get_object_or_404(Modern8FurnitureStoreFront, tenant_identity=active_slug_record)
 
@@ -177,7 +198,7 @@ def modern8_furniture_detail_view(request, slug=None, pk=None):
         'studio_blogs': studio_blogs,
         'testimonials': testimonials,
         'studio_team_members': studio_team_members,
-        'selected_furniture_item': selected_furniture_item,  # Stamped safely for custom cart pre-loads!
+        'selected_furniture_item': selected_furniture_item,
     }
 
     # 🟢 DIRECT ENTRY TRAFFIC VECTOR: Renders your clean cart template screen layout instantly!
