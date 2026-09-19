@@ -204,7 +204,7 @@
   </div>
 
 
-  <!-- Start Footer Section -->
+   <!-- Start Footer Section -->
   <footer class="footer-section">
     <div class="container relative">
       <div class="sofa-img">
@@ -225,6 +225,7 @@
               {% endfor %}
             {% endif %}
 
+            <!-- LIVE NEWSLETTER CAPTURE STRINGS ENGINE -->
             <form action="{% url 'modern8:subscribe' %}" method="POST" class="row g-3">
               {% csrf_token %}
               <div class="col-auto">
@@ -246,8 +247,19 @@
 
       <div class="row g-5 mb-5">
         <div class="col-lg-4">
-          <div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">{{ platform_config.studio_name }}<span>.</span></a></div>
-          <p class="mb-4">Donec facilisis quam ut purus rutrum lobortis. Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique.</p>
+          <!-- 🟢 FIXED DYNAMIC LOGO ENGINE ALIGNMENT -->
+          <div class="mb-4 footer-logo-wrap">
+            <a href="{% url 'modern8:storefront_with_slug' slug=active_tenant.studio_slug %}" class="footer-logo">
+              {% if platform_config.studio_logo %}
+                <img src="{{ platform_config.studio_logo.url }}" alt="{{ platform_config.studio_name }}" style="max-height: 40px; width: auto; object-fit: contain;">
+              {% else %}
+                {{ platform_config.studio_name }}<span>.</span>
+              {% endif %}
+            </a>
+          </div>
+
+          <!-- Dynamic description pulled directly from your dashboard configuration metrics -->
+          <p class="mb-4">{{ platform_config.hero_subhead_copy }}</p>
 
           <ul class="list-unstyled custom-social">
             <li><a href="#"><span class="fa fa-brands fa-facebook-f"></span></a></li>
@@ -256,56 +268,38 @@
             <li><a href="#"><span class="fa fa-brands fa-linkedin"></span></a></li>
           </ul>
         </div>
-
+        <!-- Right Side: Cleaned Navigation Channels Matrix -->
         <div class="col-lg-8">
-          <div class="row links-wrap">
-            <div class="col-6 col-sm-6 col-md-3">
+          <div class="row links-wrap justify-content-end">
+
+            <!-- Pillar Column 1: Core Navigation -->
+            <div class="col-6 col-sm-6 col-md-4">
               <ul class="list-unstyled">
-                <li><a href="#">About us</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Blog</a></li>
-                <li><a href="#">Contact us</a></li>
+                <li><a href="{% url 'modern8:storefront_with_slug' slug=active_tenant.studio_slug %}">Home</a></li>
+                <li><a href="{% url 'modern8:shop' slug=active_tenant.studio_slug %}">Shop Page</a></li>
+                <li><a href="{% url 'modern8:about' slug=active_tenant.studio_slug %}">About us</a></li>
+                <li><a href="{% url 'modern8:services' slug=active_tenant.studio_slug %}">Services</a></li>
               </ul>
             </div>
 
-            <div class="col-6 col-sm-6 col-md-3">
+            <!-- Pillar Column 2: Studio Information -->
+            <div class="col-6 col-sm-6 col-md-4">
               <ul class="list-unstyled">
-                <li><a href="#">Support</a></li>
-                <li><a href="#">Knowledge base</a></li>
-                <li><a href="#">Live chat</a></li>
+                <li><a href="{% url 'modern8:blog' slug=active_tenant.studio_slug %}">Design Blog</a></li>
+                <li><a href="{% url 'modern8:contact' slug=active_tenant.studio_slug %}">Contact us</a></li>
+                <li><a href="{% url 'modern8:cart' slug=active_tenant.studio_slug %}">Shopping Cart</a></li>
               </ul>
             </div>
 
-            <div class="col-6 col-sm-6 col-md-3">
-              <ul class="list-unstyled">
-                <li><a href="#">Jobs</a></li>
-                <li><a href="#">Our team</a></li>
-                <li><a href="#">Leadership</a></li>
-                <li><a href="#">Privacy Policy</a></li>
-              </ul>
-            </div>
-
-            <div class="col-6 col-sm-6 col-md-3">
-              <ul class="list-unstyled">
-                <li><a href="#">Nordic Chair</a></li>
-                <li><a href="#">Kruzo Aero</a></li>
-                <li><a href="#">Ergonomic Chair</a></li>
-              </ul>
-            </div>
           </div>
         </div>
       </div>
 
+      <!-- 🟢 BASE SIGNATURE MATRIX: Cleaned and updated for Corex Systems Server channels -->
       <div class="border-top copyright">
         <div class="row pt-4">
           <div class="col-lg-6">
-            <p class="mb-0">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Distributed By ThemeWagon</p>
-          </div>
-          <div class="col-lg-6 text-start text-lg-end">
-            <ul class="list-unstyled inline-menu mb-0">
-              <li class="list-inline-item"><a href="#">Terms &amp; Conditions</a></li>
-              <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
-            </ul>
+            <p class="mb-0">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Distributed By Corex Server</p>
           </div>
         </div>
       </div>
