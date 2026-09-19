@@ -79,12 +79,12 @@
             </p>
           </div>
         </div>
-        <div class="col-lg-7">
-          <div class="hero-img-wrap">
+        <div class="col-lg-7 col-12 text-center mt-4 mt-lg-0">
+          <div class="hero-img-wrap" style="max-width: 100%; overflow: hidden; display: flex; justify-content: center; align-items: center;">
             {% if platform_config.hero_banner_image %}
-              <img src="{{ platform_config.hero_banner_image.url }}" class="img-fluid" alt="Premium Studio Hero Banner Image Content">
+              <img src="{{ platform_config.hero_banner_image.url }}" class="img-fluid" style="max-height: 380px; width: auto; object-fit: contain; padding: 10px;" alt="Premium Studio Hero Banner Image Content">
             {% else %}
-              <img src="{% static 'modern8/images/couch.png' %}" class="img-fluid" alt="Default Showcase Nordic Couch Template Asset">
+              <img src="{% static 'modern8/images/couch.png' %}" class="img-fluid" style="max-height: 380px; width: auto; object-fit: contain; padding: 10px;" alt="Default Showcase Nordic Couch Template Asset">
             {% endif %}
           </div>
         </div>
