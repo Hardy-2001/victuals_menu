@@ -42,8 +42,8 @@ ALLOWED_HOSTS = [
     '.corex.ng' ,
      '*'
 ]
-
 # Application definition
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -55,6 +55,8 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'cloudinary',
     'django.contrib.staticfiles',
+
+    # 🟢 FIXED: All multi-factor security app dependencies have been completely wiped out from this section!
 
     # Main App Suites
     'menu',
@@ -71,22 +73,17 @@ INSTALLED_APPS = [
 ]
 
 # 🎯 INJECT THIS CUSTOM ROUTER ENGINE INSIDE YOUR settings.py MIDDLEWARE ARRAY:
-
-# ==============================================================================
-# 🌐 GLOBAL COREX MIDDLEWARE MANAGEMENT SYSTEM TRACKS
-# ==============================================================================
-# ==============================================================================
-# 🌐 GLOBAL COREX SYSTEM MIDDLEWARE PIPELINES
-# ==============================================================================
-
 MIDDLEWARE = [
     # 🌐 POSITION #1: CAPTURES RAW CUSTOM SUBDOMAINS INSTANTLY BEFORE COMMONMIDDLEWARE
     'super_admin.middleware.MultiTenantSubdomainRouterMiddleware',
-        'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
     # Standard Internal Django Security & Framework Layers Follow Below Safely
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+
+    # 🟢 FIXED: Clean, standard security token alignment
     'django.middleware.csrf.CsrfViewMiddleware',
 
     # Commented out clean code archive for system housekeeping
@@ -96,6 +93,15 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# ==============================================================================
+# 🔐 STANDARD NATIVE AUTHENTICATION BACKENDS
+# ==============================================================================
+# Restored to standard defaults to ensure instant, stable login access across all systems
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+)
+
 
 ROOT_URLCONF = 'victual_Menu.urls'
 
@@ -169,19 +175,12 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-
-# Email
-# https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
-
-MAILERS = {
-    'default': {
-        'BACKEND': 'django.core.mail.backends.console.EmailBackend',
-    },
-}
+# ==============================================================================
+## =============================================================================
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # ==============================================================================
-# 🎨 ABSOLUTE FINAL PRODUCTION STATIC ASSET Blueprints
-# ==============================================================================
+
 # ☁️ PERMANENT CLOUD MEDIA STORAGE CONFIGURATION MATRIX
 # ==============================================================================
 
@@ -234,3 +233,4 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGOUT_REDIRECT_URL = '/'
+

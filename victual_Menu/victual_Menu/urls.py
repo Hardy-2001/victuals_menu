@@ -18,12 +18,11 @@ urlpatterns = [
     # 🏥 NEW: Wires up your fully dynamic hospital suite modules live!
     path('modern3/', include('modern3.urls')),
     path('modern4/', include('modern4.urls')),
-    path('modern5/',include('modern5.urls')),
+    path('modern5/', include('modern5.urls')),
     path('modern6/', include('modern6.urls')),
     path('modern7/', include('modern7.urls')),
     path('modern8/', include('modern8.urls')),
     path('modern9/', include('modern9.urls')),
-
 ]
 
 # Append dynamic physical system media file pathways when debugging locally
@@ -34,5 +33,3 @@ if settings.DEBUG:
 admin.site.site_header = "The Victuals & Edibles — Management System"
 admin.site.site_title = "The Victuals Admin Portal"
 admin.site.index_title = "Restaurant Operations & Digital Menu Controls"
-
-
