@@ -55,7 +55,7 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'cloudinary',
     'django.contrib.staticfiles',
-
+    'django.contrib.humanize',
     # 🟢 FIXED: All multi-factor security app dependencies have been completely wiped out from this section!
 
     # Main App Suites
@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     'modern7',
     'modern8',
     'modern9',
+    'modern10',
 ]
 
 # 🎯 INJECT THIS CUSTOM ROUTER ENGINE INSIDE YOUR settings.py MIDDLEWARE ARRAY:
@@ -233,4 +234,9 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGOUT_REDIRECT_URL = '/'
+
+
+
+
+
 

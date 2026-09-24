@@ -1,0 +1,365 @@
+{% extends 'modern10/main.html' %}
+{% load static %}
+
+{% block title %}About Our Enterprise — {{ active_tenant.business_name }}{% endblock %}
+
+{% block master_content %}
+<!-- =========================================================================
+    📇 CORPORATE OVERVIEW BREADCRUMB HEADER
+========================================================================== -->
+<div class="breadcrumb-option set-bg" data-setbg="{% static 'modern10/img/breadcrumb-bg.jpg' %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>About Us</h2>
+                    <div class="breadcrumb__links">
+                        <a href="{% url 'modern10_index_view' slug=active_tenant.slug_name %}"><i class="fa fa-home"></i> Home</a>
+                        <span>Corporate Profile</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =========================================================================
+    🏢 WELCOME PROFILE & 3-COLUMN FEATURE CORES (100% ADMIN DRIVEN)
+========================================================================== -->
+<section class="about spad" style="background: #ffffff; padding: 80px 0;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title text-center mb-5">
+                    <span>Welcome To {{ active_tenant.business_name|default:"Corex Elite Auto" }}</span>
+                    <!-- 🟢 DYNAMIC ABOUT HEADLINE TITLE -->
+                    <h2 class="font-weight-bold text-dark mt-2" style="font-size: 32px; letter-spacing: -0.5px;">
+                        {{ platform_config.about_headline }}
+                    </h2>
+                    <!-- 🟢 DYNAMIC ABOUT DESCRIPTION COPY -->
+                    <p class="text-muted mt-3 mx-auto" style="max-width: 800px; line-height: 1.7; font-size: 15px;">
+                        {{ platform_config.about_description_copy }}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row text-center mb-5">
+            <!-- Feature Column 1 -->
+            <div class="col-lg-4 col-md-4 col-sm-6 mb-4">
+                <div class="about__feature__item p-4 bg-white border h-100 shadow-sm" style="border-radius: 4px;">
+                    <div class="icon mb-3"><i class="fa fa-shield text-danger" style="font-size: 36px;"></i></div>
+                    <h5 class="font-weight-bold text-dark" style="font-size: 18px;">Quality Assurance System</h5>
+                    <p class="text-muted small mt-2" style="line-height: 1.6;">Every single car listed within our database undergoes standard multi-point mechanical checks and custom duty verification before joining our available fleet catalog rows.</p>
+                </div>
+            </div>
+            <!-- Feature Column 2 -->
+            <div class="col-lg-4 col-md-4 col-sm-6 mb-4">
+                <div class="about__feature__item p-4 bg-white border h-100 shadow-sm" style="border-radius: 4px;">
+                    <div class="icon mb-3"><i class="fa fa-dashboard text-danger" style="font-size: 36px;"></i></div>
+                    <h5 class="font-weight-bold text-dark" style="font-size: 18px;">Accurate Testing Processes</h5>
+                    <p class="text-muted small mt-2" style="line-height: 1.6;">Odometer configurations, suspension parameters, and armored ballistic glass specs are rigorously optimized by certified technicians to handle local expressways safely.</p>
+                </div>
+            </div>
+            <!-- Feature Column 3 -->
+            <div class="col-lg-4 col-md-4 col-sm-12 mb-4">
+                <div class="about__feature__item p-4 bg-white border h-100 shadow-sm" style="border-radius: 4px;">
+                    <div class="icon mb-3"><i class="fa fa-cogs text-danger" style="font-size: 36px;"></i></div>
+                    <h5 class="font-weight-bold text-dark" style="font-size: 18px;">Infrastructure Integration</h5>
+                    <p class="text-muted small mt-2" style="line-height: 1.6;">We weave cloud fleet surveillance telemetry and 24/7 technical help desks together natively to guarantee premium administrative protection across all active storefronts.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 📑 STRATEGIC CORE PANELS: MISSION VS VISION (LINKED TO SAAS ADMIN DATABASE) -->
+        <div class="row border-top pt-5">
+            <div class="col-lg-6 col-md-6 mb-4">
+                <div class="about__text__item">
+                    <h4 class="font-weight-bold text-dark mb-3" style="font-size: 20px;"><i class="fa fa-paper-plane text-danger mr-2"></i> Our Mission</h4>
+                    <p class="text-muted" style="line-height: 1.7; font-size: 15px;">{{ platform_config.about_mission_text }}</p>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 mb-4">
+                <div class="about__text__item">
+                    <h4 class="font-weight-bold text-dark mb-3" style="font-size: 20px;"><i class="fa fa-eye text-danger mr-2"></i> Our Vision</h4>
+                    <p class="text-muted" style="line-height: 1.7; font-size: 15px;">{{ platform_config.about_vision_text }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- =========================================================================
+    📬 CALL-BACK INTERACTION TERMINAL & SERVICE SELECTORS
+========================================================================== -->
+<section class="request-form spad set-bg" data-setbg="{% static 'modern10/img/request-bg.jpg' %}" style="background-color: #151515; background-position: center; background-size: cover; position: relative;">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 col-md-6 mb-4 mb-md-0">
+                <div class="request__text text-white">
+                    <h2 class="font-weight-bold text-white mb-3" style="font-size: 32px;">Request A Call Back</h2>
+                    <p class="text-white-50" style="line-height: 1.7;">Need a custom armored fleet proposal, a corporate executive protocol block, or structured financing documentation guidelines for a luxury Tokunbo import? Transmit your parameters right now.</p>
+                    <a href="{% url 'modern10_contact_view' slug=active_tenant.slug_name %}" class="btn btn-danger font-weight-bold px-4 py-2 mt-3" style="background: #db2d2d; border: 0; border-radius: 4px;"><i class="fa fa-map-marker mr-1"></i> Visit Our Office</a>
+                </div>
+            </div>
+                 <!-- 🪐 RIGHT COLUMN: SECURE INLINE WHATSAPP CALLBACK TERMINAL -->
+            <div class="col-lg-6 col-md-6">
+                <div class="request__form__box bg-white p-4 rounded shadow-sm">
+                    <form id="aboutCallbackForm" onsubmit="event.preventDefault(); transmitAboutCallbackToWhatsApp();">
+                        <div class="form-group mb-2">
+                            <input type="text" id="about_cb_name" class="form-control" placeholder="Your Full Name" required style="border-radius: 4px; height: 44px; font-size: 14px;">
+                        </div>
+                        <div class="form-group mb-2">
+                            <input type="text" id="about_cb_phone" class="form-control" placeholder="Phone Number" required style="border-radius: 4px; height: 44px; font-size: 14px;">
+                        </div>
+                        <div class="form-group mb-3">
+                            <select id="about_cb_service" class="form-control w-100" required style="border-radius: 4px; height: 42px; padding: 6px 12px; font-size: 14px;">
+                                <option value="">Choose Service Needed</option>
+                                <option value="Procure / Buy Premium Vehicles">Procure / Buy Premium Vehicles</option>
+                                <option value="Lease / Hire Armored & Luxury Cars">Lease / Hire Armored & Luxury Cars</option>
+                                <option value="Book Technical Fleet Maintenance">Book Technical Fleet Maintenance</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="site-btn btn-block w-100 border-0 bg-danger text-white py-2 font-weight-bold d-flex align-items-center justify-content-center" style="letter-spacing: 1px; border-radius: 4px; height: 44px; background: #db2d2d; gap: 8px;">
+                            <i class="fa fa-whatsapp" style="font-size: 18px;"></i> SUBMIT REQUEST
+                        </button>
+                    </form>
+                </div>
+            </div> <!-- Closed right form box column cleanly -->
+
+        </div>
+    </div>
+</section>
+
+
+<!-- =========================================================================
+    ⚡ CORPORATE ABOUT PROFILE: BUG-FREE WHATSAPP CALL-BACK DISPATCH ENGINE
+========================================================================== -->
+<script>
+    function transmitAboutCallbackToWhatsApp() {
+        // 1. Gather clear form input parameters text values out of layout nodes
+        var buyerName = document.getElementById('about_cb_name').value.trim();
+        var buyerPhone = document.getElementById('about_cb_phone').value.trim();
+        var serviceNeeded = document.getElementById('about_cb_service').value;
+
+        // 2. Safely extract your multi-tenant merchant's contact phone number row
+        // 🟢 FIXED EXACT LOOKUP: Uses ONLY the verified context key matching your view dump to eliminate syntax crashes completely!
+        var rawMerchantPhone = "{{ platform_config.contact_phone }}".trim();
+
+        // Clean out any spaces, brackets, or plus symbols from the string token
+        var cleanMerchantPhone = rawMerchantPhone.replace(/[^0-9]/g, '');
+
+        // 🇳🇬 Nigerian Localization Safe Shield: Convert standard local '080...' or '070...' strings to international '234...' format
+        if (cleanMerchantPhone.startsWith('0') && cleanMerchantPhone.length === 11) {
+            cleanMerchantPhone = '234' + cleanMerchantPhone.substring(1);
+        } else if (!cleanMerchantPhone.startsWith('234') && cleanMerchantPhone.length === 10) {
+            cleanMerchantPhone = '234' + cleanMerchantPhone;
+        }
+
+        // 3. Format an exquisite text payload paragraph block message to map onto the chat window
+        var whatsappCallbackText =
+            "🚘 *NEW SHOWROOM CALL-BACK REQUEST* 🚘\n\n" +
+            "Hello Management Team,\n" +
+            "An elite prospect has just transmitted an immediate call-back operations request from your corporate profile page.\n\n" +
+            "🛠️ *ALLOCATED SERVICE LOGS*\n" +
+            "• *Selected Need:* " + serviceNeeded + "\n\n" +
+            "📋 *CLIENT DISPATCH LOGS*\n" +
+            "• *Client Name:* " + buyerName + "\n" +
+            "• *Phone Connectivity:* " + buyerPhone + "\n\n" +
+            "⏳ *Status Check:* Active Showroom System Route Matrix Clear.";
+
+        // 4. Convert plain text parameters into a secure browser-transmittable URI tracking token
+        var encodedCallbackText = encodeURIComponent(whatsappCallbackText);
+
+        // 5. Force an absolute hardware redirect loop to snap open the chat terminal wrapper instantly!
+        window.location.href = "whatsapp://send?phone=" + cleanMerchantPhone + "&text=" + encodedCallbackText;
+    }
+</script>
+
+
+
+<!-- =========================================================================
+    👥 EXECUTIVE OPERATIONAL BOARD (TEAM MATRICES - EXACT KEY MATCH)
+========================================================================== -->
+<section class="team spad" style="background: #ffffff; padding: 80px 0;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5">
+                <div class="section-title">
+                    <span class="text-danger font-weight-bold" style="letter-spacing: 2px; text-transform: uppercase; font-size: 13px;">Our Team</span>
+                    <h2 class="font-weight-bold text-dark mt-2" style="font-size: 32px;">Meet Our Industry Experts</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row text-center justify-content-center">
+            <!-- 🟢 FIXED HOOK LAYER: Linked directly to your exact verified context key 'studio_team_members' -->
+            {% for member in studio_team_members %}
+            <!-- Dynamic Corporate Team Profile Grid Card -->
+            <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+                <div class="team__item border p-3 bg-white h-100 shadow-sm" style="border-radius: 4px;">
+                    <!-- Picture Thumbnail Component Frame Box Container -->
+                    <div class="team__pic mb-3">
+                        {% if member.member_avatar %}
+                            <img src="{{ member.member_avatar.url }}" alt="{{ member.member_name }} Profile Picture" class="img-fluid rounded" style="width: 100%; height: 250px; object-fit: cover;">
+                        {% else %}
+                            <img src="{% static 'modern10/img/team/team-1.jpg' %}" alt="Default Fallback" class="img-fluid rounded" style="width: 100%; height: 250px; object-fit: cover;">
+                        {% endif %}
+                    </div>
+                    <!-- Dynamic Data Identifiers Fields Text Elements -->
+                    <h5 class="font-weight-bold text-dark mb-1" style="font-size: 17px;">{{ member.member_name }}</h5>
+                    <span class="text-danger small font-weight-bold d-block mb-2" style="text-transform: uppercase; letter-spacing: 0.5px;">{{ member.member_role }}</span>
+                </div>
+            </div>
+            {% empty %}
+            <!-- Safe Fallback if No Members Exist inside active sub-credentials database filters -->
+            <div class="col-12 text-center py-4">
+                <p class="text-muted small mb-0">No dynamic team members have been published to this storefront catalog deck yet.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+<!-- =========================================================================
+    📊 DYNAMIC METRIC INFRASTRUCTURE COUNTERS
+========================================================================== -->
+<section class="counter spad bg-light border-top border-bottom" style="padding: 60px 0;">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-lg-3 col-md-6 col-sm-6 mb-3">
+                <div class="counter__item">
+                    <h2 class="font-weight-bold text-dark m-0" style="font-size: 36px; letter-spacing: -0.5px;">{{ platform_config.stats_vehicles_count|default:"1,922" }}</h2>
+                    <p class="text-muted small font-weight-bold mt-2 text-uppercase" style="letter-spacing: 1px;">Vehicles In Stock</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 mb-3">
+                <div class="counter__item">
+                    <h2 class="font-weight-bold text-dark m-0" style="font-size: 36px; letter-spacing: -0.5px;">{{ platform_config.stats_sales_count|default:"1,500+" }}</h2>
+                    <p class="text-muted small font-weight-bold mt-2 text-uppercase" style="letter-spacing: 1px;">Successful Direct Sales</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 mb-3">
+                <div class="counter__item">
+                    <h2 class="font-weight-bold text-dark m-0" style="font-size: 36px; letter-spacing: -0.5px;">{{ platform_config.stats_reviews_count|default:"1,922" }}</h2>
+                    <p class="text-muted small font-weight-bold mt-2 text-uppercase" style="letter-spacing: 1px;">Verified Dealer Reviews</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 mb-3">
+                <div class="counter__item">
+                    <h2 class="font-weight-bold text-dark m-0" style="font-size: 36px; letter-spacing: -0.5px;">{{ platform_config.stats_clients_count|default:"5,100+" }}</h2>
+                    <p class="text-muted small font-weight-bold mt-2 text-uppercase" style="letter-spacing: 1px;">Happy Platform Clients</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================================
+    📇 LOCALIZED MULTI-COLUMN PLATFORM FOOTER (STANDARDIZED ARCHITECTURE)
+========================================================================== -->
+<footer class="footer spad" style="background: #111111; padding-top: 70px; padding-bottom: 0; clear: both; width: 100%; display: block;">
+    <div class="container">
+        <!-- Top Contact Summary Banner Bar -->
+        <div class="footer__contact" style="border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 35px; margin-bottom: 50px;">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="footer__contact__title">
+                        <h2 class="text-white font-weight-bold" style="font-size: 24px; margin: 0;">Contact Us Now!</h2>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="footer__contact__option text-md-right mt-3 mt-md-0">
+                        <div class="option__item text-white d-inline-block mr-4" style="font-size: 15px;"><i class="fa fa-phone text-danger mr-2"></i> {{ platform_config.contact_phone|default:"+234 (0) 803 456 7891" }}</div>
+                        <div class="option__item text-white text-lowercase d-inline-block" style="font-size: 15px;"><i class="fa fa-envelope text-danger mr-2"></i> {{ platform_config.contact_email|default:"info@corexautos.ng" }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Center Multi-Column Link Navigation Grid -->
+        <div class="row">
+            <!-- Brand Overview Profile Card -->
+            <div class="col-lg-4 col-md-4 mb-4">
+                <div class="footer__about">
+                    <div class="footer__logo mb-3">
+                        <h3 class="text-white font-weight-bold m-0" style="letter-spacing: 1px;">COREX<span class="text-danger">10</span></h3>
+                    </div>
+                    <p class="text-white-50 small" style="line-height: 1.7; font-size: 14px;">
+                        Premium multi-tenant vehicle leasing, luxury rental setups, and direct automotive asset sales operational hubs in Lagos and Abuja, Nigeria.
+                    </p>
+                    <div class="footer__social mt-3">
+                        <a href="#" class="facebook text-white mr-3"><i class="fa fa-facebook"></i></a>
+                        <a href="#" class="twitter text-white mr-3"><i class="fa fa-twitter"></i></a>
+                        <a href="#" class="instagram text-white mr-3"><i class="fa fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Information Category Core Link List -->
+            <div class="col-lg-2 col-md-2 col-sm-6 mb-4">
+                <div class="footer__widget">
+                    <h5 class="text-white font-weight-bold mb-3" style="font-size: 16px;">Information</h5>
+                    <ul class="list-unstyled small" style="line-height: 2.2;">
+                        <li><a href="#" class="text-white-50">Purchase Insurance</a></li>
+                        <li><a href="#" class="text-white-50">Flexible Payment Plans</a></li>
+                        <li><a href="#" class="text-white-50">Nationwide Delivery</a></li>
+                        <li><a href="#" class="text-white-50">Return Policy Tracks</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Vehicle Segment Core Link List -->
+            <div class="col-lg-2 col-md-2 col-sm-6 mb-4">
+                <div class="footer__widget">
+                    <h5 class="text-white font-weight-bold mb-3" style="font-size: 16px;">Vehicle Categories</h5>
+                    <ul class="list-unstyled small" style="line-height: 2.2;">
+                        <li><a href="#" class="text-white-50">Luxury Sedans</a></li>
+                        <li><a href="#" class="text-white-50">Sports & Exotic Cars</a></li>
+                        <li><a href="#" class="text-white-50">Multi-terrain SUVs</a></li>
+                        <li><a href="#" class="text-white-50">Armored Protocol Fleets</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Top Automotive Brands Matrix Columns Split -->
+            <div class="col-lg-4 col-md-4 mb-4">
+                <div class="footer__widget">
+                    <h5 class="text-white font-weight-bold mb-3" style="font-size: 16px;">Top Brands Available</h5>
+                    <div class="row small" style="line-height: 2.2;">
+                        <div class="col-6">
+                            <ul class="list-unstyled">
+                                <li><a href="#" class="text-white-50">Toyota</a></li>
+                                <li><a href="#" class="text-white-50">Lexus</a></li>
+                                <li><a href="#" class="text-white-50">Mercedes-Benz</a></li>
+                                <li><a href="#" class="text-white-50">Land Rover</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-6">
+                            <ul class="list-unstyled">
+                                <li><a href="#" class="text-white-50">BMW</a></li>
+                                <li><a href="#" class="text-white-50">Hyundai</a></li>
+                                <li><a href="#" class="text-white-50">Honda</a></li>
+                                <li><a href="#" class="text-white-50">Ford Matrix</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Copyright Metric Block Section Banner Bar -->
+        <div class="footer__copyright mt-4 py-3" style="border-top: 1px solid rgba(255, 255, 255, 0.05);">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <p class="footer__copyright__text text-white-50 small mb-0">
+                        Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | Corex multi-tenant automotive enterprise engine.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock master_content %}

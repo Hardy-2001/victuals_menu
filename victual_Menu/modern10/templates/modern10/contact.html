@@ -1,0 +1,283 @@
+{% extends 'modern10/main.html' %}
+{% load static %}
+
+{% block title %}Contact Our Showrooms — {{ active_tenant.business_name }}{% endblock %}
+
+{% block master_content %}
+<!-- =========================================================================
+    📇 INFRASTRUCTURE CONTACT BREADCRUMB HEADER
+========================================================================== -->
+<div class="breadcrumb-option set-bg" data-setbg="{% static 'modern10/img/breadcrumb-bg.jpg' %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>Contact Us</h2>
+                    <div class="breadcrumb__links">
+                        <a href="{% url 'modern10_index_view' slug=active_tenant.slug_name %}"><i class="fa fa-home"></i> Home</a>
+                        <span>Feedback Desk</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =========================================================================
+    🗺️ DIGITAL GEOLOCATION MAP INTERCEPTOR (NIGERIAN HUB FOCUS)
+========================================================================== -->
+<div class="contact-map-section">
+    <div class="map-container" style="width: 100%; height: 400px; background: #eeeff1; display: flex; align-items: center; justify-content: center; position: relative;">
+        <div class="text-center text-dark p-4 bg-white rounded-3 shadow-sm mx-3" style="max-width: 500px; position: absolute; z-index: 10;">
+            <i class="fa fa-map-marker text-danger mb-2" style="font-size: 36px;"></i>
+            <h5 class="fw-bold m-0 text-dark">Lekki Phase 1 Showroom Deck</h5>
+            <p class="text-muted small mt-1 mb-0">Plot 14, Lekki-Epe Expressway, Eti-Osa, Lagos, Nigeria.</p>
+        </div>
+        <!-- Operational fallback aesthetic vector grid background line wrapper element -->
+        <div style="opacity: 0.15; font-size: 120px; color: #151515;"><i class="fa fa-globe"></i></div>
+    </div>
+</div>
+
+<!-- =========================================================================
+    📞 SHOWROOM RADAR & DIRECTIONS DECK (100% ADMIN COMMUNICATIVE MATRIX)
+========================================================================== -->
+<section class="contact spad" style="background: #ffffff; padding: 80px 0;">
+    <div class="container">
+        <div class="row">
+            <!-- 🪐 LEFT DATA INTERACTOR COLUMN: Live Depot Coordinates -->
+            <div class="col-lg-6 col-md-6 mb-4 mb-md-0">
+                <div class="contact__text">
+                    <div class="section-title mb-4">
+                        <span class="text-danger font-weight-bold" style="letter-spacing: 2px; text-transform: uppercase; font-size: 13px;">Contact Depot</span>
+                        <h2 class="font-weight-bold text-dark mt-2" style="font-size: 32px; letter-spacing: -0.5px;">Get In Touch With Us</h2>
+                    </div>
+                    <p class="text-muted mb-4" style="line-height: 1.7; font-size: 15px;">
+                        Have questions about a premium luxury lease agreement, structured armored fleet protocols, or Tokunbo vehicle custom clearance document profiling? Speak directly with our dispatch operators.
+                    </p>
+
+                    <!-- 💎 Live Database Communicative Anchors Map -->
+                    <div class="contact__address__item d-flex align-items-start mb-3">
+                        <div class="icon mr-3 bg-light rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; min-width: 48px; border: 1px solid #eaeaea;">
+                            <i class="fa fa-phone text-danger" style="font-size: 18px;"></i>
+                        </div>
+                        <div class="text">
+                            <span class="text-muted small d-block text-uppercase font-weight-bold" style="letter-spacing: 0.5px;">Call Showroom Deck</span>
+                            <!-- 🟢 FIXED DYNAMIC PHONE PHONE NUMBER STRING -->
+                            <a href="tel:{{ platform_config.contact_phone }}" class="font-weight-bold text-dark" style="font-size: 16px;">
+                                {{ platform_config.contact_phone|default:"+234 (0) 803 456 7891" }} [2, 3]
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="contact__address__item d-flex align-items-start mb-3">
+                        <div class="icon mr-3 bg-light rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; min-width: 48px; border: 1px solid #eaeaea;">
+                            <i class="fa fa-envelope text-danger" style="font-size: 16px;"></i>
+                        </div>
+                        <div class="text">
+                            <span class="text-muted small d-block text-uppercase font-weight-bold" style="letter-spacing: 0.5px;">Email Support Radar</span>
+                            <!-- 🟢 FIXED DYNAMIC EMAIL CONNECTION STRING -->
+                            <a href="mailto:{{ platform_config.contact_email }}" class="font-weight-bold text-danger text-lowercase" style="font-size: 16px;">
+                                {{ platform_config.contact_email|default:"info@corexautos.ng" }} [2, 3]
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 🪐 RIGHT COLUMN: SECURE INQUIRY TRANSMISSION MODULE -->
+                      <!-- 🪐 RIGHT COLUMN: HARDWARE-ACCELERATED SECURE WHATSAPP ROUTING DISPATCH TERMINAL -->
+            <div class="col-lg-6 col-md-6">
+                <div class="contact__form bg-white p-4 rounded shadow-sm border">
+                    <h5 class="font-weight-bold text-dark mb-2" style="font-size: 18px; letter-spacing: -0.3px;">Instant WhatsApp Procurement Desk</h5>
+                    <span class="small text-muted d-block mb-3">Connect instantly with this showroom's official desk handlers via chat.</span>
+
+                    <form id="whatsappRoutingForm" onsubmit="event.preventDefault(); transmitToWhatsApp();">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-2">
+                                    <input type="text" id="wa_name" class="form-control" placeholder="Your Full Name" required style="border-radius: 4px; height: 44px; font-size: 14px;">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group mb-2">
+                                    <input type="email" id="wa_email" class="form-control" placeholder="Your Email Address" required style="border-radius: 4px; height: 44px; font-size: 14px;">
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group mb-2">
+                                    <input type="text" id="wa_phone" class="form-control" placeholder="Your Active Phone Number" required style="border-radius: 4px; height: 44px; font-size: 14px;">
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group mb-3">
+                                    <textarea id="wa_message" class="form-control" rows="4" placeholder="Describe your vehicle procurement or short-term protocol rental requirements..." required style="border-radius: 4px; font-size: 14px; resize: none;"></textarea>
+                                </div>
+                                <button type="submit" class="site-btn btn-block w-100 border-0 text-white py-2 font-weight-bold d-flex align-items-center justify-content-center" style="letter-spacing: 0.5px; border-radius: 4px; height: 44px; background: #25D366;">
+                                    <i class="fa fa-whatsapp mr-2" style="font-size: 20px;"></i> Open WhatsApp Chat
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div> <!-- Closed right chat terminal column cleanly -->
+
+        </div> <!-- Closed .row grid framework cleanly -->
+    </div> <!-- Closed .container layer cleanly -->
+</section> <!-- Closed master contact section cleanly -->
+
+<!-- =========================================================================
+    ⚡ HARDWARE-ACCELERATED CLIENT-SIDE WHATSAPP REDIRECT ROUTER ENGINE
+========================================================================== -->
+<!-- =========================================================================
+    ⚡ HARDWARE-ACCELERATED NATIVE WHATSAPP PROTOCOL ENGINE
+========================================================================== -->
+<script>
+    function transmitToWhatsApp() {
+        // 1. Gather clear form parameter text values natively out of document nodes
+        var buyerName = document.getElementById('wa_name').value.trim();
+        var buyerEmail = document.getElementById('wa_email').value.trim();
+        var buyerPhone = document.getElementById('wa_phone').value.trim();
+        var buyerMsg = document.getElementById('wa_message').value.trim();
+
+        // 2. Safely capture your merchant's active dynamic database telephone contact number string
+        // FIXED: Cleaned out any fallback phone number logic inside the template completely!
+        var rawMerchantPhone = "{{ platform_config.contact_phone }}".trim();
+
+        // Sanitize database merchant number token from any loose spaces, brackets, or plus symbols
+        var cleanMerchantPhone = rawMerchantPhone.replace(/[^0-9]/g, '');
+
+        // 🇳🇬 Nigerian Localization Safe Shield: Convert standard local '080...' or '070...' strings to international '234...' format
+        if (cleanMerchantPhone.startsWith('0') && cleanMerchantPhone.length === 11) {
+            cleanMerchantPhone = '234' + cleanMerchantPhone.substring(1);
+        } else if (!cleanMerchantPhone.startsWith('234') && cleanMerchantPhone.length === 10) {
+            cleanMerchantPhone = '234' + cleanMerchantPhone;
+        }
+
+        // 3. Format an exquisite text payload paragraph block message to map onto the chat window
+        var whatsappPayloadText =
+            "🚘 *NEW VEHICLE MARKETPLACE INQUIRY* 🚘\n\n" +
+            "Hello Management Team,\n" +
+            "An elite client has just transmitted an operations message request via your showroom channel portal.\n\n" +
+            "📋 *CLIENT DISPATCH LOGS*\n" +
+            "• *Client Name:* " + buyerName + "\n" +
+            "• *Phone Connectivity:* " + buyerPhone + "\n" +
+            "• *Email Box:* " + buyerEmail + "\n\n" +
+            "💬 *MESSAGE PAYLOAD*\n" +
+            "\"" + buyerMsg + "\"\n\n" +
+            "⏳ *Status Check:* Active Sandbox Routing Log Matrix Clear.";
+
+        // 4. Convert plain text parameters into a secure browser-transmittable URI tracking token
+        var encodedPayloadText = encodeURIComponent(whatsappPayloadText);
+
+        // 🟢 FIXED PROTOCOL HOOK: Uses the native app redirect trigger link path to snap open chats instantly!
+        window.location.href = "whatsapp://send?phone=" + cleanMerchantPhone + "&text=" + encodedPayloadText;
+    }
+</script>
+
+
+<!-- =========================================================================
+    📇 LOCALIZED MULTI-COLUMN PLATFORM FOOTER (STANDARDIZED ARCHITECTURE)
+========================================================================== -->
+<footer class="footer spad" style="background: #111111; padding-top: 70px; padding-bottom: 0; clear: both; width: 100%; display: block;">
+    <div class="container">
+        <!-- Top Contact Summary Banner Bar -->
+        <div class="footer__contact" style="border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 35px; margin-bottom: 50px;">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="footer__contact__title">
+                        <h2 class="text-white font-weight-bold" style="font-size: 24px; margin: 0;">Contact Us Now!</h2>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="footer__contact__option text-md-right mt-3 mt-md-0">
+                        <div class="option__item text-white d-inline-block mr-4" style="font-size: 15px;"><i class="fa fa-phone text-danger mr-2"></i> {{ platform_config.contact_phone|default:"+234 (0) 803 456 7891" }}</div>
+                        <div class="option__item text-white text-lowercase d-inline-block" style="font-size: 15px;"><i class="fa fa-envelope text-danger mr-2"></i> {{ platform_config.contact_email|default:"info@corexautos.ng" }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Center Multi-Column Link Navigation Grid -->
+        <div class="row">
+            <!-- Brand Overview Profile Card -->
+            <div class="col-lg-4 col-md-4 mb-4">
+                <div class="footer__about">
+                    <div class="footer__logo mb-3">
+                        <h3 class="text-white font-weight-bold m-0" style="letter-spacing: 1px;">COREX<span class="text-danger">10</span></h3>
+                    </div>
+                    <p class="text-white-50 small" style="line-height: 1.7; font-size: 14px;">
+                        Premium multi-tenant vehicle leasing, luxury rental setups, and direct automotive asset sales operational hubs in Lagos and Abuja, Nigeria.
+                    </p>
+                    <div class="footer__social mt-3">
+                        <a href="#" class="facebook text-white mr-3"><i class="fa fa-facebook"></i></a>
+                        <a href="#" class="twitter text-white mr-3"><i class="fa fa-twitter"></i></a>
+                        <a href="#" class="instagram text-white mr-3"><i class="fa fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Information Category Core Link List -->
+            <div class="col-lg-2 col-md-2 col-sm-6 mb-4">
+                <div class="footer__widget">
+                    <h5 class="text-white font-weight-bold mb-3" style="font-size: 16px;">Information</h5>
+                    <ul class="list-unstyled small" style="line-height: 2.2;">
+                        <li><a href="#" class="text-white-50">Purchase Insurance</a></li>
+                        <li><a href="#" class="text-white-50">Flexible Payment Plans</a></li>
+                        <li><a href="#" class="text-white-50">Nationwide Delivery</a></li>
+                        <li><a href="#" class="text-white-50">Return Policy Tracks</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Vehicle Segment Core Link List -->
+            <div class="col-lg-2 col-md-2 col-sm-6 mb-4">
+                <div class="footer__widget">
+                    <h5 class="text-white font-weight-bold mb-3" style="font-size: 16px;">Vehicle Categories</h5>
+                    <ul class="list-unstyled small" style="line-height: 2.2;">
+                        <li><a href="#" class="text-white-50">Luxury Sedans</a></li>
+                        <li><a href="#" class="text-white-50">Sports & Exotic Cars</a></li>
+                        <li><a href="#" class="text-white-50">Multi-terrain SUVs</a></li>
+                        <li><a href="#" class="text-white-50">Armored Protocol Fleets</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Top Automotive Brands Matrix Columns Split -->
+            <div class="col-lg-4 col-md-4 mb-4">
+                <div class="footer__widget">
+                    <h5 class="text-white font-weight-bold mb-3" style="font-size: 16px;">Top Brands Available</h5>
+                    <div class="row small" style="line-height: 2.2;">
+                        <div class="col-6">
+                            <ul class="list-unstyled">
+                                <li><a href="#" class="text-white-50">Toyota</a></li>
+                                <li><a href="#" class="text-white-50">Lexus</a></li>
+                                <li><a href="#" class="text-white-50">Mercedes-Benz</a></li>
+                                <li><a href="#" class="text-white-50">Land Rover</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-6">
+                            <ul class="list-unstyled">
+                                <li><a href="#" class="text-white-50">BMW</a></li>
+                                <li><a href="#" class="text-white-50">Hyundai</a></li>
+                                <li><a href="#" class="text-white-50">Honda</a></li>
+                                <li><a href="#" class="text-white-50">Ford Matrix</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Copyright Metric Block Section Banner Bar -->
+        <div class="footer__copyright mt-4 py-3" style="border-top: 1px solid rgba(255, 255, 255, 0.05);">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <p class="footer__copyright__text text-white-50 small mb-0">
+                        Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | Corex multi-tenant automotive enterprise engine.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock master_content %}

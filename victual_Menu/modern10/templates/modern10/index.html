@@ -1,0 +1,745 @@
+
+
+{% extends 'modern10/main.html' %}
+{% load static %}
+
+{% block master_content %}
+<!-- =========================================================================
+    🎛️ TOP NAVIGATION HEADER & LOCALIZED INFRASTRUCTURE PANEL
+========================================================================== -->
+<header class="header">
+    <div class="header__top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7 col-md-7">
+                    <div class="header__top__left">
+                        <ul>
+                            <li><i class="fa fa-clock-o"></i> Mon - Sat: 08:00 am to 18:00 pm</li>
+                            <li><i class="fa fa-envelope"></i> {{ platform_config.contact_email|default:"info@corexautos.ng" }}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-5">
+                    <div class="header__top__right">
+                        <div class="header__top__phone">
+                            <i class="fa fa-phone"></i> <span>{{ platform_config.contact_phone|default:"+234 (0) 803 456 7891" }}</span>
+                        </div>
+                        <div class="header__top__social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3">
+                <div class="header__logo">
+                    <a href="{% url 'modern10_index_view' slug=active_tenant.slug_name %}">
+                        {% if platform_config.logo %}
+                            <img src="{{ platform_config.logo.url }}" alt="Premium Logo Layout" style="max-height: 50px;">
+                        {% else %}
+                            <h3 class="fw-bold text-dark m-0" style="letter-spacing: 1px;">COREX<span class="text-danger">10</span></h3>
+                        {% endif %}
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-9">
+                <div class="header__nav">
+                    <nav class="header__menu">
+                        <ul>
+                            <li class="active"><a href="{% url 'modern10_index_view' slug=active_tenant.slug_name %}">Home</a></li>
+                            <li><a href="{% url 'modern10_car_view' slug=active_tenant.slug_name %}">Cars</a></li>
+                            <li><a href="{% url 'modern10_blog_view' slug=active_tenant.slug_name %}">Blog</a></li>
+                            <li><a href="#">Pages</a>
+                                <ul class="dropdown">
+                                    <li><a href="{% url 'modern10_about_view' slug=active_tenant.slug_name %}">About Us</a></li>
+                                    <li><a href="{% url 'modern10_contact_view' slug=active_tenant.slug_name %}">Contact</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+
+                </div>
+            </div>
+        </div>
+        <div class="canvas__open">
+            <span class="fa fa-bars"></span>
+        </div>
+    </div>
+</header>
+
+<!-- =========================================================================
+    🏎️ HERO SLIDER MODULE (DYNAMIC VEHICLE SHOWCASE INTERFACE)
+========================================================================== -->
+
+{% if platform_config.hero_banner_image %}
+<section class="hero spad set-bg" data-setbg="{{ platform_config.hero_banner_image.url }}">
+{% else %}
+<section class="hero spad set-bg" data-setbg="{% static 'modern10/img/hero/hero-bg.jpg' %}">
+{% endif %}
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- 🪐 LEFT DATA SPECIFICATIONS: HEADING & PARAMETERS -->
+            <div class="col-lg-6 col-md-6 mb-4">
+                <div class="hero__text">
+                    <div class="hero__text__title">
+                        <span>FIND YOUR DREAM VEHICLE</span>
+                        <h2>{{ platform_config.hero_title|default:"Luxury & Status Focus" }}</h2>
+                    </div>
+                    <div class="hero__text__price">
+                        <p class="text-white mb-4 pr-3 font-weight-normal lead" style="line-height: 1.6; text-shadow: 1px 1px 3px rgba(0,0,0,0.8);">
+                            {{ platform_config.hero_subtitle|default:"Premium car rentals made effortless. Choose your vehicle and select your dates instantly." }}
+                        </p>
+                        <div class="car-model font-weight-bold mb-2">Active Fleet</div>
+                        <h2 class="mb-4">CN: ₦350,000<span>/Day Baseline</span></h2>
+                    </div>
+                    <div class="hero__buttons__row">
+                        <a href="{% url 'modern10_car_view' slug=active_tenant.slug_name %}" class="primary-btn mr-2"><i class="fa fa-automobile"></i> Explore Fleet</a>
+                        <a href="{% url 'modern10_about_view' slug=active_tenant.slug_name %}" class="primary-btn transparent-btn"><i class="fa fa-info-circle"></i> Learn More</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 🔍 RIGHT DATA SPECIFICATIONS: OVERLAY DUAL SEARCH CONSOLE WIDGET -->
+            <div class="col-lg-6 col-md-6 mb-4">
+                <div class="search__tab bg-transparent border-0 mb-2">
+                    <ul class="nav nav-tabs border-0" role="tablist" style="background: transparent;">
+                        <li class="nav-item m-1">
+                            <a class="nav-link active bg-white text-dark font-weight-bold px-3 py-2 border-0" data-toggle="tab" href="#tabs-1" role="tab" style="border-radius: 4px 4px 0 0;">
+                                <i class="fa fa-calendar-check-o text-danger"></i> Car Rental
+                            </a>
+                        </li>
+                        <li class="nav-item m-1">
+                            <a class="nav-link bg-dark text-white font-weight-bold px-3 py-2 border-0" data-toggle="tab" href="#tabs-2" role="tab" style="border-radius: 4px 4px 0 0;">
+                                <i class="fa fa-tags text-warning"></i> Buy Car
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="tab-content bg-white p-4 rounded shadow-lg" style="border-radius: 8px;">
+                    <!-- 🟢 ZONE 1: VEHICLE HIRE RENTAL FORM -->
+                    <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                        <form action="{% url 'modern10_car_view' slug=active_tenant.slug_name %}" method="GET">
+                            <input type="hidden" name="purpose" value="RENT">
+                            <h4 class="font-weight-bold text-dark mb-3" style="letter-spacing: -0.5px;">Find Your Dream Car</h4>
+
+                            <div class="row">
+                                <!-- 1. Dynamic Year Selection -->
+                                <div class="col-6 mb-2">
+                                    <label class="small text-muted font-weight-bold mb-1">Select Year</label>
+                                    <select name="year" class="form-control w-100">
+                                        <option value="">All Years</option>
+                                        {% for yr in dynamic_years %}
+                                            <option value="{{ yr }}">{{ yr }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <!-- 2. Dynamic Brand Selection -->
+                                <div class="col-6 mb-2">
+                                    <label class="small text-muted font-weight-bold mb-1">Select Brand</label>
+                                    <select name="brand" class="form-control w-100">
+                                        <option value="">All Brands</option>
+                                        {% for brand in dynamic_brands %}
+                                            <option value="{{ brand }}">{{ brand }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <!-- 3. Dynamic Model Selection -->
+                                <div class="col-6 mb-3">
+                                    <label class="small text-muted font-weight-bold mb-1">Select Model</label>
+                                    <select name="model" class="form-control w-100">
+                                        <option value="">All Models</option>
+                                        {% for car in dynamic_fleet_options %}
+                                            <option value="{{ car.make_and_model }}">{{ car.make_and_model }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <!-- 4. Dynamic Location Selection -->
+                                <div class="col-6 mb-3">
+                                    <label class="small text-muted font-weight-bold mb-1">Select Location</label>
+                                    <select name="location" class="form-control w-100">
+                                        <option value="">All Locations</option>
+                                        {% for loc in dynamic_locations %}
+                                            <option value="{{ loc }}">{{ loc }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <!-- 5. Dynamic Mileage Selection & Slider -->
+                                <div class="col-12 mb-3">
+                                    <label class="small text-muted font-weight-bold mb-1">Select Mileage Cap</label>
+                                    <select name="mileage" class="form-control w-100 mb-2">
+                                        <option value="">Any Mileage</option>
+                                        {% for mil in dynamic_mileage %}
+                                            <option value="{{ mil }}">{{ mil }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <label class="small text-muted font-weight-bold mb-1 d-block">Price Range: ₦25,000 - ₦500,000 / Day</label>
+                                    <div class="price-range-wrap px-2">
+                                        <div class="price-range-control ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="site-btn btn-danger btn-block w-100 border-0 font-weight-bold text-white py-2" style="background: #e52727; border-radius: 4px;"><i class="fa fa-search"></i> Searching</button>
+                        </form>
+                    </div>
+
+                    <!-- 🔵 ZONE 2: DIRECT PURCHASE FORM (FULLY STABILIZED WITH COMPLETE CLOSURES) -->
+                    <div class="tab-pane" id="tabs-2" role="tabpanel">
+                        <form action="{% url 'modern10_car_view' slug=active_tenant.slug_name %}" method="GET">
+                            <input type="hidden" name="purpose" value="SALE">
+                            <h4 class="font-weight-bold text-dark mb-3" style="letter-spacing: -0.5px;">Purchase Luxury Autos</h4>
+
+                            <div class="row">
+                                <div class="col-6 mb-2">
+                                    <label class="small text-muted font-weight-bold mb-1">Select Year</label>
+                                    <select name="year" class="form-control w-100">
+                                        <option value="">All Years</option>
+                                        {% for yr in dynamic_years %}
+                                            <option value="{{ yr }}">{{ yr }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <label class="small text-muted font-weight-bold mb-1">Select Brand</label>
+                                    <select name="brand" class="form-control w-100">
+                                        <option value="">All Brands</option>
+                                        {% for brand in dynamic_brands %}
+                                            <option value="{{ brand }}">{{ brand }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="site-btn btn-dark btn-block w-100 border-0 font-weight-bold text-white py-2 mt-3" style="border-radius: 4px; background: #151515;"><i class="fa fa-automobile"></i> Search Purchase</button>
+                        </form>
+                    </div> <!-- 🟢 FIXED: Closed .tab-pane cleanly -->
+                </div> <!-- 🟢 FIXED: Closed .tab-content cleanly -->
+            </div> <!-- 🟢 FIXED: Closed .col-lg-6 right data widget column cleanly -->
+        </div> <!-- 🟢 FIXED: Closed .row master alignment grid cleanly -->
+    </div> <!-- 🟢 FIXED: Closed .container framework shell cleanly -->
+</section> <!-- 🟢 FIXED: Closed .hero section block shell cleanly -->
+
+<!-- =========================================================================
+    🛠️ CORE PLATFORM SERVICE OFFERS WINDOW (100% ADMIN DRIVEN)
+========================================================================== -->
+<section class="services spad" style="background: #ffffff; padding: 80px 0;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title text-center mb-5">
+                    <span class="text-danger font-weight-bold" style="letter-spacing: 2px; font-size: 13px; text-transform: uppercase;">Our Services</span>
+                    <h2 class="font-weight-bold text-dark mt-2" style="font-size: 32px;">What We Offer Across Nigeria</h2>
+                    <p class="text-muted mx-auto mt-2" style="max-width: 700px; line-height: 1.6;">Premium multi-tenant vehicular logistics and maintenance structures tailored to your corporate and personal mobility needs.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- 🟢 SERVICE CARD 1: CAR HIRE LOGISTICS -->
+            <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+                <div class="services__item p-3 text-center border rounded shadow-sm bg-white" style="height: 100%; transition: all 0.3s ease;">
+                    <img src="{% static 'modern10/img/services/services-1.png' %}" alt="Premium Car Hire Link Layout" class="mb-3" style="height: 60px; object-fit: contain;">
+                    <h5 class="font-weight-bold text-dark mb-2" style="font-size: 18px;">Luxury Car Rentals</h5>
+                    <p class="text-muted small mb-0" style="line-height: 1.6;">{{ platform_config.service_1_desc }}</p>
+                </div>
+            </div>
+
+            <!-- 🟢 SERVICE CARD 2: PROCUREMENT DIRECT MERCHANT -->
+            <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+                <div class="services__item p-3 text-center border rounded shadow-sm bg-white" style="height: 100%; transition: all 0.3s ease;">
+                    <img src="{% static 'modern10/img/services/services-2.png' %}" alt="Direct Vehicle Purchasing Handle" class="mb-3" style="height: 60px; object-fit: contain;">
+                    <h5 class="font-weight-bold text-dark mb-2" style="font-size: 18px;">Buying A Vehicle</h5>
+                    <p class="text-muted small mb-0" style="line-height: 1.6;">{{ platform_config.service_2_desc }}</p>
+                </div>
+            </div>
+
+            <!-- 🟢 SERVICE CARD 3: DIAGNOSTIC REPAIR NETWORK -->
+            <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+                <div class="services__item p-3 text-center border rounded shadow-sm bg-white" style="height: 100%; transition: all 0.3s ease;">
+                    <img src="{% static 'modern10/img/services/services-3.png' %}" alt="Automobile Maintenance Metrics" class="mb-3" style="height: 60px; object-fit: contain;">
+                    <h5 class="font-weight-bold text-dark mb-2" style="font-size: 18px;">Car Maintenance</h5>
+                    <p class="text-muted small mb-0" style="line-height: 1.6;">{{ platform_config.service_3_desc }}</p>
+                </div>
+            </div>
+
+            <!-- 🟢 SERVICE CARD 4: REAL-TIME OPERATIONS RADAR -->
+            <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+                <div class="services__item p-3 text-center border rounded shadow-sm bg-white" style="height: 100%; transition: all 0.3s ease;">
+                    <img src="{% static 'modern10/img/services/services-4.png' %}" alt="Active Support Logistics Control" class="mb-3" style="height: 60px; object-fit: contain;">
+                    <h5 class="font-weight-bold text-dark mb-2" style="font-size: 18px;">Support 24/7</h5>
+                    <p class="text-muted small mb-0" style="line-height: 1.6;">{{ platform_config.service_4_desc }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- =========================================================================
+    🛡️ THE TRUSTED PARTNERS & FLEET CORE SPECIFICATIONS BLOCK (100% DYNAMIC)
+========================================================================== -->
+<section class="feature spad" style="background: #ffffff; padding: 80px 0; display: block; clear: both; width: 100%;">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- 🪐 LEFT SPECIFICATIONS COLUMN BLOCK -->
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <div class="feature__text">
+                    <div class="section-title mb-4">
+                        <span class="text-danger font-weight-bold" style="letter-spacing: 2px; font-size: 13px; text-transform: uppercase;">Our Feature</span>
+                        <!-- 🟢 FIXED DYNAMIC HEADLINE -->
+                        <h2 class="font-weight-bold text-dark mt-2" style="font-size: 32px; letter-spacing: -0.5px; line-height: 1.3;">
+                            {{ platform_config.feature_main_headline|default:"We Are A Trusted Name In Auto Distribution Matrix" }}
+                        </h2>
+                    </div>
+                    <div class="feature__text__desc text-muted mb-4" style="font-size: 15px; line-height: 1.7;">
+                        <!-- 🟢 FIXED DYNAMIC PARAGRAPHS -->
+                        <p class="mb-3">{{ platform_config.feature_desc_paragraph_1 }}</p>
+                        <p class="mb-0">{{ platform_config.feature_desc_paragraph_2 }}</p>
+                    </div>
+                    <a href="{% url 'modern10_about_view' slug=active_tenant.slug_name %}" class="btn btn-danger font-weight-bold px-4 py-2" style="background: #db2d2d; border: 0; border-radius: 4px; font-size: 14px; letter-spacing: 0.5px;">
+                        <i class="fa fa-info-circle mr-1"></i> Learn About Us
+                    </a>
+                </div>
+            </div>
+
+            <!-- 📸 RIGHT DYNAMIC BADGE BOX GRID: Completely fixed overlapping elements! -->
+            <div class="col-lg-6 text-center">
+                <div class="feature__showcase__wrapper p-4 border rounded shadow-sm bg-light" style="position: relative; overflow: hidden; width: 100%;">
+                    <!-- Main Automotive Asset Render Image Component -->
+                   {% if platform_config.hero_banner_image %}
+                        <img src="{{ platform_config.hero_banner_image.url }}" alt="Fleet Showcase Asset" class="img-fluid mb-4 rounded" style="max-height: 280px; object-fit: contain; width: 100%;">
+                    {% endif %}
+
+
+                    <!-- 💎 Dynamic Flex Badges Matrix Row -->
+                    <div class="row mx-0 mt-3 pt-2 justify-content-center text-center">
+                        <div class="col-6 p-2">
+                            <div class="p-2 bg-white border rounded shadow-sm font-weight-bold text-dark small text-truncate">
+                                <i class="fa fa-cogs text-danger mr-1"></i> {{ platform_config.feature_badge_1|default:"V8 Engine Core" }}
+                            </div>
+                        </div>
+                        <div class="col-6 p-2">
+                            <div class="p-2 bg-white border rounded shadow-sm font-weight-bold text-dark small text-truncate">
+                                <i class="fa fa-dashboard text-danger mr-1"></i> {{ platform_config.feature_badge_2|default:"Twin Turbo" }}
+                            </div>
+                        </div>
+                        <div class="col-6 p-2">
+                            <div class="p-2 bg-white border rounded shadow-sm font-weight-bold text-dark small text-truncate">
+                                <i class="fa fa-snowflake-o text-danger mr-1"></i> {{ platform_config.feature_badge_3|default:"Climate Control" }}
+                            </div>
+                        </div>
+                        <div class="col-6 p-2">
+                            <div class="p-2 bg-white border rounded shadow-sm font-weight-bold text-dark small text-truncate">
+                                <i class="fa fa-shield text-danger mr-1"></i> {{ platform_config.feature_badge_4|default:"Armored Option" }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================================
+    🏎️ LUXURY FLEET CATALOG DISPATCH (RENTAL GRIDS & VEHICLES FOR SALE)
+========================================================================== -->
+<section class="car spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title text-center">
+                    <span>Our Car Fleet</span>
+                    <h2>Best Vehicle Offers Available</h2>
+                    <p class="text-muted">Explore high-quality vehicles available for immediate hire or direct purchase within our multi-tenant network.</p>
+                </div>
+                <div class="car__filter__tab">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#all-cars" role="tab">Most Researched</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#latest-sale" role="tab">Latest On Sale</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content">
+            <!-- 🟢 TAB ZONE 1: PRIMARY GRID CHANNELS (ALL FLEET CARDS LOOP) -->
+            <div class="tab-pane active" id="all-cars" role="tabpanel">
+                <div class="row">
+                    {% for car in product_listings|slice:":4" %}
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                        <div class="car__item">
+                            <!-- 🟢 FIXED PICTURE ASPECT RATIO: Overlay link layer attached inside to handle click actions flawlessly -->
+                            {% if car.vehicle_image %}
+                                <div class="car__item__pic set-bg" data-setbg="{{ car.vehicle_image.url }}" style="height: 220px; background-size: cover; background-position: center; display: block; width: 100%; position: relative;">
+                                    <a href="{% url 'modern10_car_details_view' slug=active_tenant.slug_name pk=car.id %}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; display: block;"></a>
+                                    <div class="label-date" style="z-index: 6;">{{ car.year_of_manufacture }}</div>
+                                </div>
+                            {% else %}
+                                <div class="car__item__pic set-bg" data-setbg="{% static 'modern10/img/cars/car-1.jpg' %}" style="height: 220px; background-size: cover; background-position: center; display: block; width: 100%; position: relative;">
+                                    <a href="{% url 'modern10_car_details_view' slug=active_tenant.slug_name pk=car.id %}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; display: block;"></a>
+                                    <div class="label-date" style="z-index: 6;">{{ car.year_of_manufacture }}</div>
+                                </div>
+                            {% endif %}
+
+                            <div class="car__item__text" style="padding-top: 15px;">
+                                <div class="car__item__text__inner">
+                                    <h5 class="font-weight-bold" style="font-size: 15px; margin-bottom: 8px;">
+                                        <a href="{% url 'modern10_car_details_view' slug=active_tenant.slug_name pk=car.id %}" class="text-dark">{{ car.make_and_model }}</a>
+                                    </h5>
+                                    <ul class="list-unstyled my-2 d-flex justify-content-between text-muted small" style="border-top: 1px solid #f2f2f2; border-bottom: 1px solid #f2f2f2; padding: 6px 0; font-size: 11px;">
+                                        <li><i class="fa fa-dashboard text-danger"></i> {{ car.mileage }}</li>
+                                        <li><i class="fa fa-cogs text-danger"></i> {% if car.transmission_automatic %}Auto{% else %}Manual{% endif %}</li>
+                                        <li><i class="fa fa-bolt text-danger"></i> {{ car.horsepower }}</li>
+                                    </ul>
+                                </div>
+
+                                <!-- 💰 FIXED PRICING BAR: Clean layout floating alignments -->
+                                <div class="car__item__price" style="width: 100%; margin-top: 10px;">
+                                    {% if car.purpose == 'RENT' %}
+                                        <span class="car-option rent" style="float: left; display: inline-block;">For Rent</span>
+                                        <h6 style="float: right; display: inline-block; color: #db2d2d; font-weight: bold; font-size: 14px; margin: 0;">₦{{ car.rental_price_per_day|default:"0" }}<span>/Day</span></h6>
+                                    {% else %}
+                                        <span class="car-option sale" style="float: left; display: inline-block;">For Sale</span>
+                                        <h6 style="float: right; display: inline-block; color: #db2d2d; font-weight: bold; font-size: 14px; margin: 0;">₦{{ car.sale_price|default:"0" }}</h6>
+                                    {% endif %}
+                                    <div style="clear: both;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="col-12 text-center py-4">
+                        <p class="text-muted small">No vehicles have been configured for the fleet showcase grid yet.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- 🔵 TAB ZONE 2: RECENT SALES DISPATCHES (SALES-ONLY FILTER MATCH) -->
+            <div class="tab-pane" id="latest-sale" role="tabpanel">
+                <div class="row">
+                    {% for car in product_listings %}
+                        {% if car.purpose == 'SALE' %}
+                        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                            <div class="car__item">
+                                <!-- 🟢 FIXED ASPECT GRID: Overlay link layer attached inside to handle thumb picture click actions -->
+                                {% if car.vehicle_image %}
+                                    <div class="car__item__pic set-bg" data-setbg="{{ car.vehicle_image.url }}" style="height: 220px; background-size: cover; background-position: center; display: block; width: 100%; position: relative;">
+                                        <a href="{% url 'modern10_car_details_view' slug=active_tenant.slug_name pk=car.id %}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; display: block;"></a>
+                                        <div class="label-date" style="z-index: 6;">{{ car.year_of_manufacture }}</div>
+                                    </div>
+                                {% else %}
+                                    <div class="car__item__pic set-bg" data-setbg="{% static 'modern10/img/cars/car-2.jpg' %}" style="height: 220px; background-size: cover; background-position: center; display: block; width: 100%; position: relative;">
+                                        <a href="{% url 'modern10_car_details_view' slug=active_tenant.slug_name pk=car.id %}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; display: block;"></a>
+                                        <div class="label-date" style="z-index: 6;">{{ car.year_of_manufacture }}</div>
+                                    </div>
+                                {% endif %}
+
+                                <div class="car__item__text" style="padding-top: 15px;">
+                                    <div class="car__item__text__inner">
+                                        <h5 class="font-weight-bold" style="font-size: 15px; margin-bottom: 8px;">
+                                            <a href="{% url 'modern10_car_details_view' slug=active_tenant.slug_name pk=car.id %}" class="text-dark">{{ car.make_and_model }}</a>
+                                        </h5>
+                                        <ul class="list-unstyled my-2 d-flex justify-content-between text-muted small" style="border-top: 1px solid #f2f2f2; border-bottom: 1px solid #f2f2f2; padding: 6px 0; font-size: 11px;">
+                                            <li><i class="fa fa-dashboard text-danger"></i> {{ car.mileage }}</li>
+                                            <li><i class="fa fa-cogs text-danger"></i> {% if car.transmission_automatic %}Auto{% else %}Manual{% endif %}</li>
+                                            <li><i class="fa fa-bolt text-danger"></i> {{ car.horsepower }}</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="car__item__price" style="width: 100%; margin-top: 10px;">
+                                        <span class="car-option sale" style="float: left; display: inline-block;">For Sale</span>
+                                        <h6 style="float: right; display: inline-block; color: #db2d2d; font-weight: bold; font-size: 14px; margin: 0;">₦{{ car.sale_price|default:"0" }}</h6>
+                                        <div style="clear: both;"></div>
+                                    </div>
+                                end text blocks info layer column -->
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% empty %}
+                    <div class="col-12 text-center py-4">
+                        <p class="text-muted small">No vehicles are currently listed directly for sale.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div> <!-- Closed .tab-content cleanly -->
+    </div> <!-- Closed .container cleanly -->
+</section> <!-- Closed .car cleanly -->
+
+
+
+ <!-- =========================================================================
+    🏆 BRAND TRUST & NIGERIA MARKETPLACE VALUE PROPOSITIONS (PURE TEXT DESIGN)
+========================================================================== -->
+<section class="chooseus spad" style="background: #fcfcfc; padding: 90px 0; border-top: 1px solid #f2f2f2; border-bottom: 1px solid #f2f2f2;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 text-center">
+                <div class="chooseus__text px-4">
+                    <div class="section-title text-center mb-4">
+                        <span class="text-danger font-weight-bold" style="letter-spacing: 2px; font-size: 13px; text-transform: uppercase;">Why Choose Us</span>
+                        <h2 class="font-weight-bold text-dark mt-2" style="font-size: 34px; letter-spacing: -0.5px;">Maximum Safety & Transparent Processing</h2>
+                    </div>
+
+                    <!-- 🟢 DYNAMIC INTRO DESCRIPTION TEXT CARD -->
+                    <p class="lead text-muted mx-auto" style="max-width: 800px; line-height: 1.8; font-size: 16px;">
+                        {{ platform_config.why_choose_us_intro|default:"Your trusted partner for secure, premium, and fully cleared vehicles. We take pride in offering a seamless automotive experience built on 100% legal compliance, advanced real-time security tracking, and comprehensive insurance protection for every single journey." }}
+                    </p>
+
+                    <!-- 💎 BALANCED VALUE PILLARS DISPLAY SELECTION MATRIX -->
+                    <div class="row mt-5 pt-2 text-left justify-content-center">
+                        <div class="col-md-6 mb-3">
+                            <div class="p-3 bg-white border rounded shadow-sm d-flex align-items-center" style="height: 100%; transition: transform 0.2s ease;">
+                                <i class="fa fa-check-circle text-danger mr-3" style="font-size: 24px;"></i>
+                                <span class="font-weight-bold text-dark" style="font-size: 14px; letter-spacing: 0.2px;">{{ platform_config.pillar_1_title|default:"100% Verified Custom Duty & Tokunbo Clearance Papers" }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="p-3 bg-white border rounded shadow-sm d-flex align-items-center" style="height: 100%; transition: transform 0.2s ease;">
+                                <i class="fa fa-check-circle text-danger mr-3" style="font-size: 24px;"></i>
+                                <span class="font-weight-bold text-dark" style="font-size: 14px; letter-spacing: 0.2px;">{{ platform_config.pillar_2_title|default:"Real-time GPS Fleet Surveillance & Telemetry Support" }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="p-3 bg-white border rounded shadow-sm d-flex align-items-center" style="height: 100%; transition: transform 0.2s ease;">
+                                <i class="fa fa-check-circle text-danger mr-3" style="font-size: 24px;"></i>
+                                <span class="font-weight-bold text-dark" style="font-size: 14px; letter-spacing: 0.2px;">{{ platform_config.pillar_3_title|default:"Comprehensive Insurance Coverage on All Operational Leases" }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="p-3 bg-white border rounded shadow-sm d-flex align-items-center" style="height: 100%; transition: transform 0.2s ease;">
+                                <i class="fa fa-check-circle text-danger mr-3" style="font-size: 24px;"></i>
+                                <span class="font-weight-bold text-dark" style="font-size: 14px; letter-spacing: 0.2px;">{{ platform_config.pillar_4_title|default:"Verified Ownership Transfers and Stress-free Registration" }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- =========================================================================
+    📢 DUAL CALL-TO-ACTION CONSOLE PANELS (BUY VS RENT ACTION PIPELINES)
+========================================================================== -->
+<section class="cta section-bg spad">
+    <div class="container">
+        <div class="row">
+            <!-- CTA Card Left -->
+            <div class="col-lg-6 col-md-6">
+                <div class="cta__item set-bg" data-setbg="{% static 'modern10/img/cta/cta-1.jpg' %}">
+                    <h4>Do You Want To Buy A Car?</h4>
+                    <p>Browse through hundreds of pristine foreign-used (Tokunbo) and brand-new premium vehicle options cleared natively and ready for immediate nationwide delivery.</p>
+                    <a href="{% url 'modern10_car_view' slug=active_tenant.slug_name %}?purpose=SALE" class="primary-btn"><i class="fa fa-shopping-cart"></i> Browse For Sale</a>
+                </div>
+            </div>
+            <!-- CTA Card Right -->
+            <div class="col-lg-6 col-md-6">
+                <div class="cta__item set-bg" data-setbg="{% static 'modern10/img/cta/cta-2.jpg' %}">
+                    <h4>Do You Want To Rent A Car?</h4>
+                    <p>Secure executive armors, rugged multi-terrain SUVs, or sleek sports configurations for short-term project leases or luxury airport protocols safely.</p>
+                    <a href="{% url 'modern10_car_view' slug=active_tenant.slug_name %}?purpose=RENT" class="primary-btn transparent-btn"><i class="fa fa-calendar"></i> Book Rental Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- =========================================================================
+    💬 DYNAMIC MULTI-TENANT CLIENT TESTIMONIALS (SOLID CHARCOAL CORE STRATEGY)
+========================================================================== -->
+<section class="testimonial spad" style="background: #111111; padding: 80px 0; display: block; width: 100%; position: relative; clear: both; z-index: 10;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5">
+                <div class="section-title text-center">
+                    <span class="text-danger font-weight-bold" style="letter-spacing: 2px; font-size: 13px; display: block; margin-bottom: 10px;">TESTIMONIALS</span>
+                    <h2 class="text-white font-weight-bold" style="font-size: 32px;">What Our Elite Clients Say</h2>
+                    <p class="text-white-50 small mt-2">Real reviews from verified corporate partners, luxury lease merchants, and private individual buyers across Nigeria.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <!-- 🟢 STABILIZED DATA CONSOLE ROW SHOWCASE CARD GRID -->
+                <div class="testimonial__slider owl-carousel" style="display: block; width: 100%;">
+                    {% for review in testimonials %}
+                    <!-- Automated Dynamic Review Item Module Grid Card -->
+                    <div class="testimonial__item text-center px-4 py-5 mb-3" style="background: #1a1a1a; border-radius: 6px; border: 1px solid #282828; display: block; width: 100%;">
+
+                        <!-- 🟢 FIXED AUTHENTIC IMAGE HOOK: Connected cleanly to your model's real 'avatar' field! -->
+                        {% if review.avatar %}
+                        <div class="testimonial__author__pic mb-3" style="width: 80px; height: 80px; margin: 0 auto; overflow: hidden; border-radius: 50%; border: 2px solid #db2d2d;">
+                            <img src="{{ review.avatar.url }}" alt="{{ review.client_name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        {% endif %}
+
+                        <!-- Displaying the Quote Icon Symbol -->
+                        <div class="testimonial__item__icon mb-3">
+                            <i class="fa fa-quote-left text-danger" style="font-size: 24px;"></i>
+                        </div>
+
+                        <!-- 🟢 FIXED AUTHENTIC TEXT HOOK: Connected cleanly to your model's real 'quote' text field! -->
+                        <p class="text-white mb-4 lead" style="font-size: 15px; line-height: 1.8; font-style: italic; font-family: 'Lato', sans-serif;">
+                            "{{ review.quote }}"
+                        </p>
+
+                        <div class="testimonial__item__author mt-3">
+                            <!-- 💎 DYNAMIC CLIENT NAME HEADLINE -->
+                            <h5 class="text-white font-weight-bold m-0" style="letter-spacing: 0.5px; font-size: 16px;">{{ review.client_name }}</h5>
+                            <!-- 💎 DYNAMIC CLIENT ROLE PARAMETER -->
+                            <span class="text-danger small font-weight-bold d-block mt-2" style="letter-spacing: 1px; text-transform: uppercase; font-size: 12px;">
+                                {{ review.client_role }}
+                            </span>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <!-- Safe Fallback Banner if Tenant Has Not Populated Review Cards -->
+                    <div class="testimonial__item text-center py-4 bg-dark rounded">
+                        <p class="text-white-50 small mb-0">No verified elite client testimonials have been published to this storefront catalog hub yet.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================================
+    📇 LOCALIZED NIGERIAN MULTI-COLUMN PLATFORM FOOTER
+========================================================================== -->
+<footer class="footer spad">
+    <div class="container">
+        <div class="footer__contact">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="footer__contact__title">
+                        <h2>Contact Us Now!</h2>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="footer__contact__option">
+                        <div class="option__item"><i class="fa fa-phone"></i> {{ platform_config.contact_phone|default:"+234 (0) 803 456 7891" }}</div>
+                        <div class="option__item text-lowercase"><i class="fa fa-envelope"></i> {{ platform_config.contact_email|default:"info@corexautos.ng" }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-4">
+                <div class="footer__about">
+                    <div class="footer__logo">
+                        <h3 class="text-white fw-bold m-0" style="letter-spacing: 1px;">COREX<span class="text-danger">10</span></h3>
+                    </div>
+                    <p>Premium multi-tenant vehicle leasing, luxury rental setups, and direct automotive asset sales operational hubs in Lagos and Abuja, Nigeria.</p>
+                    <div class="footer__social">
+                        <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+                        <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+                        <a href="#" class="instagram"><i class="fa fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2">
+                <div class="footer__widget">
+                    <h5>Information</h5>
+                    <ul>
+                        <li><a href="#">Purchase Insurance</a></li>
+                        <li><a href="#">Flexible Payment Plans</a></li>
+                        <li><a href="#">Nationwide Delivery</a></li>
+                        <li><a href="#">Return Policy Tracks</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2">
+                <div class="footer__widget">
+                    <h5>Vehicle Categories</h5>
+                    <ul>
+                        <li><a href="#">Luxury Sedans</a></li>
+                        <li><a href="#">Sports & Exotic Cars</a></li>
+                        <li><a href="#">Multi-terrain SUVs</a></li>
+                        <li><a href="#">Armored Protocol Fleets</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4">
+                <div class="footer__widget">
+                    <h5>Top Brands Available</h5>
+                    <div class="row">
+                        <div class="col-6">
+                            <ul>
+                                <li><a href="#">Toyota</a></li>
+                                <li><a href="#">Lexus</a></li>
+                                <li><a href="#">Mercedes-Benz</a></li>
+                                <li><a href="#">Land Rover</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-6">
+                            <ul>
+                                <li><a href="#">BMW</a></li>
+                                <li><a href="#">Hyundai</a></li>
+                                <li><a href="#">Honda</a></li>
+                                <li><a href="#">Ford Matrix</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer__copyright">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <p class="footer__copyright__text">
+                        Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | Corex multi-tenant automotive enterprise engine.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock master_content %}
+<!-- =========================================================================
+    ⚡ BULLETPROOF AUTOMATED HOMEPAGE TESTIMONIALS SLIDER RE-INITIALIZER
+========================================================================== -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // We inject a tiny 300ms timing delay buffer to let your database text array values expand completely!
+        setTimeout(function() {
+            var reviewSlider = $(".testimonial__slider");
+            if (reviewSlider.length > 0) {
+                // Safely clear any collapsed 0-pixel broken slider instances
+                reviewSlider.owlCarousel('destroy');
+
+                // Formally build out high-performance multi-client slide tracks
+                reviewSlider.owlCarousel({
+                    loop: true,
+                    margin: 0,
+                    items: 1,
+                    dots: true,
+                    nav: false,
+                    smartSpeed: 1200,
+                    autoHeight: true,
+                    autoplay: true,
+                    autoplayTimeout: 5000
+                });
+            }
+        }, 300); // Perfect operational timing sweet spot for premium SaaS platforms!
+    });
+</script>

@@ -1,0 +1,472 @@
+{% extends 'modern10/main.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}{{ car.make_and_model|default:"Premium Automotive Specification" }} — Details — {{ active_tenant.business_name }}{% endblock %}
+
+{% block master_content %}
+<!-- =========================================================================
+    📇 VEHICLE DETAIL BREADCRUMB HEADER
+========================================================================== -->
+<div class="breadcrumb-option set-bg" data-setbg="{% static 'modern10/img/breadcrumb-bg.jpg' %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>{{ car.make_and_model }}</h2>
+                    <div class="breadcrumb__links">
+                        <a href="{% url 'modern10_index_view' slug=active_tenant.slug_name %}"><i class="fa fa-home"></i> Home</a>
+                        <a href="{% url 'modern10_car_view' slug=active_tenant.slug_name %}">Car Listing</a>
+                        <span>Vehicle Details</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =========================================================================
+    🚘 MASTER VEHICLE DETAILS ENGINE LAYOUT WINDOW
+========================================================================== -->
+
+<section class="car-details spad">
+    <div class="container">
+        <div class="row">
+            <!-- 🪐 LEFT DATA SPECIFICATIONS PANEL CORE -->
+            <div class="col-lg-9 col-md-8">
+                <!-- =========================================================================
+                    🚘 MASTER VEHICLE DETAILS ENGINE LAYOUT WINDOW (HARDWARE-ACCELERATED SWAP)
+                ========================================================================== -->
+                <div class="car__details__pic">
+                    <div class="car__details__pic__large mb-3">
+                        <!-- 🟢 Cover Large Stage Image Node -->
+                        {% if car.vehicle_image %}
+                            <img class="car-big-img" src="{{ car.vehicle_image.url }}" alt="{{ car.make_and_model }} Main View" style="max-height: 500px; width: 100%; object-fit: cover; border-radius: 4px; border: 1px solid #eaeaea;">
+                        {% else %}
+                            <img class="car-big-img" src="{% static 'modern10/img/cars/details/cd-1.jpg' %}" alt="Fallback Profile View" style="max-height: 500px; width: 100%; object-fit: cover;">
+                        {% endif %}
+                    </div>
+
+                    <!-- 📸 HARDWARE-ACCELERATED STRATEGY: Inline click overrides bypass all javascript blocks instantly! -->
+                    <div class="row mx-0 mt-2 pre-gallery-row">
+                        <!-- Primary Main Graphic Asset Token Cover -->
+                        {% if car.vehicle_image %}
+                        <div class="col-3 p-1">
+                            <img class="gallery-thumb-card active-thumb" src="{{ car.vehicle_image.url }}" onclick="document.querySelector('.car-big-img').src=this.src;" style="height: 80px; width: 100%; object-fit: cover; cursor: pointer; border: 2px solid #db2d2d; border-radius: 4px; transition: all 0.2s ease;">
+                        </div>
+                        {% endif %}
+
+                        <!-- Optional Image 1 -->
+                        {% if car.gallery_image_1 %}
+                        <div class="col-3 p-1">
+                            <img class="gallery-thumb-card" src="{{ car.gallery_image_1.url }}" onclick="document.querySelector('.car-big-img').src=this.src;" style="height: 80px; width: 100%; object-fit: cover; cursor: pointer; border: 2px solid #eaeaea; border-radius: 4px; transition: all 0.2s ease;">
+                        </div>
+                        {% endif %}
+
+                        <!-- Optional Image 2 -->
+                        {% if car.gallery_image_2 %}
+                        <div class="col-3 p-1">
+                            <img class="gallery-thumb-card" src="{{ car.gallery_image_2.url }}" onclick="document.querySelector('.car-big-img').src=this.src;" style="height: 80px; width: 100%; object-fit: cover; cursor: pointer; border: 2px solid #eaeaea; border-radius: 4px; transition: all 0.2s ease;">
+                        </div>
+                        {% endif %}
+
+                        <!-- Optional Image 3 -->
+                        {% if car.gallery_image_3 %}
+                        <div class="col-3 p-1">
+                            <img class="gallery-thumb-card" src="{{ car.gallery_image_3.url }}" onclick="document.querySelector('.car-big-img').src=this.src;" style="height: 80px; width: 100%; object-fit: cover; cursor: pointer; border: 2px solid #eaeaea; border-radius: 4px; transition: all 0.2s ease;">
+                        </div>
+                        {% endif %}
+
+                        <!-- Optional Image 4 -->
+                        {% if car.gallery_image_4 %}
+                        <div class="col-3 p-1">
+                            <img class="gallery-thumb-card" src="{{ car.gallery_image_4.url }}" onclick="document.querySelector('.car-big-img').src=this.src;" style="height: 80px; width: 100%; object-fit: cover; cursor: pointer; border: 2px solid #eaeaea; border-radius: 4px; transition: all 0.2s ease;">
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- 📑 ADVANCED HORIZONTAL REVIEWS TAB INTERFACE -->
+                <div class="car__details__tab">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">Vehicle Overview</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Technical</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">Features & Options</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-4" role="tab">Vehicle Location</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <!-- 🟢 TAB BLOCK 1: OVERVIEW DESCRIPTION PANEL -->
+                        <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                            <div class="car__details__tab__info">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="car__details__tab__info__item">
+                                            <h5>General Description & Overview</h5>
+                                            <!-- 💎 DYNAMIC TEXT SPECIFICATION HOOK -->
+                                            <p style="line-height: 1.8; color: #444444; font-size: 15px;">
+                                                {{ car.vehicle_details_text|linebreaksbr|default:"No description overview provided for this vehicle record." }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ⚙️ TAB BLOCK 2: TECHNICAL SPECIFICATIONS -->
+                        <div class="tab-pane" id="tabs-2" role="tabpanel">
+                            <div class="car__details__tab__info">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="car__details__tab__info__item">
+                                            <h5>Engine & Transmission</h5>
+                                            <ul>
+                                                <li><strong>Fuel Type:</strong> {{ car.get_fuel_type_display|default:"Petrol" }}</li>
+                                                <li><strong>Engine Horsepower:</strong> {{ car.horsepower|default:"300 hp" }}</li>
+                                                <li><strong>Transmission:</strong> {% if car.transmission_automatic %}Automatic System{% else %}Manual Gearbox{% endif %}</li>
+                                                <li><strong>Year Model:</strong> {{ car.year_of_manufacture }}</li>
+                                                <li><strong>Odometer Mileage:</strong> {{ car.mileage|default:"0 km" }}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="car__details__tab__info__item">
+                                            <h5>Inventory Identifiers</h5>
+                                            <ul>
+                                                <li><strong>Stock Reference ID:</strong> {{ car.stock_reference|default:"N/A" }}</li>
+                                                <li><strong>VIN Registry Code:</strong> {{ car.vin_registry|default:"N/A" }}</li>
+                                                <li><strong>Vehicle Segment:</strong> {{ car.dynamic_category.category_name }}</li>
+                                                <li><strong>Listing Type Tag:</strong> {{ car.get_purpose_display }}</li>
+                                                <li><strong>Seating Capacity:</strong> {{ car.seating_capacity|default:"5" }} Seater Layout</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                                                <!-- 🛠️ TAB BLOCK 3: DYNAMIC FEATURES & OPTIONS CHECKLIST -->
+                        <div class="tab-pane" id="tabs-3" role="tabpanel">
+                            <div class="car__details__tab__info">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="car__details__tab__info__item">
+                                            <h5>Premium Features & Operational Fleet Options</h5>
+                                            <!-- 💎 DYNAMIC TEXT SPECIFICATION HOOK LINKED TO DATABASE ADMIN INPUT -->
+                                            <p style="line-height: 2.0; color: #222222; font-size: 15px; font-weight: 500; font-family: 'Lato', sans-serif; letter-spacing: 0.2px;">
+                                                {{ car.vehicle_features_checklist|linebreaksbr }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 📍 TAB BLOCK 4: LIVE SHOWROOM GOOGLE LOCATION MAP EMBED -->
+                        <div class="tab-pane" id="tabs-4" role="tabpanel">
+                            <div class="car__details__tab__info">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="car__details__tab__info__item">
+                                            <h5>Showroom Inspection Depot Location Map</h5>
+                                            <p class="mb-3 text-muted">This vehicle asset is parked and fully accessible for real-time physical inspection or terminal collection transfers at our showroom hub location: <strong class="text-dark">{{ car.showroom_location|default:"Lekki Phase 1, Lagos, Nigeria" }}</strong>.</p>
+
+                                            <!-- 🟢 DYNAMIC IFRAME INTERCEPTOR WINDOW: Embeds your custom Google Map link string automatically! -->
+                                            <div class="map-iframe-wrapper shadow-sm rounded" style="width: 100%; height: 350px; overflow: hidden; border: 1px solid #e1e1e1;">
+                                                {% if car.google_map_embed_url %}
+                                                    <iframe src="{{ car.google_map_embed_url }}" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                                {% else %}
+                                                    <div class="p-5 text-center text-muted bg-light">
+                                                        <i class="fa fa-map-marker text-danger" style="font-size: 32px;"></i>
+                                                        <p class="mt-2 font-weight-bold">Google Map Iframe Link String Has Not Been Uploaded Yet</p>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                        <!-- =========================================================================
+                📊 RIGHT COLUMN: PRICING DASHBOARD & WHATSAPP PROCUREMENT TERMINAL
+            ========================================================================== -->
+            <div class="col-lg-3 col-md-4">
+                <div class="car__details__sidebar">
+                    <!-- Stock Identification Codes Module -->
+                    <div class="car__details__sidebar__model">
+                        <ul>
+                            <li>Stock Ref <span id="vehicle_stock_ref">{{ car.stock_reference|default:"K99D10459" }}</span></li>
+                            <li>Vin Registry <span style="font-size: 11px; word-break: break-all; display: inline-block; max-width: 120px; text-align: right;">{{ car.vin_registry|default:"3VWKM245686NGR" }}</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- 💰 REAL-TIME FINANCES & PRICING WIDGET -->
+                    <div class="car__details__sidebar__payment">
+                        <div class="payment__title">
+                            <h5>Dynamic Financial Valuation</h5>
+                            <span class="small text-muted">Market Assessment Matrix</span>
+                        </div>
+                        <ul class="payment__list">
+                            {% if car.purpose == 'RENT' %}
+                                <li>Base Daily Rate <span>₦{{ car.rental_price_per_day|floatformat:"0"|intcomma }}</span></li>
+                                <li>Lease Insurance <span class="text-success">Included</span></li>
+                                <li class="total-price-row">Net Value <span id="vehicle_price_display">₦{{ car.rental_price_per_day|floatformat:"0"|intcomma }}/Day</span></li>
+                            {% else %}
+                                <li>Base MSRP <span>₦{{ car.sale_price|floatformat:"0"|intcomma }}</span></li>
+                                <li>Platform Discount <span class="text-success">₦0</span></li>
+                                <li class="total-price-row">Procurement Net <span id="vehicle_price_display">₦{{ car.sale_price|floatformat:"0"|intcomma }}</span></li>
+                            {% endif %}
+                        </ul>
+                        {% if car.purpose == 'SALE' and car.rental_price_per_day > 0 %}
+                        <div class="rental-alternative-note text-center py-2 bg-light border my-2">
+                            <span class="small text-dark font-weight-bold d-block"><i class="fa fa-calendar"></i> Rental Alternative Rate:</span>
+                            <h6 class="m-0 text-danger fw-bold">₦{{ car.rental_price_per_day|floatformat:"0"|intcomma }} / Day</h6>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- 📬 HARDWARE-ACCELERATED WHATSAPP BOOKING TERMINAL -->
+                    <div class="car__details__sidebar__booking">
+                        <h5>Secure WhatsApp Booking</h5>
+                        <form id="vehicleInquiryForm" onsubmit="event.preventDefault(); dispatchVehicleWhatsApp();">
+                            <div class="form-group mb-2">
+                                <input type="text" id="details_wa_name" class="form-control form-custom-input" placeholder="Your Full Name" required style="border-radius: 4px; height: 42px; font-size: 14px;">
+                            </div>
+                            <div class="form-group mb-2">
+                                <input type="email" id="details_wa_email" class="form-control form-custom-input" placeholder="Your Email Address" required style="border-radius: 4px; height: 42px; font-size: 14px;">
+                            </div>
+                            <div class="form-group mb-2">
+                                <input type="text" id="details_wa_phone" class="form-control form-custom-input" placeholder="Phone Number" required style="border-radius: 4px; height: 42px; font-size: 14px;">
+                            </div>
+                            <div class="form-group mb-3">
+                                <textarea id="details_wa_message" class="form-control form-custom-input" rows="3" required style="border-radius: 4px; font-size: 14px; resize: none;">I am interested in the {{ car.make_and_model }} (Stock Ref: {{ car.stock_reference }}).</textarea>
+                            </div>
+                            <button type="submit" class="primary-btn btn-block w-100 border-0 text-white font-weight-bold d-flex align-items-center justify-content-center" style="background: #25D366; letter-spacing: 0.5px; border-radius: 4px; height: 44px; gap: 8px;">
+                                <i class="fa fa-whatsapp" style="font-size: 20px;"></i> Transmit Request
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div> <!-- Closed .col-lg-3 sidebar column cleanly -->
+
+
+
+
+
+        </div> <!-- Closed .row master alignment grid cleanly -->
+    </div> <!-- Closed .container framework shell cleanly -->
+</section> <!-- 🟢 PERFECT CLOSURE: Formally seals your entire car-details section block! -->
+
+
+
+<!-- =========================================================================
+    ⚡ VEHICLE GRID SPECIFICATIONS: NATIVE APP PROTOCOL REDIRECT ROUTER (FIXED)
+========================================================================== -->
+<script>
+    function dispatchVehicleWhatsApp() {
+        // 1. Gather clear form input parameters text values out of sidebar nodes
+        var buyerName = document.getElementById('details_wa_name').value.trim();
+        var buyerEmail = document.getElementById('details_wa_email').value.trim();
+        var buyerPhone = document.getElementById('details_wa_phone').value.trim();
+        var buyerMsg = document.getElementById('details_wa_message').value.trim();
+
+        // Extract layout context strings directly from the active price nodes
+        var stockRefId = document.getElementById('vehicle_stock_ref').innerText.trim();
+        var valuationPrice = document.getElementById('vehicle_price_display').innerText.trim();
+
+        // 2. Safely capture your active multi-tenant merchant's contact phone number row
+        // 🟢 FIXED: Linked directly to your exact verified context key 'platform_config' to clear out lookup exceptions!
+        var rawMerchantPhone = "{{ platform_config.contact_phone }}".trim();
+
+        // Clean out any spaces, brackets, or plus symbols from the string token
+        var cleanMerchantPhone = rawMerchantPhone.replace(/[^0-9]/g, '');
+
+        // 🇳🇬 Nigerian Localization Layer: Convert standard local '080...' or '070...' strings to international '234...' format
+        if (cleanMerchantPhone.startsWith('0') && cleanMerchantPhone.length === 11) {
+            cleanMerchantPhone = '234' + cleanMerchantPhone.substring(1);
+        } else if (!cleanMerchantPhone.startsWith('234') && cleanMerchantPhone.length === 10) {
+            cleanMerchantPhone = '234' + cleanMerchantPhone;
+        }
+
+        // 3. Format an exquisite text payload paragraph block message to map onto the chat window
+        var whatsappManifestText =
+            "🚘 *NEW VEHICLE BOOKING & INQUIRY* 🚘\n\n" +
+            "Hello Management Team,\n" +
+            "An elite buyer has just transmitted a secure fleet dispatch request straight from your vehicle catalog profile page.\n\n" +
+            "📊 *VEHICLE ASSET PROFILE*\n" +
+            "• *Vehicle Asset:* " + "{{ car.make_and_model }}" + "\n" +
+            "• *Stock Reference:* " + stockRefId + "\n" +
+            "• *Financial Value:* " + valuationPrice + "\n\n" +
+            "📋 *CLIENT DISPATCH LOGS*\n" +
+            "• *Buyer Name:* " + buyerName + "\n" +
+            "• *Phone Connectivity:* " + buyerPhone + "\n" +
+            "• *Email Box:* " + buyerEmail + "\n\n" +
+            "📝 *TRANSMITTED MESSAGE STATEMENTS*\n" +
+            "\"" + buyerMsg + "\"\n\n" +
+            "⏳ *Status Check:* Active Showroom Asset Route Matrix Clear.";
+
+        // 4. Convert plain text parameters into a secure browser-transmittable URI tracking token
+        var encodedManifestText = encodeURIComponent(whatsappManifestText);
+
+        // 5. Force an absolute hardware redirect loop to snap open the chat terminal wrapper instantly!
+        window.location.href = "whatsapp://send?phone=" + cleanMerchantPhone + "&text=" + encodedManifestText;
+    }
+</script>
+
+
+
+
+
+<!-- =========================================================================
+    📇 LOCALIZED NIGERIAN MULTI-COLUMN PLATFORM FOOTER
+========================================================================== -->
+<footer class="footer spad">
+    <div class="container">
+        <div class="footer__contact">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="footer__contact__title">
+                        <h2>Contact Us Now!</h2>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="footer__contact__option">
+                        <div class="option__item"><i class="fa fa-phone"></i> {{ platform_config.contact_phone|default:"+234 (0) 803 456 7891" }}</div>
+                        <div class="option__item text-lowercase"><i class="fa fa-envelope"></i> {{ platform_config.contact_email|default:"info@corexautos.ng" }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-4">
+                <div class="footer__about">
+                    <div class="footer__logo">
+                        <h3 class="text-white fw-bold m-0" style="letter-spacing: 1px;">COREX<span class="text-danger">10</span></h3>
+                    </div>
+                    <p>Premium multi-tenant vehicle leasing, luxury rental setups, and direct automotive asset sales operational hubs in Lagos and Abuja, Nigeria.</p>
+                    <div class="footer__social">
+                        <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+                        <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+                        <a href="#" class="instagram"><i class="fa fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2">
+                <div class="footer__widget">
+                    <h5>Information</h5>
+                    <ul>
+                        <li><a href="#">Purchase Insurance</a></li>
+                        <li><a href="#">Flexible Payment Plans</a></li>
+                        <li><a href="#">Nationwide Delivery</a></li>
+                        <li><a href="#">Return Policy Tracks</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2">
+                <div class="footer__widget">
+                    <h5>Vehicle Categories</h5>
+                    <ul>
+                        <li><a href="#">Luxury Sedans</a></li>
+                        <li><a href="#">Sports & Exotic Cars</a></li>
+                        <li><a href="#">Multi-terrain SUVs</a></li>
+                        <li><a href="#">Armored Protocol Fleets</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4">
+                <div class="footer__widget">
+                    <h5>Top Brands Available</h5>
+                    <div class="row">
+                        <div class="col-6">
+                            <ul>
+                                <li><a href="#">Toyota</a></li>
+                                <li><a href="#">Lexus</a></li>
+                                <li><a href="#">Mercedes-Benz</a></li>
+                                <li><a href="#">Land Rover</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-6">
+                            <ul>
+                                <li><a href="#">BMW</a></li>
+                                <li><a href="#">Hyundai</a></li>
+                                <li><a href="#">Honda</a></li>
+                                <li><a href="#">Ford Matrix</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer__copyright">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <p class="footer__copyright__text">
+                        Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | Corex multi-tenant automotive enterprise engine.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock master_content %}
+<!-- =========================================================================
+    ⚡ BULLETPROOF AUTOMATED CAROUSEL LAYOUT INITIALIZER FOR SAAS DATA
+========================================================================== -->
+
+<script>
+    (function() {
+        function initializeGalleryEngine() {
+            var primaryLargeStage = document.querySelector(".car-big-img");
+            var thumbnails = document.querySelectorAll(".gallery-thumb-card");
+
+            if (!primaryLargeStage || thumbnails.length === 0) return;
+
+            thumbnails.forEach(function(thumb) {
+                // Force an explicit pointer event configuration style overlay to override theme layers
+                thumb.style.pointerEvents = "auto";
+
+                thumb.onclick = function(event) {
+                    if (event) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+
+                    var directTargetUrl = this.getAttribute("data-targeturl");
+                    if (primaryLargeStage && directTargetUrl) {
+                        // 🟢 FIXED ROUTER ACTION: Instantly force updates onto the primary big stage image layer!
+                        primaryLargeStage.src = directTargetUrl;
+                    }
+
+                    // Reset borders across all preview cards cleanly to default background outline boundaries
+                    thumbnails.forEach(function(t) {
+                        t.style.borderColor = "#eaeaea";
+                    });
+
+                    // Light up the selected thumbnail crop container box border with accent branding color red
+                    this.style.borderColor = "#db2d2d";
+                };
+            });
+        }
+
+        // Execute natively on load state tracks, then re-hook to shield against lazy load scripts
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", initializeGalleryEngine);
+        } else {
+            initializeGalleryEngine();
+        }
+
+        // Backup hot-wire trigger to ensure alignment loops run flawless after render delays
+        window.onload = initializeGalleryEngine;
+    })();
+</script>

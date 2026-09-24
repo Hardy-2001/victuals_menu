@@ -1,0 +1,264 @@
+{% extends 'modern10/main.html' %}
+{% load static %}
+
+{% block title %}Automotive Insights & News — {{ active_tenant.business_name }}{% endblock %}
+
+{% block master_content %}
+<!-- =========================================================================
+    📇 AUTOMOTIVE BLOG BREADCRUMB HEADER
+========================================================================== -->
+<div class="breadcrumb-option set-bg" data-setbg="{% static 'modern10/img/breadcrumb-bg.jpg' %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>Latest Blogs</h2>
+                    <div class="breadcrumb__links">
+                        <a href="{% url 'modern10_index_view' slug=active_tenant.slug_name %}"><i class="fa fa-home"></i> Home</a>
+                        <span>Our Blogs</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =========================================================================
+    📰 MASTER JOURNALISM CORE MATRIX (2-COLUMN ARCHITECTURE FRAME)
+========================================================================== -->
+<section class="blog spad">
+    <div class="container">
+        <div class="row">
+                       <!-- 📰 LEFT PRIMARY CONTENT STREAM: AUTO JOURNALISM ENTRIES (DYNAMICALLY CONNECTED) -->
+                    <!-- 📰 LEFT PRIMARY CONTENT STREAM: AUTO JOURNALISM ENTRIES (INLINE TOGGLE ACTION) -->
+            <div class="col-lg-8 col-md-8">
+                <div class="row">
+                    {% for article in studio_blogs %}
+                    <!-- Dynamic Recent Blog Article Entry Card Block -->
+                    <div class="col-lg-6 col-md-6 col-sm-6 mb-4">
+                        <div class="blog__item">
+                            <!-- 🟢 Dynamic Media Thumbnail Image Cover -->
+                            {% if article.article_thumbnail %}
+                                <div class="blog__item__pic set-bg" data-setbg="{{ article.article_thumbnail.url }}" style="height: 220px; background-size: cover; background-position: center; display: block; width: 100%;"></div>
+                            {% else %}
+                                <div class="blog__item__pic set-bg" data-setbg="{% static 'modern10/img/blog/blog-1.jpg' %}" style="height: 220px; background-size: cover; background-position: center; display: block; width: 100%;"></div>
+                            {% endif %}
+
+                            <div class="blog__item__text">
+                                <ul>
+                                    <li>By {{ article.author_display_name }}</li>
+                                    <li>{{ article.published_date|date:"M d, Y" }}</li>
+                                    <li><i class="fa fa-comment-o"></i> 12 Comments</li>
+                                </ul>
+                                <h5 class="font-weight-bold text-dark mt-2 mb-2" style="font-size: 18px; line-height: 1.4;">
+                                    {{ article.article_title }}
+                                </h5>
+
+                                <!-- 🟢 ARTICLE CONTENT WINDOW SECTION -->
+                                <div class="article-content-wrapper">
+                                    <!-- Visible Summary Block -->
+                                    <p class="article-summary-text text-muted mb-2" style="font-size: 14px; line-height: 1.6;">
+                                        {{ article.article_summary }}
+                                    </p>
+
+                                    <!-- 🪐 HIDDEN EXTENDED CONTENT DECK: Opens smoothly when clicked! -->
+                                    <div id="extended-content-{{ article.id }}" class="extended-blog-content mt-2 pt-2 border-top" style="display: none; font-size: 14px; line-height: 1.7; color: #444444;">
+                                        {{ article.article_body_content|linebreaksbr }}
+                                    </div>
+                                </div>
+
+                                <!-- 🟢 HARDWARE-ACCELERATED CLICK TOGGLE: Completely cut out the separate blog_details view! -->
+                                <a href="javascript:void(0);"
+                                   id="toggle-btn-{{ article.id }}"
+                                   class="read-more d-inline-block mt-2 font-weight-bold text-danger"
+                                   style="cursor: pointer; letter-spacing: 0.5px;"
+                                   onclick="
+                                       var targetBox = document.getElementById('extended-content-{{ article.id }}');
+                                       if (targetBox.style.display === 'none') {
+                                           targetBox.style.display = 'block';
+                                           this.innerHTML = 'Read Less <i class=\'fa fa-angle-up\'></i>';
+                                       } else {
+                                           targetBox.style.display = 'none';
+                                           this.innerHTML = 'Read More <i class=\'fa fa-angle-right\'></i>';
+                                       }
+                                   ">Read More <i class="fa fa-angle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <!-- Safe Fallback Banner if Merchant Has Not Published Articles Yet -->
+                    <div class="col-12 text-center py-5 bg-white border rounded">
+                        <i class="fa fa-newspaper-o text-muted mb-2" style="font-size: 40px;"></i>
+                        <p class="text-muted mb-0 small">No news articles or insights have been published to this catalog yet.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- 📟 SYSTEM CONTENT PAGINATION OPTION LINKS -->
+                <div class="pagination__option text-center mt-4">
+                    <a href="?page=1" class="active">1</a>
+                    <a href="?page=2">2</a>
+                    <a href="?page=2"><i class="fa fa-angle-right"></i></a>
+                </div>
+            </div>
+
+            <!-- =========================================================================
+                📰 RIGHT COLUMN: FEATURED NEWS, CATEGORIES & NEWSLETTER WIDGET
+            ========================================================================== -->
+            <div class="col-lg-4 col-md-4">
+                <div class="blog__sidebar">
+                    <!-- Featured News List Widget (Dynamically linked to your live admin articles) -->
+                    <div class="blog__sidebar__feature">
+                        <h5>Feature News</h5>
+                        {% for feature in studio_blogs|slice:":3" %}
+                        <div class="blog__sidebar__feature__item">
+                            <h6>
+                                <a href="{% url 'modern10_blog_details_view' slug=active_tenant.slug_name pk=feature.id %}">
+                                    {{ feature.article_title }}
+                                </a>
+                            </h6>
+                            <ul>
+                                <li>By {{ feature.author_display_name }}</li>
+                                <li>{{ feature.published_date|date:"M d, Y" }}</li>
+                            </ul>
+                        </div>
+                        {% empty %}
+                        <div class="py-2">
+                            <span class="text-muted small">No featured highlights configured.</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Categories Hierarchy Module -->
+                    <div class="blog__sidebar__categories">
+                        <h5>Categories</h5>
+                        <ul>
+                            <li><a href="#">Market Trends <span>(14)</span></a></li>
+                            <li><a href="#">Car Maintenance <span>(8)</span></a></li>
+                            <li><a href="#">Customs Clearance <span>(12)</span></a></li>
+                            <li><a href="#">New Arrivals <span>(6)</span></a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Tag Cloud Keyword Blocks -->
+                    <div class="blog__sidebar__tags">
+                        <h5>Tag Cloud</h5>
+                        <div class="tag__list">
+                            <a href="#">Car Dealer</a>
+                            <a href="#">Tokunbo</a>
+                            <a href="#">Mercedes-Benz</a>
+                            <a href="#">Lexus</a>
+                            <a href="#">Toyota</a>
+                            <a href="#">Luxury Hire</a>
+                            <a href="#">Lagos Grid</a>
+                        </div>
+                    </div>
+
+                    <!-- Newsletter Capture Subscription Card -->
+                    <div class="blog__sidebar__newsletter">
+                        <h5>Newsletter</h5>
+                        <p>Subscribe to our newsletter to receive premium local automotive insights and exclusive price drops directly.</p>
+                        <form action="{% url 'modern10_subscribe' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="email" name="email" placeholder="Your Email Address" required>
+                            <button type="submit" class="site-btn btn-block w-100 mt-2">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div> <!-- Closed .col-lg-4 sidebar column cleanly -->
+        </div> <!-- Closed .row layout frame cleanly -->
+    </div> <!-- Closed .container cleanly -->
+</section> <!-- Closed .blog section cleanly -->
+
+<!-- =========================================================================
+    📇 LOCALIZED NIGERIAN MULTI-COLUMN PLATFORM FOOTER
+========================================================================== -->
+<footer class="footer spad">
+    <div class="container">
+        <div class="footer__contact">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="footer__contact__title">
+                        <h2>Contact Us Now!</h2>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="footer__contact__option">
+                        <div class="option__item"><i class="fa fa-phone"></i> {{ platform_config.contact_phone|default:"+234 (0) 803 456 7891" }}</div>
+                        <div class="option__item text-lowercase"><i class="fa fa-envelope"></i> {{ platform_config.contact_email|default:"info@corexautos.ng" }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-4">
+                <div class="footer__about">
+                    <div class="footer__logo">
+                        <h3 class="text-white fw-bold m-0" style="letter-spacing: 1px;">COREX<span class="text-danger">10</span></h3>
+                    </div>
+                    <p>Premium multi-tenant vehicle leasing, luxury rental setups, and direct automotive asset sales operational hubs in Lagos and Abuja, Nigeria.</p>
+                    <div class="footer__social">
+                        <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+                        <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+                        <a href="#" class="instagram"><i class="fa fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2">
+                <div class="footer__widget">
+                    <h5>Information</h5>
+                    <ul>
+                        <li><a href="#">Purchase Insurance</a></li>
+                        <li><a href="#">Flexible Payment Plans</a></li>
+                        <li><a href="#">Nationwide Delivery</a></li>
+                        <li><a href="#">Return Policy Tracks</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2">
+                <div class="footer__widget">
+                    <h5>Vehicle Categories</h5>
+                    <ul>
+                        <li><a href="#">Luxury Sedans</a></li>
+                        <li><a href="#">Sports & Exotic Cars</a></li>
+                        <li><a href="#">Multi-terrain SUVs</a></li>
+                        <li><a href="#">Armored Protocol Fleets</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4">
+                <div class="footer__widget">
+                    <h5>Top Brands Available</h5>
+                    <div class="row">
+                        <div class="col-6">
+                            <ul>
+                                <li><a href="#">Toyota</a></li>
+                                <li><a href="#">Lexus</a></li>
+                                <li><a href="#">Mercedes-Benz</a></li>
+                                <li><a href="#">Land Rover</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-6">
+                            <ul>
+                                <li><a href="#">BMW</a></li>
+                                <li><a href="#">Hyundai</a></li>
+                                <li><a href="#">Honda</a></li>
+                                <li><a href="#">Ford Matrix</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer__copyright">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <p class="footer__copyright__text">
+                        Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | Corex multi-tenant automotive enterprise engine.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock master_content %}

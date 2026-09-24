@@ -23,6 +23,8 @@ urlpatterns = [
     path('modern7/', include('modern7.urls')),
     path('modern8/', include('modern8.urls')),
     path('modern9/', include('modern9.urls')),
+    path('modern10/', include('modern10.urls')),
+
 ]
 
 # Append dynamic physical system media file pathways when debugging locally

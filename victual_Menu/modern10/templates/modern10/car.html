@@ -1,0 +1,385 @@
+{% extends 'modern10/main.html' %}
+{% load static %}
+
+{% block title %}Our Vehicle Fleet — {{ active_tenant.business_name }}{% endblock %}
+
+{% block master_content %}
+<!-- =========================================================================
+    📇 VEHICLE INVENTORY BREADCRUMB HEADER
+========================================================================== -->
+<div class="breadcrumb-option set-bg" data-setbg="{% static 'modern10/img/breadcrumb-bg.jpg' %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>Car Listing</h2>
+                    <div class="breadcrumb__links">
+                        <a href="{% url 'modern10_index_view' slug=active_tenant.slug_name %}"><i class="fa fa-home"></i> Home</a>
+                        <span>Available Cars</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =========================================================================
+    🚙 CENTRAL VEHICLE FLEET ENGINE GRID (SIDEBAR & CATALOG TRACKS)
+========================================================================== -->
+<section class="car-page spad">
+    <div class="container">
+        <div class="row">
+            <!-- 🕵️‍♂️ AUTOMATED PARAMETERS SEARCH SIDEBAR COLUMN -->
+            <div class="col-lg-3 col-md-4">
+                <div class="car__sidebar">
+                    <div class="car__sidebar__search">
+                        <h5>Car Search</h5>
+                        <form action="" method="GET">
+                            <input type="text" name="q" value="{{ request.GET.q|default:'' }}" placeholder="Search by name...">
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+
+                    <div class="car__sidebar__item">
+                        <h5>Car Filter</h5>
+                        <form action="" method="GET">
+                            <!-- Brand Selection Module -->
+                            <div class="sidebar__select__item">
+                                <p>Select Brand</p>
+                                <select name="brand">
+                                    <option value="">All Brands</option>
+                                    <option value="Toyota">Toyota</option>
+                                    <option value="Lexus">Lexus</option>
+                                    <option value="Mercedes-Benz">Mercedes-Benz</option>
+                                    <option value="Honda">Honda</option>
+                                    <option value="BMW">BMW</option>
+                                </select>
+                            </div>
+
+                            <!-- Model Selection Module -->
+                            <div class="sidebar__select__item">
+                                <p>Select Model</p>
+                                <select name="model">
+                                    <option value="">All Models</option>
+                                    <option value="Camry">Camry</option>
+                                    <option value="ES350">ES350</option>
+                                    <option value="G63">G63 AMG</option>
+                                    <option value="Prado">Prado</option>
+                                </select>
+                            </div>
+
+                            <!-- Body Style Module -->
+                            <div class="sidebar__select__item">
+                                <p>Body Style</p>
+                                <select name="body_style">
+                                    <option value="">All Styles</option>
+                                    <option value="SUV">SUV / Crossover</option>
+                                    <option value="Sedan">Sedan / Saloon</option>
+                                    <option value="Hatchback">Hatchback</option>
+                                    <option value="Coupe">Coupe / Sports</option>
+                                </select>
+                            </div>
+
+                            <!-- Condition Filter Module -->
+                            <div class="sidebar__select__item">
+                                <p>Condition</p>
+                                <select name="condition">
+                                    <option value="">Any Condition</option>
+                                    <option value="Tokunbo">Foreign Used (Tokunbo)</option>
+                                    <option value="Nigerian_Used">Nigerian Used</option>
+                                    <option value="Brand_New">Brand New</option>
+                                </select>
+                            </div>
+
+                            <!-- Transmission Filter Module -->
+                            <div class="sidebar__select__item">
+                                <p>Transmission</p>
+                                <select name="transmission">
+                                    <option value="">Any Transmission</option>
+                                    <option value="Automatic">Automatic</option>
+                                    <option value="Manual">Manual</option>
+                                </select>
+                            </div>
+
+                            <!-- Odometer Mileage Module -->
+                            <div class="sidebar__select__item">
+                                <p>Max Mileage</p>
+                                <select name="mileage">
+                                    <option value="">Any Mileage</option>
+                                    <option value="15000">Below 15,000 km</option>
+                                    <option value="50000">Below 50,000 km</option>
+                                    <option value="100000">Below 100,000 km</option>
+                                </select>
+                            </div>
+
+                            <!-- Engine Specifications Filter -->
+                            <div class="sidebar__select__item">
+                                <p>Engine Type</p>
+                                <select name="engine">
+                                    <option value="">Any Engine</option>
+                                    <option value="V4">4 Cylinder (I4)</option>
+                                    <option value="V6">6 Cylinder (V6)</option>
+                                    <option value="V8">Twin-Turbo V8</option>
+                                    <option value="Electric">Electric Motor</option>
+                                </select>
+                            </div>
+
+                            <!-- Color Palette Selector Matrix -->
+                            <div class="sidebar__select__item">
+                                <p>Select Color</p>
+                                <select name="color">
+                                    <option value="">Any Color</option>
+                                    <option value="Black">Black</option>
+                                    <option value="White">White</option>
+                                    <option value="Silver">Silver / Gray</option>
+                                    <option value="Red">Red</option>
+                                    <option value="Blue">Blue</option>
+                                </select>
+                            </div>
+
+                            <!-- Interactive Budget Slider Core -->
+                            <div class="car__sidebar__item__price">
+                                <p>Price Cap Range (₦):</p>
+                                <div class="price-range-wrap mt-2">
+                                    <div class="price-range-control ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"></div>
+                                    <div class="range-slider mt-2">
+                                        <div class="price-input">
+                                            <input type="text" id="minamount" name="min_price" value="₦50,000">
+                                            <input type="text" id="maxamount" name="max_price" value="₦150,000,000">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="site-btn mt-3"><i class="fa fa-filter"></i> Apply Filters</button>
+                            <a href="{% url 'modern10_car_view' slug=active_tenant.slug_name %}" class="btn btn-outline-secondary btn-block mt-2" style="border-radius: 0; font-size: 13px; letter-spacing: 1px;"><i class="fa fa-refresh"></i> Reset Filter</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+                        <!-- =========================================================================
+                📊 HORIZONTAL SORTING TOOLBAR & SHOWCASE CONTAINER
+            ========================================================================== -->
+            <div class="col-lg-9 col-md-8">
+                <div class="car__page__filter">
+                    <div class="row align-items-center">
+                        <div class="col-lg-4 col-md-4 col-6">
+                            <div class="car__page__filter__selected">
+                                <p>Show on Page:</p>
+                                <select onchange="location = this.value;">
+                                    {% if request.GET.show == '9' or not request.GET.show %}
+                                        <option value="?show=9" selected>9 Vehicles</option>
+                                    {% else %}
+                                        <option value="?show=9">9 Vehicles</option>
+                                    {% endif %}
+
+                                    {% if request.GET.show == '15' %}
+                                        <option value="?show=15" selected>15 Vehicles</option>
+                                    {% else %}
+                                        <option value="?show=15">15 Vehicles</option>
+                                    {% endif %}
+
+                                    {% if request.GET.show == '20' %}
+                                        <option value="?show=20" selected>20 Vehicles</option>
+                                    {% else %}
+                                        <option value="?show=20">20 Vehicles</option>
+                                    {% endif %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-6 text-right">
+                            <div class="car__page__filter__sort">
+                                <p>Sort By:</p>
+                                <select onchange="location = this.value;">
+                                    {% if request.GET.sort == 'price_desc' %}
+                                        <option value="?sort=price_desc" selected>Price: Highest First</option>
+                                    {% else %}
+                                        <option value="?sort=price_desc">Price: Highest First</option>
+                                    {% endif %}
+
+                                    {% if request.GET.sort == 'price_asc' %}
+                                        <option value="?sort=price_asc" selected>Price: Lowest First</option>
+                                    {% else %}
+                                        <option value="?sort=price_asc">Price: Lowest First</option>
+                                    {% endif %}
+
+                                    {% if request.GET.sort == 'latest' or not request.GET.sort %}
+                                        <option value="?sort=latest" selected>Latest Listings</option>
+                                    {% else %}
+                                        <option value="?sort=latest">Latest Listings</option>
+                                    {% endif %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- =========================================================================
+                    🏎️ DYNAMIC VEHICLE FLEET INVENTORY GRID (CONNECTED TO SAAS DATABASE)
+                ========================================================================== -->
+                <div class="row">
+                    {% for car in product_listings %}
+                    <!-- Automated Dynamic Car Card Item Module Grid -->
+                    <div class="col-lg-4 col-md-6 col-sm-6 mb-4">
+                        <div class="car__item">
+                            <!-- 🟢 FIXED ASPECT GRID: Overlay link layer attached inside to handle picture click actions -->
+                            {% if car.vehicle_image %}
+                                <div class="car__item__pic set-bg" data-setbg="{{ car.vehicle_image.url }}" style="height: 220px; background-size: cover; background-position: center; display: block; width: 100%; position: relative;">
+                                    <a href="{% url 'modern10_car_details_view' slug=active_tenant.slug_name pk=car.id %}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; display: block;"></a>
+                                    <div class="label-date" style="z-index: 6;">{{ car.year_of_manufacture }}</div>
+                                </div>
+                            {% else %}
+                                <div class="car__item__pic set-bg" data-setbg="{% static 'modern10/img/cars/car-1.jpg' %}" style="height: 220px; background-size: cover; background-position: center; display: block; width: 100%; position: relative;">
+                                    <a href="{% url 'modern10_car_details_view' slug=active_tenant.slug_name pk=car.id %}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; display: block;"></a>
+                                    <div class="label-date" style="z-index: 6;">{{ car.year_of_manufacture }}</div>
+                                </div>
+                            {% endif %}
+
+                            <div class="car__item__text" style="padding-top: 15px;">
+                                <div class="car__item__text__inner">
+                                    <h5 class="font-weight-bold">
+                                        <a href="{% url 'modern10_car_details_view' slug=active_tenant.slug_name pk=car.id %}" class="text-dark">{{ car.make_and_model }}</a>
+                                    </h5>
+                                    <ul class="list-unstyled my-2 d-flex justify-content-between text-muted small" style="border-top: 1px solid #f2f2f2; border-bottom: 1px solid #f2f2f2; padding: 6px 0;">
+                                        <li><i class="fa fa-dashboard text-danger"></i> {{ car.mileage }}</li>
+                                        <li><i class="fa fa-cogs text-danger"></i> {% if car.transmission_automatic %}Auto{% else %}Manual{% endif %}</li>
+                                        <li><i class="fa fa-bolt text-danger"></i> {{ car.horsepower }}</li>
+                                    </ul>
+                                </div>
+
+                                <!-- 💰 NATIVE PRICE ROW: Spaced beautifully using native theme parameters -->
+                                <div class="car__item__price" style="width: 100%; margin-top: 12px;">
+                                    {% if car.purpose == 'RENT' %}
+                                        <span class="car-option rent" style="float: left; display: inline-block;">For Rent</span>
+                                        <h6 style="float: right; display: inline-block; color: #db2d2d; font-weight: bold; font-size: 15px; margin: 0;">₦{{ car.rental_price_per_day }}<span>/Day</span></h6>
+                                    {% else %}
+                                        <span class="car-option sale" style="float: left; display: inline-block;">For Sale</span>
+                                        <h6 style="float: right; display: inline-block; color: #db2d2d; font-weight: bold; font-size: 15px; margin: 0;">₦{{ car.sale_price }}</h6>
+                                    {% endif %}
+                                    <div style="clear: both;"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <!-- Safe Fallback Banner if Tenant Has Not Populated Inventory Cards -->
+                    <div class="col-12 text-center py-5">
+                        <div class="text-muted p-4 border bg-white rounded shadow-sm">
+                            <i class="fa fa-automobile text-muted mb-2" style="font-size: 48px;"></i>
+                            <h4 class="font-weight-bold text-dark mb-1">No Active Fleet Listings Found</h4>
+                            <p class="small text-muted mb-0">This car rental salon instance hasn't published any available vehicles matching your filters yet.</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- =========================================================================
+                    📟 AUTOMATED SYSTEM PAGINATION BLOCK
+                ========================================================================== -->
+                <div class="pagination__option text-center mt-4">
+                    <a href="?page=1" class="active">1</a>
+                    <a href="?page=2">2</a>
+                    <a href="?page=3">3</a>
+                    <a href="?page=2"><i class="fa fa-angle-right"></i></a>
+                </div>
+            </div> <!-- Closed .col-lg-9 (Grid Contents Viewport Container) -->
+        </div> <!-- Closed .row (Master Dual Column Splitter) -->
+    </div> <!-- Closed .container -->
+</section> <!-- Closed .car-page -->
+
+
+<!-- =========================================================================
+    📇 LOCALIZED NIGERIAN MULTI-COLUMN PLATFORM FOOTER
+========================================================================== -->
+<footer class="footer spad">
+    <div class="container">
+        <div class="footer__contact">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="footer__contact__title">
+                        <h2>Contact Us Now!</h2>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="footer__contact__option">
+                        <div class="option__item"><i class="fa fa-phone"></i> {{ platform_config.contact_phone|default:"+234 (0) 803 456 7891" }}</div>
+                        <div class="option__item text-lowercase"><i class="fa fa-envelope"></i> {{ platform_config.contact_email|default:"info@corexautos.ng" }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-4">
+                <div class="footer__about">
+                    <div class="footer__logo">
+                        <h3 class="text-white fw-bold m-0" style="letter-spacing: 1px;">COREX<span class="text-danger">10</span></h3>
+                    </div>
+                    <p>Premium multi-tenant vehicle leasing, luxury rental setups, and direct automotive asset sales operational hubs in Lagos and Abuja, Nigeria [22/Sep/2026].</p>
+                    <div class="footer__social">
+                        <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+                        <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+                        <a href="#" class="instagram"><i class="fa fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2">
+                <div class="footer__widget">
+                    <h5>Information</h5>
+                    <ul>
+                        <li><a href="#">Purchase Insurance</a></li>
+                        <li><a href="#">Flexible Payment Plans</a></li>
+                        <li><a href="#">Nationwide Delivery</a></li>
+                        <li><a href="#">Return Policy Tracks</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2">
+                <div class="footer__widget">
+                    <h5>Vehicle Categories</h5>
+                    <ul>
+                        <li><a href="#">Luxury Sedans</a></li>
+                        <li><a href="#">Sports & Exotic Cars</a></li>
+                        <li><a href="#">Multi-terrain SUVs</a></li>
+                        <li><a href="#">Armored Protocol Fleets</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4">
+                <div class="footer__widget">
+                    <h5>Top Brands Available</h5>
+                    <div class="row">
+                        <div class="col-6">
+                            <ul>
+                                <li><a href="#">Toyota</a></li>
+                                <li><a href="#">Lexus</a></li>
+                                <li><a href="#">Mercedes-Benz</a></li>
+                                <li><a href="#">Land Rover</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-6">
+                            <ul>
+                                <li><a href="#">BMW</a></li>
+                                <li><a href="#">Hyundai</a></li>
+                                <li><a href="#">Honda</a></li>
+                                <li><a href="#">Ford Matrix</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer__copyright">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <p class="footer__copyright__text">
+                        Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | Corex multi-tenant automotive enterprise engine.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock master_content %}
