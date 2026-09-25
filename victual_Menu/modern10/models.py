@@ -131,7 +131,25 @@ class Modern10CarStoreFront(models.Model):
     stats_reviews_count = models.CharField(max_length=30, default="1,922", verbose_name="Counter: Verified Dealer Reviews")
     stats_clients_count = models.CharField(max_length=30, default="5,100+", verbose_name="Counter: Happy Platform Clients")
 
-
+    # 🟢 DYNAMIC FOOTER SOCIAL NETWORKING CHANNELS (ADMIN MANAGED)
+    facebook_url = models.URLField(
+        blank=True,
+        null=True,
+        verbose_name="Merchant Facebook URL",
+        help_text="Optional profile link (e.g., https://facebook.com)."
+    )
+    twitter_url = models.URLField(
+        blank=True,
+        null=True,
+        verbose_name="Merchant Twitter / X URL",
+        help_text="Optional profile link (e.g., https://x.com)."
+    )
+    instagram_url = models.URLField(
+        blank=True,
+        null=True,
+        verbose_name="Merchant Instagram URL",
+        help_text="Optional profile link (e.g., https://instagram.com)."
+    )
 
     initialized_at = models.DateTimeField(auto_now_add=True)
 

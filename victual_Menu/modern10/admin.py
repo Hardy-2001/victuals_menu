@@ -113,6 +113,13 @@ class Modern10CarStoreFrontAdmin(admin.ModelAdmin):
                 'feature_badge_4'
             )
         }),
+        ('🌐 Merchant Social Media Network Links', {
+            'fields': (
+                'facebook_url',
+                'twitter_url',
+                'instagram_url'
+            )
+        }),
     )
 
     def get_queryset(self, request):

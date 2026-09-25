@@ -258,13 +258,13 @@
 </section>
 
 <!-- =========================================================================
-    📇 LOCALIZED MULTI-COLUMN PLATFORM FOOTER (STANDARDIZED ARCHITECTURE)
+    📇 LOCALIZED NIGERIAN MULTI-COLUMN PLATFORM FOOTER (100% LIFE-DYNAMIC)
 ========================================================================== -->
 <footer class="footer spad" style="background: #111111; padding-top: 70px; padding-bottom: 0; clear: both; width: 100%; display: block;">
     <div class="container">
         <!-- Top Contact Summary Banner Bar -->
         <div class="footer__contact" style="border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 35px; margin-bottom: 50px;">
-            <div class="row">
+            <div class="row align-items-center">
                 <div class="col-lg-6 col-md-6">
                     <div class="footer__contact__title">
                         <h2 class="text-white font-weight-bold" style="font-size: 24px; margin: 0;">Contact Us Now!</h2>
@@ -272,8 +272,8 @@
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <div class="footer__contact__option text-md-right mt-3 mt-md-0">
-                        <div class="option__item text-white d-inline-block mr-4" style="font-size: 15px;"><i class="fa fa-phone text-danger mr-2"></i> {{ platform_config.contact_phone|default:"+234 (0) 803 456 7891" }}</div>
-                        <div class="option__item text-white text-lowercase d-inline-block" style="font-size: 15px;"><i class="fa fa-envelope text-danger mr-2"></i> {{ platform_config.contact_email|default:"info@corexautos.ng" }}</div>
+                        <div class="option__item text-white d-inline-block mr-4" style="font-size: 15px;"><i class="fa fa-phone text-danger mr-2"></i> {{ platform_config.contact_phone }}</div>
+                        <div class="option__item text-white text-lowercase d-inline-block" style="font-size: 15px;"><i class="fa fa-envelope text-danger mr-2"></i> {{ platform_config.contact_email }}</div>
                     </div>
                 </div>
             </div>
@@ -281,19 +281,30 @@
 
         <!-- Center Multi-Column Link Navigation Grid -->
         <div class="row">
-            <!-- Brand Overview Profile Card -->
+            <!-- Brand Overview Profile Card: Optimized width parameters to prevent logotype dropping text breaks! -->
             <div class="col-lg-4 col-md-4 mb-4">
                 <div class="footer__about">
                     <div class="footer__logo mb-3">
-                        <h3 class="text-white font-weight-bold m-0" style="letter-spacing: 1px;">COREX<span class="text-danger">10</span></h3>
+                        <!-- 🟢 FIXED LAYOUT: Enforced clean single-row item structural styling blocks -->
+                        <h3 class="text-white font-weight-bold m-0" style="letter-spacing: 1px; display: inline-block; white-space: nowrap;">
+                            {{ active_tenant.business_name|upper|default:"COREX" }}<span class="text-danger">10</span>
+                        </h3>
                     </div>
                     <p class="text-white-50 small" style="line-height: 1.7; font-size: 14px;">
                         Premium multi-tenant vehicle leasing, luxury rental setups, and direct automotive asset sales operational hubs in Lagos and Abuja, Nigeria.
                     </p>
+
+                    <!-- 🟢 FIXED DYNAMIC SOCIAL MEDIA LINKS DECK -->
                     <div class="footer__social mt-3">
-                        <a href="#" class="facebook text-white mr-3"><i class="fa fa-facebook"></i></a>
-                        <a href="#" class="twitter text-white mr-3"><i class="fa fa-twitter"></i></a>
-                        <a href="#" class="instagram text-white mr-3"><i class="fa fa-instagram"></i></a>
+                        {% if platform_config.facebook_url %}
+                            <a href="{{ platform_config.facebook_url }}" target="_blank" class="facebook text-white mr-3"><i class="fa fa-facebook"></i></a>
+                        {% endif %}
+                        {% if platform_config.twitter_url %}
+                            <a href="{{ platform_config.twitter_url }}" target="_blank" class="twitter text-white mr-3"><i class="fa fa-twitter"></i></a>
+                        {% endif %}
+                        {% if platform_config.instagram_url %}
+                            <a href="{{ platform_config.instagram_url }}" target="_blank" class="instagram text-white mr-3"><i class="fa fa-instagram"></i></a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -303,49 +314,37 @@
                 <div class="footer__widget">
                     <h5 class="text-white font-weight-bold mb-3" style="font-size: 16px;">Information</h5>
                     <ul class="list-unstyled small" style="line-height: 2.2;">
-                        <li><a href="#" class="text-white-50">Purchase Insurance</a></li>
-                        <li><a href="#" class="text-white-50">Flexible Payment Plans</a></li>
-                        <li><a href="#" class="text-white-50">Nationwide Delivery</a></li>
-                        <li><a href="#" class="text-white-50">Return Policy Tracks</a></li>
+                        <li><a href="{% url 'modern10_about_view' slug=active_tenant.slug_name %}" class="text-white-50">About Corporate</a></li>
+                        <li><a href="{% url 'modern10_contact_view' slug=active_tenant.slug_name %}" class="text-white-50">Flexible Payment Plans</a></li>
+                        <li><a href="{% url 'modern10_contact_view' slug=active_tenant.slug_name %}" class="text-white-50">Nationwide Delivery</a></li>
+                        <li><a href="{% url 'modern10_contact_view' slug=active_tenant.slug_name %}" class="text-white-50">Return Policy Tracks</a></li>
                     </ul>
                 </div>
             </div>
 
             <!-- Vehicle Segment Core Link List -->
-            <div class="col-lg-2 col-md-2 col-sm-6 mb-4">
+            <div class="col-lg-3 col-md-3 col-sm-6 mb-4">
                 <div class="footer__widget">
                     <h5 class="text-white font-weight-bold mb-3" style="font-size: 16px;">Vehicle Categories</h5>
                     <ul class="list-unstyled small" style="line-height: 2.2;">
-                        <li><a href="#" class="text-white-50">Luxury Sedans</a></li>
-                        <li><a href="#" class="text-white-50">Sports & Exotic Cars</a></li>
-                        <li><a href="#" class="text-white-50">Multi-terrain SUVs</a></li>
-                        <li><a href="#" class="text-white-50">Armored Protocol Fleets</a></li>
+                        <li><a href="{% url 'modern10_car_view' slug=active_tenant.slug_name %}?purpose=RENT" class="text-white-50">Luxury Rentals</a></li>
+                        <li><a href="{% url 'modern10_car_view' slug=active_tenant.slug_name %}?purpose=SALE" class="text-white-50">Direct Vehicles Sale</a></li>
+                        <li><a href="{% url 'modern10_car_view' slug=active_tenant.slug_name %}?type=suv" class="text-white-50">Multi-terrain SUVs</a></li>
+                        <li><a href="{% url 'modern10_car_view' slug=active_tenant.slug_name %}?type=armored" class="text-white-50">Armored Protocol Fleets</a></li>
                     </ul>
                 </div>
             </div>
 
-            <!-- Top Automotive Brands Matrix Columns Split -->
-            <div class="col-lg-4 col-md-4 mb-4">
+            <!-- 🟢 FIXED DYNAMIC SHIFT BRAND MATRIX ARRAYS: Spliced clean routing parameters to catalog lists! -->
+            <div class="col-lg-3 col-md-3 mb-4">
                 <div class="footer__widget">
-                    <h5 class="text-white font-weight-bold mb-3" style="font-size: 16px;">Top Brands Available</h5>
-                    <div class="row small" style="line-height: 2.2;">
-                        <div class="col-6">
-                            <ul class="list-unstyled">
-                                <li><a href="#" class="text-white-50">Toyota</a></li>
-                                <li><a href="#" class="text-white-50">Lexus</a></li>
-                                <li><a href="#" class="text-white-50">Mercedes-Benz</a></li>
-                                <li><a href="#" class="text-white-50">Land Rover</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-6">
-                            <ul class="list-unstyled">
-                                <li><a href="#" class="text-white-50">BMW</a></li>
-                                <li><a href="#" class="text-white-50">Hyundai</a></li>
-                                <li><a href="#" class="text-white-50">Honda</a></li>
-                                <li><a href="#" class="text-white-50">Ford Matrix</a></li>
-                            </ul>
-                        </div>
-                    </div>
+                    <h5 class="text-white font-weight-bold mb-3" style="font-size: 16px;">Top Brands</h5>
+                    <ul class="list-unstyled small" style="line-height: 2.2;">
+                        <li><a href="{% url 'modern10_car_view' slug=active_tenant.slug_name %}?brand=Toyota" class="text-white-50"><i class="fa fa-angle-right text-danger mr-1"></i> Toyota Showcase</a></li>
+                        <li><a href="{% url 'modern10_car_view' slug=active_tenant.slug_name %}?brand=Lexus" class="text-white-50"><i class="fa fa-angle-right text-danger mr-1"></i> Lexus Collection</a></li>
+                        <li><a href="{% url 'modern10_car_view' slug=active_tenant.slug_name %}?brand=Mercedes-Benz" class="text-white-50"><i class="fa fa-angle-right text-danger mr-1"></i> Mercedes-Benz Elite</a></li>
+                        <li><a href="{% url 'modern10_car_view' slug=active_tenant.slug_name %}?brand=BMW" class="text-white-50"><i class="fa fa-angle-right text-danger mr-1"></i> BMW Motorsport</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -355,7 +354,7 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <p class="footer__copyright__text text-white-50 small mb-0">
-                        Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | Corex multi-tenant automotive enterprise engine.
+                        Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | {{ active_tenant.business_name }} multi-tenant automotive enterprise engine.
                     </p>
                 </div>
             </div>
