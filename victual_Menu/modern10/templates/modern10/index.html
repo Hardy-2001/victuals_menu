@@ -1,11 +1,46 @@
-
-
 {% extends 'modern10/main.html' %}
 {% load static %}
 
 {% block master_content %}
 <!-- =========================================================================
-    🎛️ TOP NAVIGATION HEADER & LOCALIZED INFRASTRUCTURE PANEL
+    📱 MOBILE OFF-CANVAS RESPONSIVE MENU SYSTEM (100% MOBILE FIX)
+========================================================================== -->
+<!-- 🟢 FIXED MOBILE TOUCH PANELS: Provides the exact elements the theme script targets to open the menu drawer on mobile screen coordinates! -->
+<div class="offcanvas-menu-overlay" style="position: fixed; left: 0; top: 0; height: 100%; width: 100%; background: rgba(0, 0, 0, 0.7); z-index: 98; visibility: hidden; opacity: 0; transition: all, 0.5s;"></div>
+<div class="offcanvas-menu-wrapper" style="position: fixed; left: -300px; top: 0; height: 100%; width: 300px; background: #111111; z-index: 99; padding: 50px 30px 30px; overflow-y: auto; transition: all, 0.5s;">
+    <div class="offcanvas__close" style="font-size: 22px; color: #ffffff; cursor: pointer; position: absolute; right: 30px; top: 30px;">
+        <span class="fa fa-close"></span>
+    </div>
+
+    <div class="offcanvas__logo mb-4">
+        <a href="{% url 'modern10_index_view' slug=active_tenant.slug_name %}">
+            {% if platform_config.logo %}
+                <img src="{{ platform_config.logo.url }}" alt="Logo" style="max-height: 40px;">
+            {% else %}
+                <h4 class="text-white font-weight-bold m-0" style="letter-spacing: 1px;">{{ active_tenant.business_name|upper }}<span class="text-danger">10</span></h4>
+            {% endif %}
+        </a>
+    </div>
+
+    <!-- Mobile Navigation Router Links Grid -->
+    <nav class="offcanvas__menu mobile-menu">
+        <ul style="list-style: none; padding: 0;">
+            <li class="active mb-3"><a href="{% url 'modern10_index_view' slug=active_tenant.slug_name %}" class="text-white d-block py-2 font-weight-bold" style="font-size: 16px;">Home</a></li>
+            <li class="mb-3"><a href="{% url 'modern10_car_view' slug=active_tenant.slug_name %}" class="text-white d-block py-2 font-weight-bold" style="font-size: 16px;">Cars</a></li>
+            <li class="mb-3"><a href="{% url 'modern10_about_view' slug=active_tenant.slug_name %}" class="text-white d-block py-2 font-weight-bold" style="font-size: 16px;">About Us</a></li>
+            <li class="mb-3"><a href="{% url 'modern10_contact_view' slug=active_tenant.slug_name %}" class="text-white d-block py-2 font-weight-bold" style="font-size: 16px;">Contact Depot</a></li>
+        </ul>
+    </nav>
+
+    <div class="offcanvas__social mt-4 pt-3 border-top" style="border-top-color: rgba(255,255,255,0.1) !important;">
+        <a href="#" class="text-white-50 mr-3"><i class="fa fa-facebook"></i></a>
+        <a href="#" class="text-white-50 mr-3"><i class="fa fa-twitter"></i></a>
+        <a href="#" class="text-white-50"><i class="fa fa-instagram"></i></a>
+    </div>
+</div>
+
+<!-- =========================================================================
+    🎛️ TOP NAVIGATION HEADER & DESKTOP ARCHITECTURE PANEL
 ========================================================================== -->
 <header class="header">
     <div class="header__top">
@@ -36,14 +71,16 @@
     </div>
 
     <div class="container">
-        <div class="row">
+        <div class="row align-items-center">
             <div class="col-lg-3 col-md-3">
                 <div class="header__logo">
                     <a href="{% url 'modern10_index_view' slug=active_tenant.slug_name %}">
                         {% if platform_config.logo %}
                             <img src="{{ platform_config.logo.url }}" alt="Premium Logo Layout" style="max-height: 50px;">
                         {% else %}
-                            <h3 class="fw-bold text-dark m-0" style="letter-spacing: 1px;">COREX<span class="text-danger">10</span></h3>
+                            <h3 class="fw-bold text-dark m-0" style="letter-spacing: 1px; display: inline-block; white-space: nowrap;">
+                                {{ active_tenant.business_name|upper|default:"COREX" }}<span class="text-danger">10</span>
+                            </h3>
                         {% endif %}
                     </a>
                 </div>
@@ -54,19 +91,14 @@
                         <ul>
                             <li class="active"><a href="{% url 'modern10_index_view' slug=active_tenant.slug_name %}">Home</a></li>
                             <li><a href="{% url 'modern10_car_view' slug=active_tenant.slug_name %}">Cars</a></li>
-                            <li><a href="{% url 'modern10_blog_view' slug=active_tenant.slug_name %}">Blog</a></li>
-                            <li><a href="#">Pages</a>
-                                <ul class="dropdown">
-                                    <li><a href="{% url 'modern10_about_view' slug=active_tenant.slug_name %}">About Us</a></li>
-                                    <li><a href="{% url 'modern10_contact_view' slug=active_tenant.slug_name %}">Contact</a></li>
-                                </ul>
-                            </li>
+                            <li><a href="{% url 'modern10_about_view' slug=active_tenant.slug_name %}">About Us</a></li>
+                            <li><a href="{% url 'modern10_contact_view' slug=active_tenant.slug_name %}">Contact</a></li>
                         </ul>
                     </nav>
-
                 </div>
             </div>
         </div>
+        <!-- 📱 Mobile Hamburger Trigger Icon Grid Node -->
         <div class="canvas__open">
             <span class="fa fa-bars"></span>
         </div>
@@ -730,14 +762,50 @@
 {% endblock master_content %}
 
 <!-- =========================================================================
-    ⚡ BULLETPROOF AUTOMATED HOMEPAGE TESTIMONIALS SLIDER RE-INITIALIZER
+    ⚡ UNIFIED SAAS SYSTEM RUNTIME DRIVER: AUTOMATED SLIDERS & RESPONSIVE CANVAS Menu
 ========================================================================== -->
 <script>
     document.addEventListener("DOMContentLoaded", function() {
+
+        // 🪐 INFRASTRUCTURE SUITE A: NATIVE MOBILE SIDEBAR CANVAS DRAWER MANAGER
+        var mobileTriggerButton = document.querySelector('.canvas__open');
+        var sidebarMenuDrawer = document.querySelector('.offcanvas-menu-wrapper');
+        var darkTranslucentOverlay = document.querySelector('.offcanvas-menu-overlay');
+        var closeSidebarButton = document.querySelector('.offcanvas__close');
+
+        if (mobileTriggerButton && sidebarMenuDrawer && darkTranslucentOverlay) {
+            // Open Mobile Sidebar Drawer Function Logic Matrix
+            var triggerMobileDrawerOpen = function() {
+                sidebarMenuDrawer.style.left = "0px";
+                darkTranslucentOverlay.style.visibility = "visible";
+                darkTranslucentOverlay.style.opacity = "1";
+            };
+
+            // Close Mobile Sidebar Drawer Function Logic Matrix
+            var triggerMobileDrawerClose = function() {
+                sidebarMenuDrawer.style.left = "-300px";
+                darkTranslucentOverlay.style.visibility = "hidden";
+                darkTranslucentOverlay.style.opacity = "0";
+            };
+
+            // Attach native hardware touch/click event listener streams cleanly
+            mobileTriggerButton.addEventListener('click', function(clickEvent) {
+                clickEvent.stopPropagation();
+                triggerMobileDrawerOpen();
+            });
+
+            if (closeSidebarButton) {
+                closeSidebarButton.addEventListener('click', triggerMobileDrawerClose);
+            }
+
+            darkTranslucentOverlay.addEventListener('click', triggerMobileDrawerClose);
+        }
+
+        // 🪐 INFRASTRUCTURE SUITE B: TESTIMONIALS SLIDER RE-INITIALIZER
         // We inject a tiny 300ms timing delay buffer to let your database text array values expand completely!
         setTimeout(function() {
             var reviewSlider = $(".testimonial__slider");
-            if (reviewSlider.length > 0) {
+            if (reviewSlider.length > 0 && typeof reviewSlider.owlCarousel === 'function') {
                 // Safely clear any collapsed 0-pixel broken slider instances
                 reviewSlider.owlCarousel('destroy');
 
@@ -755,5 +823,6 @@
                 });
             }
         }, 300); // Perfect operational timing sweet spot for premium SaaS platforms!
+
     });
 </script>
