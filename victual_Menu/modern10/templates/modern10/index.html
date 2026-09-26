@@ -48,9 +48,8 @@
                 </div>
             </div>
 
-            <!-- 🟢 MOBILE RESPONSE HAMBURGER BUTTON TRACK NODE CONTAINER -->
+            <!-- MOBILE RESPONSE HAMBURGER BUTTON TRACK NODE CONTAINER -->
             <div class="col-4 col-md-9 text-right d-md-none">
-                <!-- Uses the native, hardware-accelerated Bootstrap toggle triggers to eliminate script freezes entirely on touch event actions! -->
                 <button class="navbar-toggler p-2 border rounded"
                         type="button"
                         data-toggle="collapse"
@@ -70,6 +69,8 @@
                         <ul class="m-0 list-unstyled d-flex" style="gap: 25px;">
                             <li class="active"><a href="{% url 'modern10_index_view' slug=active_tenant.slug_name %}" class="text-dark font-weight-bold" style="font-size: 15px;">Home</a></li>
                             <li><a href="{% url 'modern10_car_view' slug=active_tenant.slug_name %}" class="text-dark font-weight-bold" style="font-size: 15px;">Cars</a></li>
+                            <!-- 🟢 RESTORED DESKTOP BLOG LINK -->
+                            <li><a href="{% url 'modern10_blog_view' slug=active_tenant.slug_name %}" class="text-dark font-weight-bold" style="font-size: 15px;">Blog</a></li>
                             <li><a href="{% url 'modern10_about_view' slug=active_tenant.slug_name %}" class="text-dark font-weight-bold" style="font-size: 15px;">About Us</a></li>
                             <li><a href="{% url 'modern10_contact_view' slug=active_tenant.slug_name %}" class="text-dark font-weight-bold" style="font-size: 15px;">Contact</a></li>
                         </ul>
@@ -79,21 +80,24 @@
 
         </div> <!-- Closed .row grid map cleanly -->
 
-        <!-- 🟢 MOBILE FLUID DROP-DOWN COLLAPSIBLE EXPANSION WINDOW STRIP DECK -->
-        <!-- This container opens and closes smoothly directly below the logo whenever it receives a touch click event on mobile phone viewports! -->
+        <!-- MOBILE FLUID DROP-DOWN COLLAPSIBLE EXPANSION WINDOW STRIP DECK -->
         <div class="collapse w-100 d-md-none mt-3" id="mobileMenuNavbarWrapper" style="background: #1a1a1a; border-radius: 6px; overflow: hidden; border: 1px solid #282828;">
             <ul class="navbar-nav list-unstyled p-3 m-0" style="line-height: 2.5;">
                 <li class="nav-item border-bottom border-dark py-1">
-                    <a class="nav-link text-white font-weight-bold d-block" href="{% url 'modern10_index_view' slug=active_tenant.slug_name %}"><i class="fa fa-home text-danger mr-2"></i> Home Overview</a>
+                    <a class="nav-link text-white font-weight-bold d-block" href="{% url 'modern10_index_view' slug=active_tenant.slug_name %}"><i class="fa fa-home text-danger mr-2"></i> Home </a>
                 </li>
                 <li class="nav-item border-bottom border-dark py-1">
-                    <a class="nav-link text-white font-weight-bold d-block" href="{% url 'modern10_car_view' slug=active_tenant.slug_name %}"><i class="fa fa-car text-danger mr-2"></i> Showroom Fleet</a>
+                    <a class="nav-link text-white font-weight-bold d-block" href="{% url 'modern10_car_view' slug=active_tenant.slug_name %}"><i class="fa fa-car text-danger mr-2"></i> Car</a>
+                </li>
+                <!-- 🟢 ADDED MOBILE BLOG LINK IN HAMBURGER DROPDOWN -->
+                <li class="nav-item border-bottom border-dark py-1">
+                    <a class="nav-link text-white font-weight-bold d-block" href="{% url 'modern10_blog_view' slug=active_tenant.slug_name %}"><i class="fa fa-rss text-danger mr-2"></i> Blog </a>
                 </li>
                 <li class="nav-item border-bottom border-dark py-1">
-                    <a class="nav-link text-white font-weight-bold d-block" href="{% url 'modern10_about_view' slug=active_tenant.slug_name %}"><i class="fa fa-info-circle text-danger mr-2"></i> About Corporate</a>
+                    <a class="nav-link text-white font-weight-bold d-block" href="{% url 'modern10_about_view' slug=active_tenant.slug_name %}"><i class="fa fa-info-circle text-danger mr-2"></i> About </a>
                 </li>
                 <li class="nav-item py-1">
-                    <a class="nav-link text-white font-weight-bold d-block" href="{% url 'modern10_contact_view' slug=active_tenant.slug_name %}"><i class="fa fa-map-marker text-danger mr-2"></i> Contact Depot Hub</a>
+                    <a class="nav-link text-white font-weight-bold d-block" href="{% url 'modern10_contact_view' slug=active_tenant.slug_name %}"><i class="fa fa-map-marker text-danger mr-2"></i> Contact </a>
                 </li>
             </ul>
         </div>
