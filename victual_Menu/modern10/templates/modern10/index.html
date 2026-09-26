@@ -2,107 +2,103 @@
 {% load static %}
 
 {% block master_content %}
-<!-- =========================================================================
-    📱 MOBILE OFF-CANVAS RESPONSIVE MENU SYSTEM (100% MOBILE FIX)
-========================================================================== -->
-<!-- 🟢 FIXED MOBILE TOUCH PANELS: Provides the exact elements the theme script targets to open the menu drawer on mobile screen coordinates! -->
-<div class="offcanvas-menu-overlay" style="position: fixed; left: 0; top: 0; height: 100%; width: 100%; background: rgba(0, 0, 0, 0.7); z-index: 98; visibility: hidden; opacity: 0; transition: all, 0.5s;"></div>
-<div class="offcanvas-menu-wrapper" style="position: fixed; left: -300px; top: 0; height: 100%; width: 300px; background: #111111; z-index: 99; padding: 50px 30px 30px; overflow-y: auto; transition: all, 0.5s;">
-    <div class="offcanvas__close" style="font-size: 22px; color: #ffffff; cursor: pointer; position: absolute; right: 30px; top: 30px;">
-        <span class="fa fa-close"></span>
-    </div>
-
-    <div class="offcanvas__logo mb-4">
-        <a href="{% url 'modern10_index_view' slug=active_tenant.slug_name %}">
-            {% if platform_config.logo %}
-                <img src="{{ platform_config.logo.url }}" alt="Logo" style="max-height: 40px;">
-            {% else %}
-                <h4 class="text-white font-weight-bold m-0" style="letter-spacing: 1px;">{{ active_tenant.business_name|upper }}<span class="text-danger">10</span></h4>
-            {% endif %}
-        </a>
-    </div>
-
-    <!-- Mobile Navigation Router Links Grid -->
-    <nav class="offcanvas__menu mobile-menu">
-        <ul style="list-style: none; padding: 0;">
-            <li class="active mb-3"><a href="{% url 'modern10_index_view' slug=active_tenant.slug_name %}" class="text-white d-block py-2 font-weight-bold" style="font-size: 16px;">Home</a></li>
-            <li class="mb-3"><a href="{% url 'modern10_car_view' slug=active_tenant.slug_name %}" class="text-white d-block py-2 font-weight-bold" style="font-size: 16px;">Cars</a></li>
-            <li class="mb-3"><a href="{% url 'modern10_about_view' slug=active_tenant.slug_name %}" class="text-white d-block py-2 font-weight-bold" style="font-size: 16px;">About Us</a></li>
-            <li class="mb-3"><a href="{% url 'modern10_contact_view' slug=active_tenant.slug_name %}" class="text-white d-block py-2 font-weight-bold" style="font-size: 16px;">Contact Depot</a></li>
-        </ul>
-    </nav>
-
-    <div class="offcanvas__social mt-4 pt-3 border-top" style="border-top-color: rgba(255,255,255,0.1) !important;">
-        <a href="#" class="text-white-50 mr-3"><i class="fa fa-facebook"></i></a>
-        <a href="#" class="text-white-50 mr-3"><i class="fa fa-twitter"></i></a>
-        <a href="#" class="text-white-50"><i class="fa fa-instagram"></i></a>
-    </div>
-</div>
 
 <!-- =========================================================================
-    🎛️ TOP NAVIGATION HEADER & DESKTOP ARCHITECTURE PANEL
+    📇 HIGH-PERFORMANCE MULTI-TENANT SYSTEM NAVIGATION HEADER & MOBILE DESK
 ========================================================================== -->
-<header class="header">
-    <div class="header__top">
+<header class="header" style="background: #ffffff; border-bottom: 1px solid #eaeaea; position: relative; width: 100%; display: block; z-index: 999;">
+
+    <!-- Desktop Communication Header Strip Bar -->
+    <div class="header__top d-none d-md-block" style="background: #111111; padding: 10px 0;">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-7 col-md-7">
+            <div class="row align-items-center">
+                <div class="col-md-7">
                     <div class="header__top__left">
-                        <ul>
-                            <li><i class="fa fa-clock-o"></i> Mon - Sat: 08:00 am to 18:00 pm</li>
-                            <li><i class="fa fa-envelope"></i> {{ platform_config.contact_email|default:"info@corexautos.ng" }}</li>
+                        <ul class="list-inline m-0 text-white-50 small">
+                            <li class="list-inline-item mr-3"><i class="fa fa-clock-o text-danger mr-1"></i> Mon - Sat: 08:00 - 18:00</li>
+                            <li class="list-inline-item"><i class="fa fa-envelope text-danger mr-1"></i> {{ platform_config.contact_email|default:"info@corexautos.ng" }}</li>
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-5 col-md-5">
-                    <div class="header__top__right">
-                        <div class="header__top__phone">
-                            <i class="fa fa-phone"></i> <span>{{ platform_config.contact_phone|default:"+234 (0) 803 456 7891" }}</span>
-                        </div>
-                        <div class="header__top__social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                        </div>
+                <div class="col-md-5 text-right">
+                    <div class="header__top__right text-white-50 small">
+                        <i class="fa fa-phone text-danger mr-1"></i> <span>{{ platform_config.contact_phone|default:"+234 (0) 803 456 7891" }}</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="container">
+    <!-- Main Dynamic Navigation Grid Area Framework Container Box -->
+    <div class="container py-3">
         <div class="row align-items-center">
-            <div class="col-lg-3 col-md-3">
+
+
+            <div class="col-8 col-md-3">
                 <div class="header__logo">
-                    <a href="{% url 'modern10_index_view' slug=active_tenant.slug_name %}">
+                    <a href="{% url 'modern10_index_view' slug=active_tenant.slug_name %}" class="d-inline-block text-decoration-none">
                         {% if platform_config.logo %}
-                            <img src="{{ platform_config.logo.url }}" alt="Premium Logo Layout" style="max-height: 50px;">
+                            <img src="{{ platform_config.logo.url }}" alt="{{ active_tenant.business_name }} Logo" style="max-height: 45px; object-fit: contain;">
                         {% else %}
-                            <h3 class="fw-bold text-dark m-0" style="letter-spacing: 1px; display: inline-block; white-space: nowrap;">
-                                {{ active_tenant.business_name|upper|default:"COREX" }}<span class="text-danger">10</span>
+                            <h3 class="fw-bold text-dark font-weight-bold m-0" style="letter-spacing: 0.5px; font-size: 22px;">
+                                {{ active_tenant.business_name|upper }}<span class="text-danger">10</span>
                             </h3>
                         {% endif %}
                     </a>
                 </div>
             </div>
-            <div class="col-lg-9 col-md-9">
-                <div class="header__nav">
-                    <nav class="header__menu">
-                        <ul>
-                            <li class="active"><a href="{% url 'modern10_index_view' slug=active_tenant.slug_name %}">Home</a></li>
-                            <li><a href="{% url 'modern10_car_view' slug=active_tenant.slug_name %}">Cars</a></li>
-                            <li><a href="{% url 'modern10_about_view' slug=active_tenant.slug_name %}">About Us</a></li>
-                            <li><a href="{% url 'modern10_contact_view' slug=active_tenant.slug_name %}">Contact</a></li>
+
+            <!-- 🟢 MOBILE RESPONSE HAMBURGER BUTTON TRACK NODE CONTAINER -->
+            <div class="col-4 col-md-9 text-right d-md-none">
+                <!-- Uses the native, hardware-accelerated Bootstrap toggle triggers to eliminate script freezes entirely on touch event actions! -->
+                <button class="navbar-toggler p-2 border rounded"
+                        type="button"
+                        data-toggle="collapse"
+                        data-target="#mobileMenuNavbarWrapper"
+                        aria-controls="mobileMenuNavbarWrapper"
+                        aria-expanded="false"
+                        aria-label="Toggle Navigation Bar Menu"
+                        style="background: #111111; color: #ffffff; border-color: #111111 !important; outline: none;">
+                    <i class="fa fa-bars" style="font-size: 20px; display: block; width: 22px; height: 20px; line-height: 20px;"></i>
+                </button>
+            </div>
+
+            <!-- Main Desktop Navigation Menu Link Columns List Grid Map Matrix -->
+            <div class="col-lg-9 col-md-9 d-none d-md-block">
+                <div class="header__nav text-right">
+                    <nav class="header__menu" style="display: inline-block;">
+                        <ul class="m-0 list-unstyled d-flex" style="gap: 25px;">
+                            <li class="active"><a href="{% url 'modern10_index_view' slug=active_tenant.slug_name %}" class="text-dark font-weight-bold" style="font-size: 15px;">Home</a></li>
+                            <li><a href="{% url 'modern10_car_view' slug=active_tenant.slug_name %}" class="text-dark font-weight-bold" style="font-size: 15px;">Cars</a></li>
+                            <li><a href="{% url 'modern10_about_view' slug=active_tenant.slug_name %}" class="text-dark font-weight-bold" style="font-size: 15px;">About Us</a></li>
+                            <li><a href="{% url 'modern10_contact_view' slug=active_tenant.slug_name %}" class="text-dark font-weight-bold" style="font-size: 15px;">Contact</a></li>
                         </ul>
                     </nav>
                 </div>
             </div>
+
+        </div> <!-- Closed .row grid map cleanly -->
+
+        <!-- 🟢 MOBILE FLUID DROP-DOWN COLLAPSIBLE EXPANSION WINDOW STRIP DECK -->
+        <!-- This container opens and closes smoothly directly below the logo whenever it receives a touch click event on mobile phone viewports! -->
+        <div class="collapse w-100 d-md-none mt-3" id="mobileMenuNavbarWrapper" style="background: #1a1a1a; border-radius: 6px; overflow: hidden; border: 1px solid #282828;">
+            <ul class="navbar-nav list-unstyled p-3 m-0" style="line-height: 2.5;">
+                <li class="nav-item border-bottom border-dark py-1">
+                    <a class="nav-link text-white font-weight-bold d-block" href="{% url 'modern10_index_view' slug=active_tenant.slug_name %}"><i class="fa fa-home text-danger mr-2"></i> Home Overview</a>
+                </li>
+                <li class="nav-item border-bottom border-dark py-1">
+                    <a class="nav-link text-white font-weight-bold d-block" href="{% url 'modern10_car_view' slug=active_tenant.slug_name %}"><i class="fa fa-car text-danger mr-2"></i> Showroom Fleet</a>
+                </li>
+                <li class="nav-item border-bottom border-dark py-1">
+                    <a class="nav-link text-white font-weight-bold d-block" href="{% url 'modern10_about_view' slug=active_tenant.slug_name %}"><i class="fa fa-info-circle text-danger mr-2"></i> About Corporate</a>
+                </li>
+                <li class="nav-item py-1">
+                    <a class="nav-link text-white font-weight-bold d-block" href="{% url 'modern10_contact_view' slug=active_tenant.slug_name %}"><i class="fa fa-map-marker text-danger mr-2"></i> Contact Depot Hub</a>
+                </li>
+            </ul>
         </div>
-        <!-- 📱 Mobile Hamburger Trigger Icon Grid Node -->
-        <div class="canvas__open">
-            <span class="fa fa-bars"></span>
-        </div>
-    </div>
+
+    </div> <!-- Closed .container grid shell cleanly -->
 </header>
 
 <!-- =========================================================================
@@ -760,56 +756,15 @@
     </div>
 </footer>
 {% endblock master_content %}
-
 <!-- =========================================================================
-    ⚡ UNIFIED SAAS SYSTEM RUNTIME DRIVER: AUTOMATED SLIDERS & RESPONSIVE CANVAS Menu
+    ⚡ BULLETPROOF AUTOMATED HOMEPAGE TESTIMONIALS SLIDER RE-INITIALIZER
 ========================================================================== -->
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-
-        // 🪐 INFRASTRUCTURE SUITE A: NATIVE MOBILE SIDEBAR CANVAS DRAWER MANAGER
-        var mobileTriggerButton = document.querySelector('.canvas__open');
-        var sidebarMenuDrawer = document.querySelector('.offcanvas-menu-wrapper');
-        var darkTranslucentOverlay = document.querySelector('.offcanvas-menu-overlay');
-        var closeSidebarButton = document.querySelector('.offcanvas__close');
-
-        if (mobileTriggerButton && sidebarMenuDrawer && darkTranslucentOverlay) {
-            // Open Mobile Sidebar Drawer Function Logic Matrix
-            var triggerMobileDrawerOpen = function() {
-                sidebarMenuDrawer.style.left = "0px";
-                darkTranslucentOverlay.style.visibility = "visible";
-                darkTranslucentOverlay.style.opacity = "1";
-            };
-
-            // Close Mobile Sidebar Drawer Function Logic Matrix
-            var triggerMobileDrawerClose = function() {
-                sidebarMenuDrawer.style.left = "-300px";
-                darkTranslucentOverlay.style.visibility = "hidden";
-                darkTranslucentOverlay.style.opacity = "0";
-            };
-
-            // Attach native hardware touch/click event listener streams cleanly
-            mobileTriggerButton.addEventListener('click', function(clickEvent) {
-                clickEvent.stopPropagation();
-                triggerMobileDrawerOpen();
-            });
-
-            if (closeSidebarButton) {
-                closeSidebarButton.addEventListener('click', triggerMobileDrawerClose);
-            }
-
-            darkTranslucentOverlay.addEventListener('click', triggerMobileDrawerClose);
-        }
-
-        // 🪐 INFRASTRUCTURE SUITE B: TESTIMONIALS SLIDER RE-INITIALIZER
-        // We inject a tiny 300ms timing delay buffer to let your database text array values expand completely!
         setTimeout(function() {
             var reviewSlider = $(".testimonial__slider");
             if (reviewSlider.length > 0 && typeof reviewSlider.owlCarousel === 'function') {
-                // Safely clear any collapsed 0-pixel broken slider instances
                 reviewSlider.owlCarousel('destroy');
-
-                // Formally build out high-performance multi-client slide tracks
                 reviewSlider.owlCarousel({
                     loop: true,
                     margin: 0,
@@ -822,7 +777,6 @@
                     autoplayTimeout: 5000
                 });
             }
-        }, 300); // Perfect operational timing sweet spot for premium SaaS platforms!
-
+        }, 300);
     });
 </script>
