@@ -9,26 +9,30 @@ from .models import (
     Modern11SalonProduct
 )
 
+# ==============================================================================
+# 🔒 PART 1A: MULTI-TENANT ISOLATED IDENTITY VAULT MASTER CONTROLLER
+# ==============================================================================
+
 @admin.register(Modern11SalonTenant)
 class Modern11SalonTenantAdmin(admin.ModelAdmin):
     """
-    🔒 MULTI-TENANT BEAUTY IDENTITY BANK FOR MODERN11
-    Onboarding field agents can only spawn and view salon identities
-    linked directly to their account, with zero deletion privileges!
+    🔒 SALON MULTI-TENANT IDENTITY BANK FOR MODERN11
+    Enforces strict access constraints: Agents can only ADD and VIEW identity records
+    linked directly to their own account profiles, with zero edit handle tampering or removal!
     """
     list_display = ('business_name', 'slug_name', 'user', 'assigned_agent', 'created_at')
     search_fields = ('business_name', 'slug_name', 'user__username')
     list_filter = ('created_at',)
 
     def get_queryset(self, request):
-        """🔒 DATA ISOLATION SHIELD: Regular agents only see profiles they onboarded"""
+        """🔒 DATA ISOLATION SHIELD: Only display salon tenants onboarded by this agent"""
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
         return qs.filter(assigned_agent__user=request.user)
 
     def save_model(self, request, obj, form, change):
-        """🏷️ AUTOMATED SIGNATURE ENGINE: Stamped with agent metadata footprint tags silently"""
+        """🏷️ AUTOMATED SIGNATURE ENGINE: Stamped with agent profile codes on record save"""
         if not request.user.is_superuser and not change:
             agent_prof = getattr(request.user, 'agent_profile', None)
             if agent_prof:
@@ -36,29 +40,32 @@ class Modern11SalonTenantAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)
 
     def has_change_permission(self, request, obj=None):
-        return request.user.is_superuser or (obj is not None and obj.assigned_agent.user == request.user)
+        if request.user.is_superuser:
+            return True
+        return False
 
     def has_delete_permission(self, request, obj=None):
-        return request.user.is_superuser
+        if request.user.is_superuser:
+            return True
+        return False
 
 
 # ==============================================================================
-# 👑 SALON VISUAL APP PROFILE DASHBOARD DECK MASTER CONTROLLER
+# 👑 PART 1B: VISUAL MARKET DECK SETTINGS CONTROLLER (SALON STOREFRONT)
 # ==============================================================================
 
 @admin.register(Modern11SalonStoreFront)
 class Modern11SalonStoreFrontAdmin(admin.ModelAdmin):
     """
-    👑 PREMIUM CONTROL DECK MARKETER PANEL FOR MODERN11
-    Groups brand landing layouts, core highlights, performance counters, and coordinates.
+    👑 SALON MARKETING DASHBOARD VISUAL CONTROL PANEL FOR MODERN11
+    Manages global tenant headers, visual features, campaigns, and retail switches.
     """
     list_display = ('__str__', 'contact_email', 'contact_phone', 'initialized_at')
     search_fields = ('tenant_identity__business_name', 'tenant_identity__slug_name')
     list_filter = ('initialized_at',)
 
-    # 💇‍♀️ SALON FEATURE FIELDSETS LAYOUT CARDS: Maps manage parameters neatly!
     fieldsets = (
-        ('🔒 Isolated Salon Identity Link', {
+        ('🔒 Core Identity Link', {
             'fields': ('tenant_identity', 'logo')
         }),
         ('📞 Showroom Communications Radar', {
@@ -89,13 +96,14 @@ class Modern11SalonStoreFrontAdmin(admin.ModelAdmin):
     )
 
     def get_queryset(self, request):
-        """🔒 SUBDOMAIN SECURITY SHIELD: Restricts visibility based on user profile accounts"""
+        """🔒 DATA ISOLATION SHIELD: Field agents only monitor settings they onboarded"""
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
-        return qs.filter(tenant_identity__user=request.user)
+        return qs.filter(tenant_identity__assigned_agent__user=request.user)
 
     def has_add_permission(self, request):
+        """🛡️ GENERIC METADATA GATING: Restores agent permission button maps cleanly"""
         if request.user.is_superuser:
             return True
         opts = self.opts
@@ -104,14 +112,15 @@ class Modern11SalonStoreFrontAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         return request.user.is_superuser
 
+    # 🟢 FIXED TENANT DROPDOWN SELECTION FILTER (MATCHES MODERN4 ALIGNMENT LINE-FOR-LINE)
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        """🔒 DROPDOWN ISOLATION SHIELD: Ensures stores options stay within credential sandboxes"""
+        """🔒 FORMFIELD PROTECTION: Restricts the selection slot strictly to this agent's clients"""
         if db_field.name == "tenant_identity" and not request.user.is_superuser:
-            kwargs["queryset"] = Modern11SalonTenant.objects.filter(user=request.user)
+            kwargs["queryset"] = Modern11SalonTenant.objects.filter(assigned_agent__user=request.user)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 # ==============================================================================
-# 👥 USER-MANAGED SALON BEAUTY EXPERTS ROSTER CONTROL INTERFACE
+# 👥 PART 2A: USER-MANAGED SALON BEAUTY EXPERTS ROSTER INTERFACE
 # ==============================================================================
 
 @admin.register(Modern11SalonStylist)
@@ -127,21 +136,21 @@ class Modern11SalonStylistAdmin(admin.ModelAdmin):
     fields = ('store', 'stylist_name', 'stylist_role', 'stylist_avatar', 'stylist_bio_summary')
 
     def get_queryset(self, request):
-        """🔒 SHIELDS MERCHANT STORAGE: Users only see and manage their own hair specialists"""
+        """🔒 SHIELDS MERCHANT STORAGE: Field agents only view specialists from their onboarded salons"""
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
-        return qs.filter(store__tenant_identity__user=request.user)
+        return qs.filter(store__tenant_identity__assigned_agent__user=request.user)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        """🔒 FORMFIELD SHIELD: Restricts salon workspace targets to matching user credentials"""
+        """🔒 FORMFIELD SHIELD: Restricts salon workspace targets to matching agent clients"""
         if db_field.name == "store" and not request.user.is_superuser:
-            kwargs["queryset"] = Modern11SalonStoreFront.objects.filter(tenant_identity__user=request.user)
+            kwargs["queryset"] = Modern11SalonStoreFront.objects.filter(tenant_identity__assigned_agent__user=request.user)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
 # ==============================================================================
-# 💰 DYNAMIC BEAUTY TREATMENT PRICING MENU CONTROL INTERFACE
+# 💰 PART 2B: DYNAMIC BEAUTY TREATMENT PRICING MENU INTERFACE
 # ==============================================================================
 
 @admin.register(Modern11SalonService)
@@ -161,16 +170,15 @@ class Modern11SalonServiceAdmin(admin.ModelAdmin):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
-        return qs.filter(store__tenant_identity__user=request.user)
+        return qs.filter(store__tenant_identity__assigned_agent__user=request.user)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "store" and not request.user.is_superuser:
-            kwargs["queryset"] = Modern11SalonStoreFront.objects.filter(tenant_identity__user=request.user)
+            kwargs["queryset"] = Modern11SalonStoreFront.objects.filter(tenant_identity__assigned_agent__user=request.user)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
-
 # ==============================================================================
-# 📸 RECENT TREATMENT PORTFOLIO LOOKBOOK GALLERY CONTROL INTERFACE
+# 📸 PART 3A: RECENT TREATMENT PORTFOLIO LOOKBOOK GALLERY INTERFACE
 # ==============================================================================
 
 @admin.register(Modern11PortfolioWork)
@@ -186,20 +194,20 @@ class Modern11PortfolioWorkAdmin(admin.ModelAdmin):
     fields = ('store', 'work_title', 'work_category', 'work_image')
 
     def get_queryset(self, request):
-        """🔒 USER ISOLATION SHIELD: Merchant profiles only filter their own gallery look transformations"""
+        """🔒 USER ISOLATION SHIELD: Field agents only see lookbook assets from their onboarded salons"""
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
-        return qs.filter(store__tenant_identity__user=request.user)
+        return qs.filter(store__tenant_identity__assigned_agent__user=request.user)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "store" and not request.user.is_superuser:
-            kwargs["queryset"] = Modern11SalonStoreFront.objects.filter(tenant_identity__user=request.user)
+            kwargs["queryset"] = Modern11SalonStoreFront.objects.filter(tenant_identity__assigned_agent__user=request.user)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
 # ==============================================================================
-# 📰 RECENT BEAUTY TRENDS & HEALTHY JOURNALISM POSTS INTERFACE
+# 📰 PART 3B: RECENT BEAUTY TRENDS & HEALTHY JOURNALISM POSTS INTERFACE
 # ==============================================================================
 
 @admin.register(Modern11SalonBlogArticle)
@@ -215,19 +223,20 @@ class Modern11SalonBlogArticleAdmin(admin.ModelAdmin):
     fields = ('store', 'article_title', 'author_display_name', 'article_thumbnail', 'article_summary', 'article_body_content')
 
     def get_queryset(self, request):
+        """🔒 SHIELDS MERCHANT STORAGE: Field agents only view articles from their onboarded salons"""
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
-        return qs.filter(store__tenant_identity__user=request.user)
+        return qs.filter(store__tenant_identity__assigned_agent__user=request.user)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "store" and not request.user.is_superuser:
-            kwargs["queryset"] = Modern11SalonStoreFront.objects.filter(tenant_identity__user=request.user)
+            kwargs["queryset"] = Modern11SalonStoreFront.objects.filter(tenant_identity__assigned_agent__user=request.user)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
 # ==============================================================================
-# 🛍️ PREMIUM BEAUTY RETAIL SHOP PRODUCTS CONTROL INTERFACE
+# 🛍️ PART 3C: PREMIUM MULTI-TENANT COSMETICS RETAIL SHOP PRODUCTS INTERFACE
 # ==============================================================================
 
 @admin.register(Modern11SalonProduct)
@@ -252,14 +261,14 @@ class Modern11SalonProductAdmin(admin.ModelAdmin):
     )
 
     def get_queryset(self, request):
-        """🔒 SHIELDS MERCHANT STORAGE: Users only see and manage their own retail goods"""
+        """🔒 DATA ISOLATION SHIELD: Field agents only manage products from their onboarded salons"""
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
-        return qs.filter(store__tenant_identity__user=request.user)
+        return qs.filter(store__tenant_identity__assigned_agent__user=request.user)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        """🔒 FORMFIELD SHIELD: Restricts store storefront options to matching user row records"""
+        """🔒 FORMFIELD SHIELD: Restricts store storefront options strictly to this agent's clients"""
         if db_field.name == "store" and not request.user.is_superuser:
-            kwargs["queryset"] = Modern11SalonStoreFront.objects.filter(tenant_identity__user=request.user)
+            kwargs["queryset"] = Modern11SalonStoreFront.objects.filter(tenant_identity__assigned_agent__user=request.user)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
