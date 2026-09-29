@@ -10,6 +10,10 @@ from .models import (
     Modern10CarTestimonial
 )
 
+# ==============================================================================
+# 🔒 PART 1A: MULTI-TENANT ISOLATED AUTOMOTIVE IDENTITY VAULT CONTROLLER
+# ==============================================================================
+
 @admin.register(Modern10CarTenant)
 class Modern10CarTenantAdmin(admin.ModelAdmin):
     """
@@ -48,7 +52,7 @@ class Modern10CarTenantAdmin(admin.ModelAdmin):
 
 
 # ==============================================================================
-# 👑 AUTOMOTIVE HUB CONTROL DECK VISUAL PROFILE MASTER CONTROLLER
+# 👑 PART 1B: VISUAL MARKET DECK MASTER CONTROLLER (AUTOMOTIVE STOREFRONT)
 # ==============================================================================
 
 @admin.register(Modern10CarStoreFront)
@@ -61,7 +65,6 @@ class Modern10CarStoreFrontAdmin(admin.ModelAdmin):
     search_fields = ('tenant_identity__business_name', 'tenant_identity__slug_name')
     list_filter = ('initialized_at',)
 
-    # 🟢 CAR CORE FIELDSETS GRID: Controls car marketplace texts from admin layout cards
     fieldsets = (
         ('🔒 Isolated Dealer Identity Link', {
             'fields': ('tenant_identity', 'logo')
@@ -72,7 +75,6 @@ class Modern10CarStoreFrontAdmin(admin.ModelAdmin):
         ('🎨 Home Page Hero Vehicle Accents', {
             'fields': ('hero_title', 'hero_subtitle', 'hero_banner_image')
         }),
-        # 🟢 UPDATED: Integrated strategic statements and live counters into the corporate profile fields deck cards!
         ('📝 Corporate Profile About Content Blocks', {
             'fields': (
                 'about_headline',
@@ -123,11 +125,11 @@ class Modern10CarStoreFrontAdmin(admin.ModelAdmin):
     )
 
     def get_queryset(self, request):
-        """🔒 SUBDOMAIN SECURITY SHIELD: Restricts visibility based on tenant account permissions"""
+        """🔒 SUBDOMAIN SECURITY SHIELD: Onboarding field agents monitor settings they registered"""
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
-        return qs.filter(tenant_identity__user=request.user)
+        return qs.filter(tenant_identity__assigned_agent__user=request.user)
 
     def has_add_permission(self, request):
         if request.user.is_superuser:
@@ -139,14 +141,16 @@ class Modern10CarStoreFrontAdmin(admin.ModelAdmin):
         return request.user.is_superuser
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        """🔒 FORMFIELD PROTECTION: Locks target options strictly to rows matching active credentials"""
+        """
+        🔒 FORMFIELD PROTECTION: Restricts identity selection strictly to this agent's onboarded clients.
+        🟢 UPGRADED LOGIC: Replaced 'user=request.user' with relationship-jumping agent validation parameters!
+        """
         if db_field.name == "tenant_identity" and not request.user.is_superuser:
-            kwargs["queryset"] = Modern10CarTenant.objects.filter(user=request.user)
+            kwargs["queryset"] = Modern10CarTenant.objects.filter(assigned_agent__user=request.user)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
-
 # ==============================================================================
-# 👥 USER-MANAGED CORPORATE TEAM PROFILE MATRIX CONTROL INTERFACE
+# 👥 PART 2A: USER-MANAGED CORPORATE TEAM PROFILE MATRIX INTERFACE
 # ==============================================================================
 
 @admin.register(Modern10StudioTeamMember)
@@ -162,16 +166,16 @@ class Modern10StudioTeamMemberAdmin(admin.ModelAdmin):
     fields = ('store', 'member_name', 'member_role', 'member_avatar')
 
     def get_queryset(self, request):
-        """🔒 MERCHANT ISOLATION SHIELD: Users only filter their own team items"""
+        """🔒 MERCHANT ISOLATION SHIELD: Field agents only monitor team sheets belonging to their clients"""
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
-        return qs.filter(store__tenant_identity__user=request.user)
+        return qs.filter(store__tenant_identity__assigned_agent__user=request.user)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        """🔒 FORMFIELD SHIELD: Restricts store storefront options to matching user row rows"""
+        """🔒 FORMFIELD SHIELD: Restricts store storefront options strictly to this agent's clients"""
         if db_field.name == "store" and not request.user.is_superuser:
-            kwargs["queryset"] = Modern10CarStoreFront.objects.filter(tenant_identity__user=request.user)
+            kwargs["queryset"] = Modern10CarStoreFront.objects.filter(tenant_identity__assigned_agent__user=request.user)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
@@ -185,21 +189,21 @@ class Modern10CarTestimonialAdmin(admin.ModelAdmin):
     search_fields = ('client_name', 'client_role', 'store__tenant_identity__business_name')
 
     def get_queryset(self, request):
-        """🔒 USER ISOLATION SHIELD: Merchants only filter their own client testimonial items"""
+        """🔒 USER ISOLATION SHIELD: Field agents only track client reviews for their verified salons"""
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
-        return qs.filter(store__tenant_identity__user=request.user)
+        return qs.filter(store__tenant_identity__assigned_agent__user=request.user)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        """🔒 FORMFIELD SHIELD: Ensures stores options stay within credential sandboxes"""
+        """🔒 FORMFIELD SHIELD: Ensures stores options stay within the agent's account sandboxes"""
         if db_field.name == "store" and not request.user.is_superuser:
-            kwargs["queryset"] = Modern10CarStoreFront.objects.filter(tenant_identity__user=request.user)
+            kwargs["queryset"] = Modern10CarStoreFront.objects.filter(tenant_identity__assigned_agent__user=request.user)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
 # ==============================================================================
-# 📁 PART 2B: REPEATING CHILD CONTENT GRIDS LAYER CONTROLLERS (CATALOG & MEDIA)
+# 📁 PART 2B: FLEET CLASSIFICATION SEGMENTS INTERFACE
 # ==============================================================================
 
 @admin.register(Modern10CarCategory)
@@ -209,18 +213,21 @@ class Modern10CarCategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'category_slug': ('category_name',)}
 
     def get_queryset(self, request):
-        """🔒 USER ISOLATION SHIELD: Merchant profiles only filter their own category segments"""
+        """🔒 USER ISOLATION SHIELD: Field agents view category options matching their onboarded slots"""
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
-        return qs.filter(store__tenant_identity__user=request.user)
+        return qs.filter(store__tenant_identity__assigned_agent__user=request.user)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         """🔒 DROPDOWN DROPOUT SHIELD: Blocks visual crossover select targets"""
         if db_field.name == "store" and not request.user.is_superuser:
-            kwargs["queryset"] = Modern10CarStoreFront.objects.filter(tenant_identity__user=request.user)
+            kwargs["queryset"] = Modern10CarStoreFront.objects.filter(tenant_identity__assigned_agent__user=request.user)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
+# ==============================================================================
+# 🚘 PART 3A: AUTOMOTIVE INVENTORY VEHICLE CATALOG DECK INTERFACE
+# ==============================================================================
 
 @admin.register(Modern10CarListing)
 class Modern10CarListingAdmin(admin.ModelAdmin):
@@ -239,31 +246,32 @@ class Modern10CarListingAdmin(admin.ModelAdmin):
         'gallery_image_1', 'gallery_image_2', 'gallery_image_3', 'gallery_image_4',
         'year_of_manufacture', 'mileage', 'transmission_automatic',
         'horsepower', 'fuel_type', 'seating_capacity',
-
-        # 🟢 REGISTERED: These inputs will now automatically populate inside your admin dashboard screens!
         'vehicle_details_text', 'vehicle_features_checklist', 'google_map_embed_url',
-
         'stock_reference', 'vin_registry', 'showroom_location',
         'is_available', 'is_featured_on_home'
     )
 
     def get_queryset(self, request):
-        """🔒 SEGMENT ISOLATION SHIELD: Limits product visibility to authorized catalog creators"""
+        """🔒 SEGMENT ISOLATION SHIELD: Field agents only manage inventory from their onboarded hubs"""
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
-        return qs.filter(store__tenant_identity__user=request.user)
+        return qs.filter(store__tenant_identity__assigned_agent__user=request.user)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        """🔒 DROP-DOWN ISOLATION: Locks store and category options strictly within the agent's clients sandbox"""
         if db_field.name == "store" and not request.user.is_superuser:
-            kwargs["queryset"] = Modern10CarStoreFront.objects.filter(tenant_identity__user=request.user)
+            kwargs["queryset"] = Modern10CarStoreFront.objects.filter(tenant_identity__assigned_agent__user=request.user)
 
-        # FILTERED SEGMENTS DROPDOWN PICKER: Locks choices inside the merchant's sandbox
         if db_field.name == "dynamic_category" and not request.user.is_superuser:
-            kwargs["queryset"] = Modern10CarCategory.objects.filter(store__tenant_identity__user=request.user)
+            kwargs["queryset"] = Modern10CarCategory.objects.filter(store__tenant_identity__assigned_agent__user=request.user)
 
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
+
+# ==============================================================================
+# 📰 PART 3B: AUTOMOTIVE JOURNALISM BLOG POSTS INTERFACE
+# ==============================================================================
 
 @admin.register(Modern10CarBlogArticle)
 class Modern10CarBlogArticleAdmin(admin.ModelAdmin):
@@ -272,19 +280,20 @@ class Modern10CarBlogArticleAdmin(admin.ModelAdmin):
     list_filter = ('published_date',)
 
     def get_queryset(self, request):
+        """🔒 USER ISOLATION SHIELD: Field agents only monitor articles from their onboarded car hubs"""
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
-        return qs.filter(store__tenant_identity__user=request.user)
+        return qs.filter(store__tenant_identity__assigned_agent__user=request.user)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "store" and not request.user.is_superuser:
-            kwargs["queryset"] = Modern10CarStoreFront.objects.filter(tenant_identity__user=request.user)
+            kwargs["queryset"] = Modern10CarStoreFront.objects.filter(tenant_identity__assigned_agent__user=request.user)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
 # ==============================================================================
-# 📥 PART 2C: INBOUND AUTOMOTIVE CLIENT NEWSLETTER REGISTER MAILBOX DESK
+# 📥 PART 3C: INBOUND AUTOMOTIVE CLIENT NEWSLETTER REGISTER MAILBOX DESK
 # ==============================================================================
 
 @admin.register(Modern10NewsletterSubscription)
@@ -294,8 +303,8 @@ class Modern10NewsletterSubscriptionAdmin(admin.ModelAdmin):
     search_fields = ('subscriber_email',)
 
     def get_queryset(self, request):
-        """🔒 LEAKAGE COUNTER INTELLIGENCE: Protects incoming customer email addresses"""
+        """🔒 LEAKAGE COUNTER INTELLIGENCE: Protects incoming customer email addresses per agent context"""
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
-        return qs.filter(store__tenant_identity__user=request.user)
+        return qs.filter(store__tenant_identity__assigned_agent__user=request.user)
