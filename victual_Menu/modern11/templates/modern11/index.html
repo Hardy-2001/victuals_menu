@@ -1,0 +1,400 @@
+{% extends 'modern11/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- =========================================================================
+    👑 HERO DISPLAY WELCOME STAGE (100% ADMIN POWERED)
+========================================================================== -->
+<section class="hero-wrap" style="background-image: url('{% if platform_config.hero_banner_image %}{{ platform_config.hero_banner_image.url }}{% else %}{% static 'modern11/images/bg_1.jpg' %}{% endif %}'); background-size: cover; background-position: center; min-height: 700px; display: flex; align-items: center; position: relative;">
+    <div class="overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1;"></div>
+    <div class="container" style="position: relative; z-index: 2;">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-8 text-center">
+                <h1 class="text-white font-weight-bold mb-3" style="font-size: 56px; font-family: 'Playfair Display', serif;">
+                    {{ platform_config.hero_title|default:"Beauty Salon" }}
+                </h1>
+                <p class="text-white-50 lead mb-4">{{ platform_config.hero_subtitle|default:"Pretty Menu & Premium Grooming Services Tailored For You." }}</p>
+                <p><a href="{% url 'modern11_services_view' slug=active_tenant.slug_name %}" class="btn btn-danger px-4 py-3" style="border-radius: 30px; background: #f35588; border: 1px solid #f35588;">View Our Services</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================================
+    💎 TOP INTRODUCTORY CARD DISPLAY HOOKS MATRIX
+========================================================================== -->
+<section class="ftco-section ftco-no-pt ftco-no-pb bg-light py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-4 mb-md-0">
+                <div class="p-4 bg-white border rounded text-center shadow-sm h-100">
+                    <div class="icon mb-3"><i class="fa fa-magic text-danger" style="font-size: 32px; color: #f35588 !important;"></i></div>
+                    <h5 class="font-weight-bold text-dark">{{ platform_config.feature_1_title|default:"Skin & Beauty Care" }}</h5>
+                    <p class="text-muted small mt-2 mb-0">{{ platform_config.feature_1_desc|default:"Premium facial micro-treatment layouts engineered to restore organic cellular glow safely." }}</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 mb-md-0">
+                <div class="p-4 bg-white border rounded text-center shadow-sm h-100">
+                    <div class="icon mb-3"><i class="fa fa-paint-brush text-danger" style="font-size: 32px; color: #f35588 !important;"></i></div>
+                    <h5 class="font-weight-bold text-dark">{{ platform_config.feature_2_title|default:"Makeup Pro" }}</h5>
+                    <p class="text-muted small mt-2 mb-0">{{ platform_config.feature_2_desc|default:"Red-carpet cosmetic contours and flawless tone blends matched for high-end events." }}</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-4 bg-white border rounded text-center shadow-sm h-100">
+                    <div class="icon mb-3"><i class="fa fa-scissors text-danger" style="font-size: 32px; color: #f35588 !important;"></i></div>
+                    <h5 class="font-weight-bold text-dark">{{ platform_config.feature_3_title|default:"Hair Styling" }}</h5>
+                    <p class="text-muted small mt-2 mb-0">{{ platform_config.feature_3_desc|default:"Precision texturing, custom weaving, and deep therapeutic scalp care routines." }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- =========================================================================
+    💇‍♀️ OUR BEAUTY EXPERTS ROSTER (100% DATABASE DRIVEN LOOPS)
+========================================================================== -->
+<section class="ftco-section bg-white py-5" style="border-top: 1px solid #f2f2f2;">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-7 text-center section-heading">
+                <h2 class="font-weight-bold text-dark" style="font-family: 'Playfair Display', serif; font-size: 36px;">Our Beauty Experts</h2>
+                <p class="text-muted small">Professional local grooming artists, technical colorists, and executive skin stylists dedicated to your elite aesthetic comfort.</p>
+            </div>
+        </div>
+
+        <div class="row text-center justify-content-center">
+            {% for stylist in salon_stylists %}
+            <!-- Dynamic Salon Stylist Profile Card -->
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="p-3 bg-white border rounded shadow-sm h-100" style="transition: transform 0.2s ease;">
+                    <div class="expert-pic-frame mb-3" style="width: 100%; height: 260px; overflow: hidden; border-radius: 4px;">
+                        {% if stylist.stylist_avatar %}
+                            <img src="{{ stylist.stylist_avatar.url }}" alt="{{ stylist.stylist_name }} Profile" class="w-100 h-100" style="object-fit: cover;">
+                        {% else %}
+                            <img src="{% static 'modern11/images/stylist-fallback.jpg' %}" alt="Fallback Profile" class="w-100 h-100" style="object-fit: cover;">
+                        {% endif %}
+                    </div>
+                    <h5 class="font-weight-bold text-dark mb-1" style="font-size: 18px;">{{ stylist.stylist_name }}</h5>
+                    <span class="text-danger small font-weight-bold d-block mb-2" style="color: #f35588 !important; letter-spacing: 1px; text-transform: uppercase; font-size: 11px;">{{ stylist.stylist_role }}</span>
+                    <p class="text-muted small mb-0" style="line-height: 1.5;">{{ stylist.stylist_bio_summary|truncatewords:15 }}</p>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-4">
+                <p class="text-muted small"><i class="fa fa-users text-danger mr-1"></i> No dynamic beauty experts have been published to this workspace portfolio yet.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+
+
+<!-- =========================================================================
+    🎟️ SPECIAL CAMPAIGN OFFER BANNER ROW (WHATSAPP CALL-TO-ACTION PROTOCOL)
+========================================================================== -->
+<section class="ftco-section bg-light py-5" style="border-top: 1px solid #f2f2f2; border-bottom: 1px solid #f2f2f2;">
+    <div class="container">
+        <div class="row align-items-center justify-content-between">
+            <div class="col-md-7 text-center text-md-left mb-4 mb-md-0">
+                <span class="text-uppercase font-weight-bold text-danger d-block mb-1" style="color: #f35588 !important; letter-spacing: 2px; font-size: 12px;">Save up to 25% Off</span>
+                <h3 class="font-weight-bold text-dark mb-2" style="font-family: 'Playfair Display', serif; font-size: 28px;">{{ platform_config.campaign_headline|default:"Student Discount Strategy" }}</h3>
+                <p class="text-muted mb-0 small" style="line-height: 1.6;">
+                    {{ platform_config.campaign_description|default:"Flash your active university identification credentials on terminal checkouts to claim 25% off all basic haircuts, therapeutic hair coloring, and skin cleansing matrix sessions." }}
+                </p>
+            </div>
+                        <!-- =========================================================================
+                🎟️ SELF-SANITIZING PRIORITY SALON APPOINTMENT ACTION REDIRECT
+            ========================================================================== -->
+            <!-- 🟢 FIXED LINK GATEWAY: Intercepts taps to strip phone spacing parameters dynamically on the fly to kill mobile routing failure logs! -->
+            <div class="col-md-4 text-center text-md-right">
+                <a href="javascript:void(0);"
+                   class="btn btn-danger font-weight-bold px-4 py-3"
+                   style="border-radius: 30px; background: #111111; border: 1px solid #111111;"
+                   onclick="
+                        var rawPhone = '{{ platform_config.contact_phone }}'.trim();
+                        var cleanPhone = rawPhone.replace(/[^0-9]/g, '');
+
+                        // 🇳🇬 Nigerian Localization Safe Shield: Normalize standard '080...' numbers into international format
+                        if (cleanPhone.startsWith('0') && cleanPhone.length === 11) {
+                            cleanPhone = '234' + cleanPhone.substring(1);
+                        } else if (!cleanPhone.startsWith('234') && cleanPhone.length === 10) {
+                            cleanPhone = '234' + cleanPhone;
+                        }
+
+                        var textPayload = '💇‍♀️ *SPECIAL SALON APPOINTMENT REQUEST* 💇‍♀️\n\nHello Management Team!\nI am reviewing your Campaign Offer from the storefront portal and would like to reserve a priority grooming appointment slot.\n\nKindly confirm available seating blocks for this week.';
+                        window.location.href = 'whatsapp://send?phone=' + cleanPhone + '&text=' + encodeURIComponent(textPayload);
+                   ">
+                    <i class="fa fa-whatsapp mr-1" style="color: #25D366;"></i> Book Appointment Now
+                </a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+
+<!-- =========================================================================
+    💄 HOMEPAGE FEATURED BOUTIQUE SHOWCASE GRIDS (MULTI-ITEM CART EQUIPPED)
+========================================================================== -->
+<!-- 🟢 EXTENSION BLOCKS: Pulls only those premium retail goods explicitly selected via your admin checkbox matrix handles! -->
+<section class="ftco-section bg-light py-5" style="border-top: 1px solid #eaeaea;">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-7 text-center section-heading">
+                <h2 class="font-weight-bold text-dark" style="font-family: 'Playfair Display', serif; font-size: 34px;">Featured Products</h2>
+                <p class="text-muted small">Exotic perfumes, luxury weaves, and cosmetic drop items available right now at our salon counters.</p>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            {% for item in featured_home_products %}
+            <!-- Multi-Item Shopping Cart Enabled Product Card Component Module -->
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4 d-flex">
+                <div class="product-card-box p-3 border rounded bg-white shadow-sm w-100 d-flex flex-column justify-content-between text-center" style="transition: transform 0.2s ease; border-top: 3px solid #f35588 !important;">
+                    <div>
+                        <!-- Product Layout Image Frame -->
+                        <div class="product-img-frame mb-3 rounded overflow-hidden bg-white" style="width: 100%; height: 210px;">
+                            {% if item.product_image %}
+                                <img src="{{ item.product_image.url }}" alt="{{ item.product_name }}" class="w-100 h-100" style="object-fit: contain; padding: 5px;">
+                            {% else %}
+                                <img src="{% static 'modern11/images/shop-fallback.jpg' %}" alt="Product Fallback" class="w-100 h-100" style="object-fit: cover;">
+                            {% endif %}
+                        </div>
+
+                        <span class="text-uppercase text-muted font-weight-bold d-block mb-1" style="letter-spacing: 1px; font-size: 10px;">{{ item.get_product_category_display }}</span>
+                        <h5 class="font-weight-bold text-dark mb-2" style="font-size: 15px; min-height: 40px; display: flex; align-items: center; justify-content: center; line-height: 1.3;">{{ item.product_name }}</h5>
+
+                        <!-- Explicit Price Tag Layout Label -->
+                        <h4 class="font-weight-bold text-danger mb-2" style="color: #f35588 !important; font-size: 19px;">
+                            ₦{{ item.product_price|floatformat:"0" }}
+                        </h4>
+                        <p class="text-muted small mb-0" style="line-height: 1.4; font-size: 12px;">{{ item.product_description|truncatewords:10 }}</p>
+                    </div>
+
+                    <div class="mt-3 pt-2 border-top" style="border-top-color: #f2f2f2 !important;">
+                        <!-- 🟢 HARDWARE MULTI-ITEM PERSISTENT CART TRIGGER: Intercepts clicks to securely queue item values into our global localStorage collection layout matrix! -->
+                        <button type="button"
+                                class="btn btn-danger font-weight-bold btn-block w-100 d-flex align-items-center justify-content-center"
+                                onclick="appendItemToCartBasket('{{ item.product_name|escapejs }}', '{{ item.product_price }}')"
+                                style="border-radius: 4px; height: 38px; font-size: 13px; gap: 6px; background: #111111; border: 1px solid #111111;">
+                            <i class="fa fa-shopping-basket text-success" style="font-size: 15px;"></i> Add To Basket
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-md-8 text-center py-5 bg-white border rounded shadow-sm">
+                <i class="fa fa-shopping-bag text-muted mb-2" style="font-size: 36px;"></i>
+                <p class="text-muted mb-0 small">No dynamic look featured products have been checked for homepage slider display inside your control panel cards yet.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+
+
+<!-- =========================================================================
+    💰 DYNAMIC BEAUTY PRICING MENU GRID (100% BUG-FREE TAG ALIGNMENT)
+========================================================================== -->
+<section class="ftco-section bg-white py-5">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-7 text-center section-heading">
+                <h2 class="font-weight-bold text-dark" style="font-family: 'Playfair Display', serif; font-size: 36px;">Beauty Pricing</h2>
+                <p class="text-muted small">Transparent premium grooming menu plans tailored exactly to your active corporate and personal styling lifestyles.</p>
+            </div>
+        </div>
+
+        <div class="row text-center justify-content-center">
+            {% for service in salon_services %}
+            <!-- Dynamic Salon Pricing Tier Card Component -->
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="p-4 bg-white border rounded shadow-sm h-100 d-flex flex-column justify-content-between" style="border-top: 4px solid #f35588 !important;">
+                    <div>
+                        <h4 class="font-weight-bold text-dark mb-2" style="font-size: 20px;">{{ service.service_title }}</h4>
+                        <h2 class="font-weight-bold text-danger mb-3" style="color: #f35588 !important; font-size: 28px;">
+                            ₦{{ service.service_price|floatformat:"0" }}
+                        </h2>
+                        <ul class="list-unstyled text-muted small text-left mb-4" style="line-height: 2;">
+                            {{ service.service_features_list|linebreaksbr }}
+                        </ul>
+                    </div>
+                    <div>
+                        <!-- 🟢 FIXED EXPLICIT QUOTES: Changed |floatformat:%220%22 to |floatformat:'0' inside the text parameter to destroy the TemplateSyntaxError crash completely! -->
+                        <a href="whatsapp://send?phone={{ platform_config.contact_phone }}&text=%F0%9F%92%85%20*SALON%20SERVICE%20INQUIRY*%20%F0%9F%92%87%0A%0AHello%21%20I%20am%20interested%20in%20booking%20the%20*{{ service.service_title|urlencode }}*%20treatment%20plan%20valued%20at%20%E2%82%A6{{ service.service_price|floatformat:'0' }}.%20Kindly%20confirm%20next%20available%20stylist%20slots."
+                           class="btn btn-danger font-weight-bold btn-block w-100 mt-2"
+                           style="border-radius: 20px; background: #111111; border: 1px solid #111111; font-size: 13px;">
+                            Order Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-4">
+                <p class="text-muted small"><i class="fa fa-credit-card text-danger mr-1"></i> No dynamic pricing plans have been configured inside the management panel yet.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+<!-- =========================================================================
+    📸 RECENT TREATMENT PORTFOLIO & SHOWCASE GALLERY
+========================================================================== -->
+<section class="ftco-section bg-light py-5" style="border-top: 1px solid #f2f2f2;">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-7 text-center section-heading">
+                <h2 class="font-weight-bold text-dark" style="font-family: 'Playfair Display', serif; font-size: 36px;">Our Work</h2>
+                <p class="text-muted small">A curated showcase gallery of real haircut textures, lash enhancements, and styling makeovers executed across our salons.</p>
+            </div>
+        </div>
+
+        <div class="row mx-0">
+            {% for work in portfolio_works|slice:":6" %}
+            <!-- Dynamic Work Showcase Card -->
+            <div class="col-md-4 col-sm-6 p-2">
+                <div class="portfolio-item-box border rounded bg-white shadow-sm overflow-hidden" style="position: relative; group;">
+                    <div style="width: 100%; height: 280px; overflow: hidden;">
+                        {% if work.work_image %}
+                            <img src="{{ work.work_image.url }}" alt="{{ work.work_title }}" class="w-100 h-100" style="object-fit: cover; transition: all 0.3s ease;">
+                        {% else %}
+                            <img src="{% static 'modern11/images/work-fallback.jpg' %}" alt="Work Fallback" class="w-100 h-100" style="object-fit: cover;">
+                        {% endif %}
+                    </div>
+                    <div class="p-3 bg-white text-center">
+                        <span class="text-uppercase text-danger font-weight-bold d-block mb-1" style="color: #f35588 !important; letter-spacing: 1px; font-size: 11px;">{{ work.work_category|default:"Salon Transformation" }}</span>
+                        <h5 class="font-weight-bold text-dark mb-0" style="font-size: 16px;">{{ work.work_title }}</h5>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-5">
+                <p class="text-muted small"><i class="fa fa-camera text-danger mr-1"></i> No treatment lookbooks or look showcases have been uploaded to this showroom gallery yet.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================================
+    📊 DYNAMIC PLATFORM METRIC INFRASTRUCTURE COUNTERS
+========================================================================== -->
+<section class="ftco-section bg-white py-5 border-top border-bottom">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-3 col-sm-6 mb-4 mb-md-0">
+                <div class="counter-card p-3">
+                    <h2 class="font-weight-bold text-dark m-0" style="font-size: 40px; font-family: 'Playfair Display', serif;">{{ platform_config.stat_makeovers|default:"1,500+" }}</h2>
+                    <p class="text-muted small font-weight-bold mt-2 text-uppercase" style="letter-spacing: 1px; font-size: 11px;">Makeup Over Done</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4 mb-md-0">
+                <div class="counter-card p-3">
+                    <h2 class="font-weight-bold text-dark m-0" style="font-size: 40px; font-family: 'Playfair Display', serif;">{{ platform_config.stat_procedures|default:"2,840" }}</h2>
+                    <p class="text-muted small font-weight-bold mt-2 text-uppercase" style="letter-spacing: 1px; font-size: 11px;">Procedures Completed</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4 mb-sm-0">
+                <div class="counter-card p-3">
+                    <h2 class="font-weight-bold text-dark m-0" style="font-size: 40px; font-family: 'Playfair Display', serif;">{{ platform_config.stat_clients|default:"4,200+" }}</h2>
+                    <p class="text-muted small font-weight-bold mt-2 text-uppercase" style="letter-spacing: 1px; font-size: 11px;">Happy Salon Clients</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="counter-card p-3">
+                    <h2 class="font-weight-bold text-dark m-0" style="font-size: 40px; font-family: 'Playfair Display', serif;">{{ platform_config.stat_treatments|default:"980" }}</h2>
+                    <p class="text-muted small font-weight-bold mt-2 text-uppercase" style="letter-spacing: 1px; font-size: 11px;">Skin Treatments Done</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================================
+    📇 LOCALIZED MULTI-COLUMN PLATFORM FOOTER (100% ADMIN DRIVEN)
+========================================================================== -->
+<footer class="footer spad" style="background: #111111; padding-top: 70px; padding-bottom: 30px; clear: both; width: 100%; display: block; color: rgba(255,255,255,0.6);">
+    <div class="container">
+        <div class="row">
+            <!-- Brand Overview Column -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="footer__about">
+                    <h4 class="text-white font-weight-bold mb-3" style="letter-spacing: 1px;">
+                        {{ active_tenant.business_name|upper|default:"PRETTY" }}<span class="text-danger">.</span>
+                    </h4>
+                    <p class="small style-lh mb-4" style="line-height: 1.7;">
+                        Premium multi-tenant beauty grooming matrices, custom texturing hair hubs, and executive skin styling networks in Lagos and Abuja, Nigeria.
+                    </p>
+                    <div class="footer__social">
+                        {% if platform_config.facebook_url %}
+                            <a href="{{ platform_config.facebook_url }}" target="_blank" class="text-white mr-3"><i class="fa fa-facebook"></i></a>
+                        {% endif %}
+                        {% if platform_config.twitter_url %}
+                            <a href="{{ platform_config.twitter_url }}" target="_blank" class="text-white mr-3"><i class="fa fa-twitter"></i></a>
+                        {% endif %}
+                        {% if platform_config.instagram_url %}
+                            <a href="{{ platform_config.instagram_url }}" target="_blank" class="text-white"><i class="fa fa-instagram"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Spa Center Links Column -->
+            <div class="col-lg-2 col-md-6 mb-4">
+                <div class="footer__widget">
+                    <h5 class="text-white font-weight-bold mb-3" style="font-size: 16px;">Spa Center</h5>
+                    <ul class="list-unstyled small" style="line-height: 2.2;">
+                        <li><a href="{% url 'modern11_services_view' slug=active_tenant.slug_name %}" class="text-white-50">Body Care Desk</a></li>
+                        <li><a href="{% url 'modern11_services_view' slug=active_tenant.slug_name %}" class="text-white-50">Massage Therapy</a></li>
+                        <li><a href="{% url 'modern11_services_view' slug=active_tenant.slug_name %}" class="text-white-50">Hydrotherapy Core</a></li>
+                        <li><a href="{% url 'modern11_services_view' slug=active_tenant.slug_name %}" class="text-white-50">Sauna & Lounges</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Information Navigation Column -->
+            <div class="col-lg-2 col-md-6 mb-4">
+                <div class="footer__widget">
+                    <h5 class="text-white font-weight-bold mb-3" style="font-size: 16px;">Information</h5>
+                    <ul class="list-unstyled small" style="line-height: 2.2;">
+                        <li><a href="{% url 'modern11_about_view' slug=active_tenant.slug_name %}" class="text-white-50">About Corporate</a></li>
+                        <li><a href="{% url 'modern11_work_view' slug=active_tenant.slug_name %}" class="text-white-50">Our Portfolio</a></li>
+                        <li><a href="{% url 'modern11_contact_view' slug=active_tenant.slug_name %}" class="text-white-50">Contact Depot</a></li>
+                        <li><a href="#" class="text-white-50">Privacy Protection</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Have A Question Contact Column -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="footer__widget">
+                    <h5 class="text-white font-weight-bold mb-3" style="font-size: 16px;">Have a Question?</h5>
+                    <ul class="list-unstyled small text-white-50" style="line-height: 2;">
+                        <li class="mb-2"><i class="fa fa-map-marker text-danger mr-2"></i> {{ platform_config.contact_address|default:"203 Fake St. Lekki Phase 1, Lagos, Nigeria" }}</li>
+                        <li class="mb-2"><i class="fa fa-phone text-danger mr-2"></i> <a href="tel:{{ platform_config.contact_phone }}" class="text-white-50">{{ platform_config.contact_phone|default:"+234 (0) 803 456 7891" }}</a></li>
+                        <li><i class="fa fa-envelope text-danger mr-2"></i> <a href="mailto:{{ platform_config.contact_email }}" class="text-white-50 text-lowercase">{{ platform_config.contact_email|default:"info@prettyautos.ng" }}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Copyright Block -->
+        <div class="footer__copyright mt-4 pt-3 text-center" style="border-top: 1px solid rgba(255,255,255,0.05);">
+            <p class="small text-white-50 mb-0">
+                Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | {{ active_tenant.business_name|default:"Pretty Salon" }} Multi-Tenant Ecosystem Engine.
+            </p>
+        </div>
+    </div>
+</footer>
+{% endblock content %}
+

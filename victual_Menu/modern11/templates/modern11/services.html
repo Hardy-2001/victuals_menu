@@ -1,0 +1,219 @@
+{% extends 'modern11/base.html' %}
+{% load static %}
+
+{% block title %}Our Services — {{ platform_config.business_name|default:active_tenant.business_name }}{% endblock %}
+
+{% block content %}
+<!-- =========================================================================
+    📇 SERVICES PAGE PARALLAX BREADCRUMB HEADER (100% DYNAMIC)
+========================================================================== -->
+<section class="hero-wrap hero-wrap-2" style="background-image: url('{% if platform_config.hero_banner_image %}{{ platform_config.hero_banner_image.url }}{% else %}{% static 'modern11/images/bg_2.jpg' %}{% endif %}'); background-size: cover; background-position: center; min-height: 300px; display: flex; align-items: center; position: relative;">
+    <div class="overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1;"></div>
+    <div class="container" style="position: relative; z-index: 2;">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-8 text-center mt-5">
+                <h1 class="text-white font-weight-bold mb-2" style="font-family: 'Playfair Display', serif; font-size: 40px;">Our Services</h1>
+                <p class="text-white-50 small">
+                    <a href="{% url 'modern11_index_view' slug=active_tenant.slug_name %}" class="text-white">Home</a>
+                    <i class="fa fa-angle-right mx-2"></i>
+                    <span>Services</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================================
+    🛠️ CORE SERVICE OFFER CARDS WINDOW (ADMIN DRIVEN)
+========================================================================== -->
+<section class="ftco-section bg-white py-5">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-7 text-center section-heading">
+                <h2 class="font-weight-bold text-dark" style="font-family: 'Playfair Display', serif; font-size: 32px;">Grooming Menu</h2>
+                <p class="text-muted small">Premium multi-tenant aesthetic treatments curated out of live salon inventory matrices.</p>
+            </div>
+        </div>
+
+        <div class="row text-center">
+            <!-- Feature Column 1 -->
+            <div class="col-md-4 mb-4">
+                <div class="p-4 bg-light border rounded text-center shadow-sm h-100">
+                    <div class="icon mb-3"><i class="fa fa-magic text-danger" style="font-size: 32px; color: #f35588 !important;"></i></div>
+                    <h5 class="font-weight-bold text-dark">{{ platform_config.feature_1_title|default:"Skin & Beauty Care" }}</h5>
+                    <p class="text-muted small mt-2 mb-0">{{ platform_config.feature_1_desc|default:"Premium facial micro-treatment layouts engineered to restore organic cellular glow safely." }}</p>
+                </div>
+            </div>
+            <!-- Feature Column 2 -->
+            <div class="col-md-4 mb-4">
+                <div class="p-4 bg-light border rounded text-center shadow-sm h-100">
+                    <div class="icon mb-3"><i class="fa fa-paint-brush text-danger" style="font-size: 32px; color: #f35588 !important;"></i></div>
+                    <h5 class="font-weight-bold text-dark">{{ platform_config.feature_2_title|default:"Makeup Pro" }}</h5>
+                    <p class="text-muted small mt-2 mb-0">{{ platform_config.feature_2_desc|default:"Red-carpet cosmetic contours and flawless tone blends matched for high-end events." }}</p>
+                </div>
+            </div>
+            <!-- Feature Column 3 -->
+            <div class="col-md-4 mb-4">
+                <div class="p-4 bg-light border rounded text-center shadow-sm h-100">
+                    <div class="icon mb-3"><i class="fa fa-scissors text-danger" style="font-size: 32px; color: #f35588 !important;"></i></div>
+                    <h5 class="font-weight-bold text-dark">{{ platform_config.feature_3_title|default:"Hair Styling" }}</h5>
+                    <p class="text-muted small mt-2 mb-0">{{ platform_config.feature_3_desc|default:"Precision texturing, custom weaving, and deep therapeutic scalp care routines." }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================================
+    🎟️ SPECIAL CAMPAIGN OFFER BANNER ROW (WHATSAPP CALL-TO-ACTION PROTOCOL)
+========================================================================== -->
+<section class="ftco-section bg-light py-5" style="border-top: 1px solid #f2f2f2; border-bottom: 1px solid #f2f2f2;">
+    <div class="container">
+        <div class="row align-items-center justify-content-between">
+            <div class="col-md-7 text-center text-md-left mb-4 mb-md-0">
+                <span class="text-uppercase font-weight-bold text-danger d-block mb-1" style="color: #f35588 !important; letter-spacing: 2px; font-size: 12px;">Save up to 25% Off</span>
+                <h3 class="font-weight-bold text-dark mb-2" style="font-family: 'Playfair Display', serif; font-size: 28px;">{{ platform_config.campaign_headline|default:"Student Discount Strategy" }}</h3>
+                <p class="text-muted mb-0 small" style="line-height: 1.6;">
+                    {{ platform_config.campaign_description|default:"Flash your active university identification credentials on terminal checkouts to claim 25% off all basic haircuts, therapeutic hair coloring, and skin cleansing matrix sessions." }}
+                </p>
+            </div>
+                        <!-- =========================================================================
+                🎟️ SERVICES PAGE SELF-SANITIZING APPOINTMENT ACTION REDIRECT
+            ========================================================================== -->
+            <!-- 🟢 FIXED LINK GATEWAY: Replicates the high-performance index behavior to secure unified, bug-free phone-viewport redirection channels platform-wide! -->
+            <div class="col-md-4 text-center text-md-right">
+                <a href="javascript:void(0);"
+                   class="btn btn-danger font-weight-bold px-4 py-3"
+                   style="border-radius: 30px; background: #111111; border: 1px solid #111111;"
+                   onclick="
+                        var rawPhone = '{{ platform_config.contact_phone }}'.trim();
+                        var cleanPhone = rawPhone.replace(/[^0-9]/g, '');
+
+                        // 🇳🇬 Nigerian Localization Safe Shield: Normalize standard local number prefixes cleanly
+                        if (cleanPhone.startsWith('0') && cleanPhone.length === 11) {
+                            cleanPhone = '234' + cleanPhone.substring(1);
+                        } else if (!cleanPhone.startsWith('234') && cleanPhone.length === 10) {
+                            cleanPhone = '234' + cleanPhone;
+                        }
+
+                        var textPayload = '💇‍♀️ *SPECIAL SALON APPOINTMENT REQUEST (SERVICES PAGE)* 💇‍♀️\n\nHello Management Team!\nI am reviewing your comprehensive grooming menu from the Services directory path and would like to claim a slot under the active Campaign Offer.\n\nKindly confirm available seating blocks.';
+                        window.location.href = 'whatsapp://send?phone=' + cleanPhone + '&text=' + encodeURIComponent(textPayload);
+                   ">
+                    <i class="fa fa-whatsapp mr-1" style="color: #25D366;"></i> Book Appointment Now
+                </a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================================
+    📊 DYNAMIC PLATFORM METRIC INFRASTRUCTURE COUNTERS
+========================================================================== -->
+<section class="ftco-section bg-white py-5 border-bottom">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-3 col-sm-6 mb-4 mb-md-0">
+                <div class="counter-card p-3">
+                    <h2 class="font-weight-bold text-dark m-0" style="font-size: 40px; font-family: 'Playfair Display', serif;">{{ platform_config.stat_makeovers|default:"1,500+" }}</h2>
+                    <p class="text-muted small font-weight-bold mt-2 text-uppercase" style="letter-spacing: 1px; font-size: 11px;">Makeup Over Done</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4 mb-md-0">
+                <div class="counter-card p-3">
+                    <h2 class="font-weight-bold text-dark m-0" style="font-size: 40px; font-family: 'Playfair Display', serif;">{{ platform_config.stat_procedures|default:"2,840" }}</h2>
+                    <p class="text-muted small font-weight-bold mt-2 text-uppercase" style="letter-spacing: 1px; font-size: 11px;">Procedures Completed</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4 mb-sm-0">
+                <div class="counter-card p-3">
+                    <h2 class="font-weight-bold text-dark m-0" style="font-size: 40px; font-family: 'Playfair Display', serif;">{{ platform_config.stat_clients|default:"4,200+" }}</h2>
+                    <p class="text-muted small font-weight-bold mt-2 text-uppercase" style="letter-spacing: 1px; font-size: 11px;">Happy Salon Clients</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="counter-card p-3">
+                    <h2 class="font-weight-bold text-dark m-0" style="font-size: 40px; font-family: 'Playfair Display', serif;">{{ platform_config.stat_treatments|default:"980" }}</h2>
+                    <p class="text-muted small font-weight-bold mt-2 text-uppercase" style="letter-spacing: 1px; font-size: 11px;">Skin Treatments Done</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================================
+    📇 LOCALIZED MULTI-COLUMN PLATFORM FOOTER (100% ADMIN DRIVEN)
+========================================================================== -->
+<footer class="footer spad" style="background: #111111; padding-top: 70px; padding-bottom: 30px; clear: both; width: 100%; display: block; color: rgba(255,255,255,0.6);">
+    <div class="container">
+        <div class="row">
+            <!-- Brand Overview Column -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="footer__about">
+                    <h4 class="text-white font-weight-bold mb-3" style="letter-spacing: 1px;">
+                        {{ active_tenant.business_name|upper|default:"PRETTY" }}<span class="text-danger">.</span>
+                    </h4>
+                    <p class="small style-lh mb-4" style="line-height: 1.7;">
+                        Premium multi-tenant beauty grooming matrices, custom texturing hair hubs, and executive skin styling networks in Lagos and Abuja, Nigeria.
+                    </p>
+                    <div class="footer__social">
+                        {% if platform_config.facebook_url %}
+                            <a href="{{ platform_config.facebook_url }}" target="_blank" class="text-white mr-3"><i class="fa fa-facebook"></i></a>
+                        {% endif %}
+                        {% if platform_config.twitter_url %}
+                            <a href="{{ platform_config.twitter_url }}" target="_blank" class="text-white mr-3"><i class="fa fa-twitter"></i></a>
+                        {% endif %}
+                        {% if platform_config.instagram_url %}
+                            <a href="{{ platform_config.instagram_url }}" target="_blank" class="text-white"><i class="fa fa-instagram"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Spa Center Links Column -->
+            <div class="col-lg-2 col-md-6 mb-4">
+                <div class="footer__widget">
+                    <h5 class="text-white font-weight-bold mb-3" style="font-size: 16px;">Spa Center</h5>
+                    <ul class="list-unstyled small" style="line-height: 2.2;">
+                        <li><a href="{% url 'modern11_services_view' slug=active_tenant.slug_name %}" class="text-white-50">Body Care Desk</a></li>
+                        <li><a href="{% url 'modern11_services_view' slug=active_tenant.slug_name %}" class="text-white-50">Massage Therapy</a></li>
+                        <li><a href="{% url 'modern11_services_view' slug=active_tenant.slug_name %}" class="text-white-50">Hydrotherapy Core</a></li>
+                        <li><a href="{% url 'modern11_services_view' slug=active_tenant.slug_name %}" class="text-white-50">Sauna & Lounges</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Information Navigation Column -->
+            <div class="col-lg-2 col-md-6 mb-4">
+                <div class="footer__widget">
+                    <h5 class="text-white font-weight-bold mb-3" style="font-size: 16px;">Information</h5>
+                    <ul class="list-unstyled small" style="line-height: 2.2;">
+                        <li><a href="{% url 'modern11_about_view' slug=active_tenant.slug_name %}" class="text-white-50">About Corporate</a></li>
+                        <li><a href="{% url 'modern11_work_view' slug=active_tenant.slug_name %}" class="text-white-50">Our Portfolio</a></li>
+                        <li><a href="{% url 'modern11_contact_view' slug=active_tenant.slug_name %}" class="text-white-50">Contact Depot</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Have A Question Contact Column -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="footer__widget">
+                    <h5 class="text-white font-weight-bold mb-3" style="font-size: 16px;">Have a Question?</h5>
+                    <ul class="list-unstyled small text-white-50" style="line-height: 2;">
+                        <li class="mb-2"><i class="fa fa-map-marker text-danger mr-2"></i> {{ platform_config.contact_address|default:"203 Fake St. Lekki Phase 1, Lagos, Nigeria" }}</li>
+                        <li class="mb-2"><i class="fa fa-phone text-danger mr-2"></i> <a href="tel:{{ platform_config.contact_phone }}" class="text-white-50">{{ platform_config.contact_phone|default:"+234 (0) 803 456 7891" }}</a></li>
+                        <li><i class="fa fa-envelope text-danger mr-2"></i> <a href="mailto:{{ platform_config.contact_email }}" class="text-white-50 text-lowercase">{{ platform_config.contact_email|default:"info@prettyautos.ng" }}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Copyright Block -->
+        <div class="footer__copyright mt-4 pt-3 text-center" style="border-top: 1px solid rgba(255,255,255,0.05);">
+            <p class="small text-white-50 mb-0">
+                Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | {{ active_tenant.business_name }} Multi-Tenant Ecosystem Engine.
+            </p>
+        </div>
+    </div>
+</footer>
+{% endblock content %}

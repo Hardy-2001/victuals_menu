@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     'modern8',
     'modern9',
     'modern10',
+    'modern11',
 ]
 
 # 🎯 INJECT THIS CUSTOM ROUTER ENGINE INSIDE YOUR settings.py MIDDLEWARE ARRAY:

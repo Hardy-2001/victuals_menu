@@ -154,6 +154,7 @@ class DomainEngine(models.Model):
         ('modern8', '🛋️ LIST_MODERN8 (Furniture App)'),
         ('modern9', '👗 LIST_MODERN9 (Fashion App)'),
         ('modern10', '🏎️ LIST_MODERN10 (Car App)'),
+        ('modern11','👗 LIST_MODERN11 (solon App)'),
     ]
 
     slug_name = models.CharField(max_length=100, unique=True,
