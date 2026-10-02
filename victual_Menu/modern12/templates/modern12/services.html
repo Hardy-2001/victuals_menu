@@ -1,4 +1,4 @@
-{% extends 'modern11/base.html' %}
+{% extends 'modern12/base.html' %}
 {% load static %}
 
 {% block title %}Our Services — {{ platform_config.business_name|default:active_tenant.business_name }}{% endblock %}
@@ -7,14 +7,14 @@
 <!-- =========================================================================
     📇 SERVICES PAGE PARALLAX BREADCRUMB HEADER (100% DYNAMIC)
 ========================================================================== -->
-<section class="hero-wrap hero-wrap-2" style="background-image: url('{% if platform_config.hero_banner_image %}{{ platform_config.hero_banner_image.url }}{% else %}{% static 'modern11/images/bg_2.jpg' %}{% endif %}'); background-size: cover; background-position: center; min-height: 300px; display: flex; align-items: center; position: relative;">
+<section class="hero-wrap hero-wrap-2" style="background-image: url('{% if platform_config.hero_banner_image %}{{ platform_config.hero_banner_image.url }}{% else %}{% static 'modern12/images/bg_2.jpg' %}{% endif %}'); background-size: cover; background-position: center; min-height: 300px; display: flex; align-items: center; position: relative;">
     <div class="overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1;"></div>
     <div class="container" style="position: relative; z-index: 2;">
         <div class="row no-gutters slider-text align-items-center justify-content-center">
             <div class="col-md-8 text-center mt-5">
                 <h1 class="text-white font-weight-bold mb-2" style="font-family: 'Playfair Display', serif; font-size: 40px;">Our Services</h1>
                 <p class="text-white-50 small">
-                    <a href="{% url 'modern11_index_view' slug=active_tenant.slug_name %}" class="text-white">Home</a>
+                    <a href="{% url 'modern12_index_view' slug=active_tenant.slug_name %}" class="text-white">Home</a>
                     <i class="fa fa-angle-right mx-2"></i>
                     <span>Services</span>
                 </p>
@@ -176,9 +176,9 @@
                     <h5 class="text-white font-weight-bold mb-3" style="font-size: 16px;">Spa Center</h5>
                     <ul class="list-unstyled small" style="line-height: 2.2;">
                         <li><a href="{% url 'modern12_services_view' slug=active_tenant.slug_name %}" class="text-white-50">Body Care Desk</a></li>
-                        <li><a href="{% url 'modern11_services_view' slug=active_tenant.slug_name %}" class="text-white-50">Massage Therapy</a></li>
-                        <li><a href="{% url 'modern11_services_view' slug=active_tenant.slug_name %}" class="text-white-50">Hydrotherapy Core</a></li>
-                        <li><a href="{% url 'modern11_services_view' slug=active_tenant.slug_name %}" class="text-white-50">Sauna & Lounges</a></li>
+                        <li><a href="{% url 'modern12_services_view' slug=active_tenant.slug_name %}" class="text-white-50">Massage Therapy</a></li>
+                        <li><a href="{% url 'modern12_services_view' slug=active_tenant.slug_name %}" class="text-white-50">Hydrotherapy Core</a></li>
+                        <li><a href="{% url 'modern12_services_view' slug=active_tenant.slug_name %}" class="text-white-50">Sauna & Lounges</a></li>
                     </ul>
                 </div>
             </div>
@@ -188,9 +188,9 @@
                 <div class="footer__widget">
                     <h5 class="text-white font-weight-bold mb-3" style="font-size: 16px;">Information</h5>
                     <ul class="list-unstyled small" style="line-height: 2.2;">
-                        <li><a href="{% url 'modern11_about_view' slug=active_tenant.slug_name %}" class="text-white-50">About Corporate</a></li>
-                        <li><a href="{% url 'modern11_work_view' slug=active_tenant.slug_name %}" class="text-white-50">Our Portfolio</a></li>
-                        <li><a href="{% url 'modern11_contact_view' slug=active_tenant.slug_name %}" class="text-white-50">Contact Depot</a></li>
+                        <li><a href="{% url 'modern12_about_view' slug=active_tenant.slug_name %}" class="text-white-50">About Corporate</a></li>
+                        <li><a href="{% url 'modern12_work_view' slug=active_tenant.slug_name %}" class="text-white-50">Our Portfolio</a></li>
+                        <li><a href="{% url 'modern12_contact_view' slug=active_tenant.slug_name %}" class="text-white-50">Contact Depot</a></li>
                     </ul>
                 </div>
             </div>
