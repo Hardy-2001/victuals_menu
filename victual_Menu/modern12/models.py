@@ -100,16 +100,23 @@ class modern12SalonStoreFront(models.Model):
         verbose_name="Working Hours Left Side Image Display Banner",
         help_text="Upload a picture of professional barbering equipment to show on the left side panel."
     )
+    # =========================================================================
+    # ⏳ UPDATED OPERATIONAL SCHEDULE TRACKING FIELDS
+    # =========================================================================
     hours_monday = models.CharField(max_length=50, default="09 AM - 09 PM", verbose_name="Monday Operational Timing")
     hours_tuesday = models.CharField(max_length=50, default="09 AM - 09 PM", verbose_name="Tuesday Operational Timing")
-    hours_wednesday = models.CharField(max_length=50, default="09 AM - 09 PM", verbose_name="Wednesday Operational Timing")
-    hours_thursday = models.CharField(max_length=50, default="09 AM - 09 PM", verbose_name="Thursday Operational Timing")
+    hours_wednesday = models.CharField(max_length=50, default="09 AM - 09 PM",
+                                       verbose_name="Wednesday Operational Timing")
+    hours_thursday = models.CharField(max_length=50, default="09 AM - 09 PM",
+                                      verbose_name="Thursday Operational Timing")
     hours_friday = models.CharField(max_length=50, default="09 AM - 09 PM", verbose_name="Friday Operational Timing")
-    hours_weekend = models.CharField(max_length=50, default="Closed", verbose_name="Weekend Operational Timing (Sat / Sun)")
 
+    # 🟢 NEW FIELD: Added explicit database column line to power your new homepage Saturday template row slot!
+    hours_saturday = models.CharField(max_length=50, default="09 AM - 06 PM",
+                                      verbose_name="Saturday Operational Timing")
 
-
-
+    # Updated text label representation to clearly map as Sunday only
+    hours_weekend = models.CharField(max_length=50, default="Closed", verbose_name="Sunday Operational Timing")
 
     initialized_at = models.DateTimeField(auto_now_add=True)
 

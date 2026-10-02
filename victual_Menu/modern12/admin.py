@@ -96,6 +96,9 @@ class modern12SalonStoreFrontAdmin(admin.ModelAdmin):
             'fields': ('facebook_url', 'twitter_url', 'instagram_url')
         }),
         # 🟢 FIXED LAYOUT: Appended your dynamic operational scheduling panel cleanly at the bottom!
+        # =========================================================================
+        # ⏳ STOREFRONT OPERATING TIMETABLE SECTION GROUP (UPDATED FOR SATURDAY)
+        # =========================================================================
         ('⏳ Storefront Operating Timetable & Media', {
             'fields': (
                 'hours_banner_image',
@@ -104,9 +107,12 @@ class modern12SalonStoreFrontAdmin(admin.ModelAdmin):
                 'hours_wednesday',
                 'hours_thursday',
                 'hours_friday',
+                # 🟢 NEW FIELD SYNC: Injected your explicit saturday column token straight into the admin editor panel deck!
+                'hours_saturday',
                 'hours_weekend'
             )
         }),
+
     )
 
 

@@ -194,9 +194,15 @@
                             <span class="font-weight-bold text-white" style="font-size: 14px;">{{ platform_config.hours_friday|default:"09 AM - 09 PM" }}</span>
                         </div>
 
+                         <!-- Friday Row -->
+                        <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3" style="border-color: rgba(255,255,255,0.08) !important;">
+                            <h6 class="text-uppercase text-white-50 m-0 font-weight-bold" style="font-size: 14px; letter-spacing: 0.5px;">Saturday</h6>
+                            <span class="font-weight-bold text-white" style="font-size: 14px;">{{ platform_config.hours_saturday|default:"09 AM - 09 PM" }}</span>
+                        </div>
+
                         <!-- Saturday / Sunday Weekend Row (Red Accent Color Matched Precisely to Image) -->
                         <div class="d-flex justify-content-between align-items-center pt-1">
-                            <h6 class="text-uppercase text-white-50 m-0 font-weight-bold" style="font-size: 14px; letter-spacing: 0.5px;">Sat / Sun</h6>
+                            <h6 class="text-uppercase text-white-50 m-0 font-weight-bold" style="font-size: 14px; letter-spacing: 0.5px;">Sun</h6>
                             <span class="font-weight-bold text-uppercase" style="font-size: 14px; color: #dc3545 !important; letter-spacing: 0.5px;">{{ platform_config.hours_weekend|default:"Closed" }}</span>
                         </div>
                     </div>
