@@ -1,0 +1,214 @@
+{% extends 'modern12/base.html' %}
+{% load static %}
+
+{% block title %}Contact Showroom Depot — {{ platform_config.business_name|default:active_tenant.business_name }}{% endblock %}
+
+{% block content %}
+<!-- =========================================================================
+    📇 CONTACT PAGE PARALLAX BREADCRUMB HEADER (100% DYNAMIC)
+========================================================================== -->
+<section class="hero-wrap hero-wrap-2" style="background-image: url('{% if platform_config.hero_banner_image %}{{ platform_config.hero_banner_image.url }}{% else %}{% static 'modern12/images/bg_2.jpg' %}{% endif %}'); background-size: cover; background-position: center; min-height: 300px; display: flex; align-items: center; position: relative;">
+    <div class="overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1;"></div>
+    <div class="container" style="position: relative; z-index: 2;">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-8 text-center mt-5">
+                <h1 class="text-white font-weight-bold mb-2" style="font-family: 'Playfair Display', serif; font-size: 40px;">Contact Us</h1>
+                <p class="text-white-50 small">
+                    <a href="{% url 'modern12_index_view' slug=active_tenant.slug_name %}" class="text-white">Home</a>
+                    <i class="fa fa-angle-right mx-2"></i>
+                    <span>Contact Info</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================================
+    📞 SHOWROOM COORDINATES & HARDWARE INTERACTION BOOKING TERMINAL
+========================================================================== -->
+<section class="ftco-section bg-white py-5">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-7 text-center section-heading">
+                <h2 class="font-weight-bold text-dark" style="font-family: 'Playfair Display', serif; font-size: 32px;">Get In Touch</h2>
+                <p class="text-muted small">Have questions about bridal booking packages, hair extension styling, or executive spa reservations? Connect with us instantly.</p>
+            </div>
+        </div>
+
+        <div class="row align-items-stretch no-gutters border rounded shadow-sm overflow-hidden mb-5">
+            <!-- 🪐 LEFT DATA COLUMN: Live Merchant Contact Info Coordinates -->
+            <div class="col-md-5 bg-light p-4 border-right">
+                <h4 class="font-weight-bold text-dark mb-4" style="font-size: 20px; font-family: 'Playfair Display', serif;">Contact Information</h4>
+
+                <div class="mb-4">
+                    <span class="d-block small text-muted text-uppercase font-weight-bold mb-1" style="letter-spacing: 0.5px;">Salon Address:</span>
+                    <p class="text-dark font-weight-bold" style="font-size: 15px;"><i class="fa fa-map-marker text-danger mr-2" style="color: #f35588 !important;"></i> {{ platform_config.contact_address|default:"203 Fake St. Lekki Phase 1, Lagos, Nigeria" }}</p>
+                </div>
+
+                <div class="mb-4">
+                    <span class="d-block small text-muted text-uppercase font-weight-bold mb-1" style="letter-spacing: 0.5px;">Phone Channel:</span>
+                    <p class="text-dark font-weight-bold" style="font-size: 15px;"><i class="fa fa-phone text-danger mr-2" style="color: #f35588 !important;"></i> <a href="tel:{{ platform_config.contact_phone }}" class="text-dark">{{ platform_config.contact_phone|default:"+234 (0) 803 456 7891" }}</a></p>
+                </div>
+
+                <div class="mb-4">
+                    <span class="d-block small text-muted text-uppercase font-weight-bold mb-1" style="letter-spacing: 0.5px;">Email Coordinate:</span>
+                    <p class="text-dark font-weight-bold" style="font-size: 15px;"><i class="fa fa-envelope text-danger mr-2" style="color: #f35588 !important;"></i> <a href="mailto:{{ platform_config.contact_email }}" class="text-danger text-lowercase" style="color: #f35588 !important;">{{ platform_config.contact_email|default:"info@prettyautos.ng" }}</a></p>
+                </div>
+            </div>
+            <!-- 🪐 RIGHT COLUMN: SECURE DIRECT WHATSAPP ROUTING TRANSCRIPT -->
+            <div class="col-md-7 bg-white p-4">
+                <h4 class="font-weight-bold text-dark mb-2" style="font-size: 20px; font-family: 'Playfair Display', serif;">Instant Appointment Desk</h4>
+                <p class="small text-muted mb-4">Complete the fields below to transmit your custom salon booking request straight to our management desk via chat.</p>
+
+                <form id="salonWAForm" onsubmit="event.preventDefault(); dispatchSalonAppointment();">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-2">
+                                <input type="text" id="salon_name" class="form-control" placeholder="Your Full Name" required style="border-radius: 4px; height: 44px; font-size: 14px;">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-2">
+                                <input type="email" id="salon_email" class="form-control" placeholder="Your Email Address" required style="border-radius: 4px; height: 44px; font-size: 14px;">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group mb-2">
+                                <input type="text" id="salon_phone" class="form-control" placeholder="Active Mobile Number" required style="border-radius: 4px; height: 44px; font-size: 14px;">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group mb-3">
+                                <textarea id="salon_message" class="form-control" rows="4" placeholder="Describe your preferred haircut, makeup theme, hair treatment choices or priority appointment slots..." required style="border-radius: 4px; font-size: 14px; resize: none;"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-block w-100 border-0 text-white font-weight-bold d-flex align-items-center justify-content-center" style="letter-spacing: 0.5px; border-radius: 4px; height: 44px; background: #25D366; gap: 8px;">
+                                <i class="fa fa-whatsapp" style="font-size: 20px;"></i> Open Salon WhatsApp Chat
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div> <!-- Closed .row grid card layout box cleanly -->
+    </div>
+</section>
+
+<!-- =========================================================================
+    ⚡ HARDWARE-ACCELERATED NATIVE SALON WHATSAPP PROTOCOL REDIRECT ENGINE
+========================================================================== -->
+<script>
+    function dispatchSalonAppointment() {
+        var customerName = document.getElementById('salon_name').value.trim();
+        var customerEmail = document.getElementById('salon_email').value.trim();
+        var customerPhone = document.getElementById('salon_phone').value.trim();
+        var customerMsg = document.getElementById('salon_message').value.trim();
+
+        // Safely extract your multi-tenant merchant's contact phone number row
+        var rawMerchantPhone = "{{ platform_config.contact_phone }}".trim();
+        var cleanMerchantPhone = rawMerchantPhone.replace(/[^0-9]/g, '');
+
+        // 🇳🇬 Nigerian Localization Safe Shield: Convert standard local '080...' or '070...' strings to international '234...' format
+        if (cleanMerchantPhone.startsWith('0') && cleanMerchantPhone.length === 11) {
+            cleanMerchantPhone = '234' + cleanMerchantPhone.substring(1);
+        } else if (!cleanMerchantPhone.startsWith('234') && cleanMerchantPhone.length === 10) {
+            cleanMerchantPhone = '234' + cleanMerchantPhone;
+        }
+
+        // Format an exquisite text payload paragraph block message to map onto the chat window
+        var salonPayloadText =
+            "💇‍♀️ *NEW SALON BOOKING & APPOINTMENT REQUEST* 💇‍♀️\n\n" +
+            "Hello Management Team,\n" +
+            "A priority customer has just transmitted an immediate grooming request from your showroom channel portal.\n\n" +
+            "📋 *CLIENT DISPATCH LOGS*\n" +
+            "• *Client Name:* " + customerName + "\n" +
+            "• *Mobile Number:* " + customerPhone + "\n" +
+            "• *Email Box:* " + customerEmail + "\n\n" +
+            "💬 *REQUEST DETAILS*\n" +
+            "\"" + customerMsg + "\"\n\n" +
+            "⏳ *Status Check:* Active Sandbox Routing Log Matrix Clear.";
+
+        var encodedPayloadText = encodeURIComponent(salonPayloadText);
+
+        // Force an absolute hardware redirect loop to snap open the native app instantly!
+        window.location.href = "whatsapp://send?phone=" + cleanMerchantPhone + "&text=" + encodedPayloadText;
+    }
+</script>
+
+
+<!-- =========================================================================
+    📇 LOCALIZED MULTI-COLUMN PLATFORM FOOTER (STANDARDIZED ARCHITECTURE)
+========================================================================== -->
+<footer class="footer spad" style="background: #111111; padding-top: 70px; padding-bottom: 30px; clear: both; width: 100%; display: block; color: rgba(255,255,255,0.6);">
+    <div class="container">
+        <div class="row">
+            <!-- Brand Overview Profile Card -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="footer__about">
+                    <div class="footer__logo mb-3">
+                        <h4 class="text-white font-weight-bold m-0" style="letter-spacing: 1px; display: inline-block; white-space: nowrap;">
+                            {{ active_tenant.business_name|upper|default:"PRETTY" }}<span class="text-danger">.</span>
+                        </h4>
+                    </div>
+                    <p class="small mb-4" style="line-height: 1.7; font-size: 14px;">
+                        Premium multi-tenant beauty grooming matrices, custom texturing hair hubs, and executive skin styling networks in Lagos and Abuja, Nigeria.
+                    </p>
+                    <div class="footer__social mt-3">
+                        {% if platform_config.facebook_url %}
+                            <a href="{{ platform_config.facebook_url }}" target="_blank" class="text-white mr-3"><i class="fa fa-facebook"></i></a>
+                        {% endif %}
+                        {% if platform_config.twitter_url %}
+                            <a href="{{ platform_config.twitter_url }}" target="_blank" class="text-white mr-3"><i class="fa fa-twitter"></i></a>
+                        {% endif %}
+                        {% if platform_config.instagram_url %}
+                            <a href="{{ platform_config.instagram_url }}" target="_blank" class="text-white"><i class="fa fa-instagram"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Spa Center Links Column -->
+            <div class="col-lg-2 col-md-6 mb-4">
+                <div class="footer__widget">
+                    <h5 class="text-white font-weight-bold mb-3" style="font-size: 16px;">Spa Center</h5>
+                    <ul class="list-unstyled small" style="line-height: 2.2;">
+                        <li><a href="{% url 'modern12_services_view' slug=active_tenant.slug_name %}" class="text-white-50">Body Care Desk</a></li>
+                        <li><a href="{% url 'modern12_services_view' slug=active_tenant.slug_name %}" class="text-white-50">Massage Therapy</a></li>
+                        <li><a href="{% url 'modern12_services_view' slug=active_tenant.slug_name %}" class="text-white-50">Hydrotherapy Core</a></li>
+                        <li><a href="{% url 'modern12_services_view' slug=active_tenant.slug_name %}" class="text-white-50">Sauna & Lounges</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Information Navigation Column -->
+            <div class="col-lg-2 col-md-6 mb-4">
+                <div class="footer__widget">
+                    <h5 class="text-white font-weight-bold mb-3" style="font-size: 16px;">Information</h5>
+                    <ul class="list-unstyled small" style="line-height: 2.2;">
+                        <li><a href="{% url 'modern12_about_view' slug=active_tenant.slug_name %}" class="text-white-50">About Corporate</a></li>
+                        <li><a href="{% url 'modern12_work_view' slug=active_tenant.slug_name %}" class="text-white-50">Our Portfolio</a></li>
+                        <li><a href="{% url 'modern12_contact_view' slug=active_tenant.slug_name %}" class="text-white-50">Contact Depot</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Have A Question Contact Column -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="footer__widget">
+                    <h5 class="text-white font-weight-bold mb-3" style="font-size: 16px;">Have a Question?</h5>
+                    <ul class="list-unstyled small text-white-50" style="line-height: 2;">
+                        <li class="mb-2"><i class="fa fa-map-marker text-danger mr-2"></i> {{ platform_config.contact_address|default:"203 Fake St. Lekki Phase 1, Lagos, Nigeria" }}</li>
+                        <li class="mb-2"><i class="fa fa-phone text-danger mr-2"></i> <a href="tel:{{ platform_config.contact_phone }}" class="text-white-50">{{ platform_config.contact_phone|default:"+234 (0) 803 456 7891" }}</a></li>
+                        <li><i class="fa fa-envelope text-danger mr-2"></i> <a href="mailto:{{ platform_config.contact_email }}" class="text-white-50 text-lowercase">{{ platform_config.contact_email|default:"info@prettyautos.ng" }}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Copyright Metric Block Section Banner Bar -->
+        <div class="footer__copyright mt-4 pt-3 text-center" style="border-top: 1px solid rgba(255, 255, 255, 0.05);">
+            <p class="small text-white-50 mb-0">
+                Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | {{ active_tenant.business_name|default:"Pretty Salon" }} Multi-Tenant Ecosystem Engine.
+            </p>
+        </div>
+    </div>
+</footer>
+{% endblock content %}

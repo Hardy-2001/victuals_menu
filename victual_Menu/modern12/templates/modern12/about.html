@@ -1,0 +1,175 @@
+{% extends 'modern12/base.html' %}
+{% load static %}
+
+{% block title %}About Our Salon — {{ platform_config.business_name|default:active_tenant.business_name }}{% endblock %}
+
+{% block content %}
+<!-- =========================================================================
+    📇 ABOUT PAGE PARALLAX BREADCRUMB HEADER (100% DYNAMIC)
+========================================================================== -->
+<section class="hero-wrap hero-wrap-2" style="background-image: url('{% if platform_config.hero_banner_image %}{{ platform_config.hero_banner_image.url }}{% else %}{% static 'modern12/images/bg_2.jpg' %}{% endif %}'); background-size: cover; background-position: center; min-height: 300px; display: flex; align-items: center; position: relative;">
+    <div class="overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1;"></div>
+    <div class="container" style="position: relative; z-index: 2;">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-8 text-center mt-5">
+                <h1 class="text-white font-weight-bold mb-2" style="font-family: 'Playfair Display', serif; font-size: 40px;">About Us</h1>
+                <p class="text-white-50 small">
+                    <a href="{% url 'modern12_index_view' slug=active_tenant.slug_name %}" class="text-white">Home</a>
+                    <i class="fa fa-angle-right mx-2"></i>
+                    <span>About Corporate</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================================
+    🏢 CORPORATE WELCOME BACKGROUND STORY (100% ADMIN DRIVEN)
+========================================================================== -->
+<section class="ftco-section bg-white py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Strategic Left Side Dynamic Image Window -->
+            <div class="col-md-6 mb-4 mb-md-0">
+                <div class="about-img-frame border rounded shadow-sm overflow-hidden" style="width: 100%; max-height: 450px;">
+                    {% if platform_config.about_banner_image %}
+                        <img src="{{ platform_config.about_banner_image.url }}" alt="About Our Space" class="img-fluid w-100 h-100" style="object-fit: cover;">
+                    {% else %}
+                        <img src="{% static 'modern12/images/about.jpg' %}" alt="Fallback Profile" class="img-fluid w-100 h-100" style="object-fit: cover;">
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Strategic Right Side Description Copy Deck -->
+            <div class="col-md-6 pl-md-5">
+                <div class="section-title mb-3">
+                    <span class="text-uppercase text-danger font-weight-bold d-block mb-1" style="color: #f35588 !important; letter-spacing: 2px; font-size: 12px;">Our Story</span>
+                    <!-- 🟢 DYNAMIC ABOUT HEADLINE TITLE -->
+                    <h2 class="font-weight-bold text-dark" style="font-family: 'Playfair Display', serif; font-size: 32px; line-height: 1.3;">
+                        {{ platform_config.about_headline|default:"Welcome to Pretty A Beauty Salon Website" }}
+                    </h2>
+                </div>
+                <!-- 🟢 DYNAMIC ABOUT DESCRIPTION COPY -->
+                <p class="text-muted style-lh" style="line-height: 1.8; font-size: 15px;">
+                    {{ platform_config.about_description_copy|default:"Premium multi-tenant beauty grooming matrices, custom texturing hair hubs, and executive skin styling networks curated out of live inventory profiles to deliver absolute aesthetic luxury." }}
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- =========================================================================
+    💇‍♀️ OUR BEAUTY EXPERTS ROSTER (100% DATABASE DRIVEN LOOPS)
+========================================================================== -->
+<section class="ftco-section bg-light py-5" style="border-top: 1px solid #f2f2f2;">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-7 text-center section-heading">
+                <h2 class="font-weight-bold text-dark" style="font-family: 'Playfair Display', serif; font-size: 36px;">Our Beauty Experts</h2>
+                <p class="text-muted small">Professional local grooming artists, technical colorists, and executive skin stylists dedicated to your elite aesthetic comfort.</p>
+            </div>
+        </div>
+
+        <div class="row text-center justify-content-center">
+            {% for stylist in salon_stylists %}
+            <!-- Dynamic Salon Stylist Profile Card -->
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="p-3 bg-white border rounded shadow-sm h-100" style="transition: transform 0.2s ease;">
+                    <div class="expert-pic-frame mb-3" style="width: 100%; height: 260px; overflow: hidden; border-radius: 4px;">
+                        {% if stylist.stylist_avatar %}
+                            <img src="{{ stylist.stylist_avatar.url }}" alt="{{ stylist.stylist_name }} Profile" class="w-100 h-100" style="object-fit: cover;">
+                        {% else %}
+                            <img src="{% static 'modern12/images/stylist-fallback.jpg' %}" alt="Fallback Profile" class="w-100 h-100" style="object-fit: cover;">
+                        {% endif %}
+                    </div>
+                    <h5 class="font-weight-bold text-dark mb-1" style="font-size: 18px;">{{ stylist.stylist_name }}</h5>
+                    <span class="text-danger small font-weight-bold d-block mb-2" style="color: #f35588 !important; letter-spacing: 1px; text-transform: uppercase; font-size: 11px;">{{ stylist.stylist_role }}</span>
+                    <p class="text-muted small mb-0" style="line-height: 1.5;">{{ stylist.stylist_bio_summary|truncatewords:15 }}</p>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-4">
+                <p class="text-muted small"><i class="fa fa-users text-danger mr-1"></i> No dynamic beauty experts have been published to this workspace portfolio yet.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================================
+    📇 LOCALIZED MULTI-COLUMN PLATFORM FOOTER (STANDARDIZED ARCHITECTURE)
+========================================================================== -->
+<footer class="footer spad" style="background: #111111; padding-top: 70px; padding-bottom: 30px; clear: both; width: 100%; display: block; color: rgba(255,255,255,0.6);">
+    <div class="container">
+        <div class="row">
+            <!-- Brand Overview Profile Card -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="footer__about">
+                    <div class="footer__logo mb-3">
+                        <h4 class="text-white font-weight-bold m-0" style="letter-spacing: 1px; display: inline-block; white-space: nowrap;">
+                            {{ active_tenant.business_name|upper|default:"PRETTY" }}<span class="text-danger">.</span>
+                        </h4>
+                    </div>
+                    <p class="small mb-4" style="line-height: 1.7; font-size: 14px;">
+                        Premium multi-tenant beauty grooming matrices, custom texturing hair hubs, and executive skin styling networks in Lagos and Abuja, Nigeria.
+                    </p>
+                    <div class="footer__social mt-3">
+                        {% if platform_config.facebook_url %}
+                            <a href="{{ platform_config.facebook_url }}" target="_blank" class="text-white mr-3"><i class="fa fa-facebook"></i></a>
+                        {% endif %}
+                        {% if platform_config.twitter_url %}
+                            <a href="{{ platform_config.twitter_url }}" target="_blank" class="text-white mr-3"><i class="fa fa-twitter"></i></a>
+                        {% endif %}
+                        {% if platform_config.instagram_url %}
+                            <a href="{{ platform_config.instagram_url }}" target="_blank" class="text-white"><i class="fa fa-instagram"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Spa Center Links Column -->
+            <div class="col-lg-2 col-md-6 mb-4">
+                <div class="footer__widget">
+                    <h5 class="text-white font-weight-bold mb-3" style="font-size: 16px;">Spa Center</h5>
+                    <ul class="list-unstyled small" style="line-height: 2.2;">
+                        <li><a href="{% url 'modern12_services_view' slug=active_tenant.slug_name %}" class="text-white-50">Body Care Desk</a></li>
+                        <li><a href="{% url 'modern12_services_view' slug=active_tenant.slug_name %}" class="text-white-50">Massage Therapy</a></li>
+                        <li><a href="{% url 'modern12_services_view' slug=active_tenant.slug_name %}" class="text-white-50">Hydrotherapy Core</a></li>
+                        <li><a href="{% url 'modern12_services_view' slug=active_tenant.slug_name %}" class="text-white-50">Sauna & Lounges</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Information Navigation Column -->
+            <div class="col-lg-2 col-md-6 mb-4">
+                <div class="footer__widget">
+                    <h5 class="text-white font-weight-bold mb-3" style="font-size: 16px;">Information</h5>
+                    <ul class="list-unstyled small" style="line-height: 2.2;">
+                        <li><a href="{% url 'modern12_about_view' slug=active_tenant.slug_name %}" class="text-white-50">About Corporate</a></li>
+                        <li><a href="{% url 'modern12_work_view' slug=active_tenant.slug_name %}" class="text-white-50">Our Portfolio</a></li>
+                        <li><a href="{% url 'modern12_contact_view' slug=active_tenant.slug_name %}" class="text-white-50">Contact Depot</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Have A Question Contact Column -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="footer__widget">
+                    <h5 class="text-white font-weight-bold mb-3" style="font-size: 16px;">Have a Question?</h5>
+                    <ul class="list-unstyled small text-white-50" style="line-height: 2;">
+                        <li class="mb-2"><i class="fa fa-map-marker text-danger mr-2"></i> {{ platform_config.contact_address|default:"203 Fake St. Lekki Phase 1, Lagos, Nigeria" }}</li>
+                        <li class="mb-2"><i class="fa fa-phone text-danger mr-2"></i> <a href="tel:{{ platform_config.contact_phone }}" class="text-white-50">{{ platform_config.contact_phone|default:"+234 (0) 803 456 7891" }}</a></li>
+                        <li><i class="fa fa-envelope text-danger mr-2"></i> <a href="mailto:{{ platform_config.contact_email }}" class="text-white-50 text-lowercase">{{ platform_config.contact_email|default:"info@prettyautos.ng" }}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Copyright Metric Block Section Banner Bar -->
+        <div class="footer__copyright mt-4 pt-3 text-center" style="border-top: 1px solid rgba(255, 255, 255, 0.05);">
+            <p class="small text-white-50 mb-0">
+                Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | {{ active_tenant.business_name|default:"Pretty Salon" }} Multi-Tenant Ecosystem Engine.
+            </p>
+        </div>
+    </div>
+</footer>
+{% endblock content %}

@@ -25,6 +25,8 @@ urlpatterns = [
     path('modern9/', include('modern9.urls')),
     path('modern10/', include('modern10.urls')),
     path('modern11/', include('modern11.urls')),
+    path('modern12/', include('modern12.urls')),
+
 
 ]
 
