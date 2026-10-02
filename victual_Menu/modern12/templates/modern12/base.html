@@ -13,42 +13,46 @@
 </head>
 <body style="position: relative; min-height: 100vh;">
 
-    <!-- =========================================================================
-        🟢 NAVIGATION MENU CONTROLLER (DARK FIXED DESIGN CONTEXT)
+        <!-- =========================================================================
+        🟢 NAVIGATION MENU CONTROLLER (DARK FIXED DESIGN CONTEXT - MODERN12)
     ========================================================================== -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ftco-navbar-light" id="ftco-navbar" style="background: #111111 !important; border-bottom: 1px solid rgba(255,255,255,0.05);">
+    <!-- 🟢 FIXED LOGIC: Deployed absolute slug parameter tracking across all anchors to prevent re-click URL stacking and 404 breaks! -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ftco-navbar-light" id="ftco-navbar" style="background: #111111 !important; border-bottom: 1px solid rgba(255,255,255,0.05); z-index: 1000;">
         <div class="container">
-            <a class="navbar-brand font-weight-bold text-white" href="{% url 'modern12_index_view' slug=active_tenant.slug_name %}">
-                {{ active_tenant.business_name|upper|default:"PRETTY" }}<span class="text-danger">.</span>
+            <a class="navbar-brand font-weight-bold text-white text-uppercase" href="{% url 'modern12_index_view' slug=active_tenant.slug_name %}" style="font-family: 'Playfair Display', serif; letter-spacing: 0.5px;">
+                {{ active_tenant.business_name|default:"SANITY HAIRCUTZ" }}<span style="color: #d39e00 !important;">.</span>
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="fa fa-bars"></span> Menu
+
+            <!-- Mobile Toggle Menu Bars Trigger Switch Button -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation" style="border: 1px solid rgba(255,255,255,0.1); padding: 4px 8px;">
+                <span class="fa fa-bars" style="color: #ffffff;"></span> <span class="small text-white-50">Menu</span>
             </button>
 
             <div class="collapse navbar-collapse" id="ftco-nav">
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ms-auto" style="list-style: none; display: flex; padding-left: 0; margin-bottom: 0; gap: 4px;">
                     <li class="nav-item">
-                        <a href="{% url 'modern12_index_view' slug=active_tenant.slug_name %}" class="nav-link font-weight-bold" style="color: #ffffff !important; font-size: 14px; letter-spacing: 1px; transition: color 0.3s;" onmouseover="this.style.color='#f35588'" onmouseout="this.style.color='#ffffff'">Home</a>
+                        <a href="{% url 'modern12_index_view' slug=active_tenant.slug_name %}" class="nav-link font-weight-bold text-uppercase" style="color: #ffffff !important; font-size: 13px; letter-spacing: 1px; transition: all 0.3s ease; padding: 15px 12px; display: block;" onmouseover="this.style.color='#d39e00'" onmouseout="this.style.color='#ffffff'">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{% url 'modern12_shop_view' slug=active_tenant.slug_name %}" class="nav-link font-weight-bold" style="color: #ffffff !important; font-size: 14px; letter-spacing: 1px; transition: color 0.3s;" onmouseover="this.style.color='#f35588'" onmouseout="this.style.color='#ffffff'">Shop</a>
+                        <a href="{% url 'modern12_shop_view' slug=active_tenant.slug_name %}" class="nav-link font-weight-bold text-uppercase" style="color: #ffffff !important; font-size: 13px; letter-spacing: 1px; transition: all 0.3s ease; padding: 15px 12px; display: block;" onmouseover="this.style.color='#d39e00'" onmouseout="this.style.color='#ffffff'">Shop</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{% url 'modern12_services_view' slug=active_tenant.slug_name %}" class="nav-link font-weight-bold" style="color: #ffffff !important; font-size: 14px; letter-spacing: 1px; transition: color 0.3s;" onmouseover="this.style.color='#f35588'" onmouseout="this.style.color='#ffffff'">Services</a>
+                        <a href="{% url 'modern12_services_view' slug=active_tenant.slug_name %}" class="nav-link font-weight-bold text-uppercase" style="color: #ffffff !important; font-size: 13px; letter-spacing: 1px; transition: all 0.3s ease; padding: 15px 12px; display: block;" onmouseover="this.style.color='#d39e00'" onmouseout="this.style.color='#ffffff'">Services</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{% url 'modern12_work_view' slug=active_tenant.slug_name %}" class="nav-link font-weight-bold" style="color: #ffffff !important; font-size: 14px; letter-spacing: 1px; transition: color 0.3s;" onmouseover="this.style.color='#f35588'" onmouseout="this.style.color='#ffffff'">Work</a>
+                        <a href="{% url 'modern12_work_view' slug=active_tenant.slug_name %}" class="nav-link font-weight-bold text-uppercase" style="color: #ffffff !important; font-size: 13px; letter-spacing: 1px; transition: all 0.3s ease; padding: 15px 12px; display: block;" onmouseover="this.style.color='#d39e00'" onmouseout="this.style.color='#ffffff'">Work</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{% url 'modern12_about_view' slug=active_tenant.slug_name %}" class="nav-link font-weight-bold" style="color: #ffffff !important; font-size: 14px; letter-spacing: 1px; transition: color 0.3s;" onmouseover="this.style.color='#f35588'" onmouseout="this.style.color='#ffffff'">About</a>
+                        <a href="{% url 'modern12_about_view' slug=active_tenant.slug_name %}" class="nav-link font-weight-bold text-uppercase" style="color: #ffffff !important; font-size: 13px; letter-spacing: 1px; transition: all 0.3s ease; padding: 15px 12px; display: block;" onmouseover="this.style.color='#d39e00'" onmouseout="this.style.color='#ffffff'">About</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{% url 'modern12_contact_view' slug=active_tenant.slug_name %}" class="nav-link font-weight-bold" style="color: #ffffff !important; font-size: 14px; letter-spacing: 1px; transition: color 0.3s;" onmouseover="this.style.color='#f35588'" onmouseout="this.style.color='#ffffff'">Contact</a>
+                        <a href="{% url 'modern12_contact_view' slug=active_tenant.slug_name %}" class="nav-link font-weight-bold text-uppercase" style="color: #ffffff !important; font-size: 13px; letter-spacing: 1px; transition: all 0.3s ease; padding: 15px 12px; display: block;" onmouseover="this.style.color='#d39e00'" onmouseout="this.style.color='#ffffff'">Contact</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
+
 <!-- =========================================================================
     🛍️ PERSISTENT MULTI-ITEM SHOPPING CART DRAWER INTERFACE (FIXED SYNTAL)
 ========================================================================== -->

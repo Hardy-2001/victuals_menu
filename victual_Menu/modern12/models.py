@@ -228,28 +228,25 @@ class modern12SalonBlogArticle(models.Model):
     def __str__(self):
         return f"{self.article_title} by {self.author_display_name}"
 
-
 # =========================================================================
 # 🛍️ PART 3: DYNAMIC REPEATING SALON INVENTORY RETAIL SUITE (E-COMMERCE)
 # =========================================================================
 
 class modern12SalonProduct(models.Model):
     """
-    💄 SALON RETAIL PRODUCT INVENTORY VAULT
-    Powers dynamic product cards (perfumes, hair, lipsticks, eyelashes) with
+    💈 BARBER SALON RETAIL PRODUCT INVENTORY VAULT
+    🔒 RESTRICTED OVERHAUL: Powers dynamic product cards (perfumes, grooming care) with
     price tags, descriptions, homepage display controls, and native WhatsApp cart buttons.
     """
     CATEGORY_CHOICES = (
         ('PERFUME', 'Exotic Perfumes / Scents'),
-        ('HAIR', 'Premium Hair Bundles / Weaves'),
-        ('LIPSTICK', 'Lipsticks / Lip Gloss'),
-        ('EYELASH', 'Eyelashes / Eye Enhancements'),
         ('OTHER', 'General Cosmetics & Care'),
     )
 
     store = models.ForeignKey(modern12SalonStoreFront, on_delete=models.CASCADE, related_name='salon_products')
     product_name = models.CharField(max_length=150, verbose_name="Product Brand & Name",
-                                    help_text="e.g. Matte Crimson Red Lipstick")
+                                    help_text="e.g. Royal Oud Perfume, Texture Wax")
+    # 🟢 FIXED LOGIC: Group choices restricted strictly to perfumes and general barbering cosmetics care!
     product_category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='OTHER',
                                         verbose_name="Product Category Group")
     product_price = models.DecimalField(max_digits=12, decimal_places=2, default=0.00,
@@ -259,7 +256,7 @@ class modern12SalonProduct(models.Model):
     product_description = models.TextField(default="Premium salon-grade quality checked and approved.",
                                            verbose_name="Product Description / Details")
 
-    # 🟢 CHOOSE WHAT APPEARS ON INDEX PAGE: Boolean field control tag matrix
+    # CHOOSE WHAT APPEARS ON INDEX PAGE: Boolean field control tag matrix
     is_featured_on_home = models.BooleanField(default=False, verbose_name="Showcase on Home Page Product Sliders",
                                               help_text="Check this box to push this retail item directly to your index page view layout.")
     is_in_stock = models.BooleanField(default=True, verbose_name="Item Is Available In Stock Grid")
