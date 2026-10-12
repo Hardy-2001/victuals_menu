@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FOCUS NOC MONITOR — License Portal</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #080b10;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 850px;
+        }
+
+        .card {
+            background: #11161d;
+            border: 1px solid #252d38;
+            border-radius: 18px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .brand h1 {
+            margin: 0;
+            font-size: 30px;
+            letter-spacing: 1px;
+        }
+
+        .brand p {
+            color: #8e99a8;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 18px;
+            background: #0c2117;
+            border: 1px solid #174d30;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: #22c55e;
+            border-radius: 50%;
+        }
+
+        .status-text {
+            color: #86efac;
+            font-size: 14px;
+        }
+
+        .section {
+            margin-bottom: 28px;
+        }
+
+        .section h2 {
+            font-size: 18px;
+            margin-bottom: 18px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .info-box {
+            background: #0b0f14;
+            border: 1px solid #222a34;
+            border-radius: 10px;
+            padding: 16px;
+        }
+
+        .label {
+            display: block;
+            color: #7d8998;
+            font-size: 12px;
+            margin-bottom: 7px;
+        }
+
+        .value {
+            font-size: 14px;
+            color: #ffffff;
+            word-break: break-word;
+        }
+
+        .installation {
+            color: #60a5fa;
+            font-family: monospace;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        button {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 9px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .activate {
+            background: #2563eb;
+            color: white;
+        }
+
+        .activate:hover {
+            background: #1d4ed8;
+        }
+
+        .request {
+            background: #202833;
+            color: white;
+        }
+
+        .request:hover {
+            background: #2b3542;
+        }
+
+        .footer {
+            text-align: center;
+            color: #66717f;
+            font-size: 12px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                padding: 25px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+        }
+
+
+
+
+
+
+
+        .request-form {
+            margin-top: 25px;
+            padding: 22px;
+            background: #0b0f14;
+            border: 1px solid #252d38;
+            border-radius: 12px;
+        }
+
+        .request-form h2 {
+            margin-top: 0;
+            font-size: 18px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #9ca8b7;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            background: #11161d;
+            color: #ffffff;
+            border: 1px solid #303b49;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        .form-group input:focus {
+            outline: 1px solid #2563eb;
+            border-color: #2563eb;
+        }
+
+        .submit-request {
+            width: 100%;
+            background: #2563eb;
+            color: white;
+        }
+
+        .submit-request:hover {
+            background: #1d4ed8;
+        }
+
+        .submit-request:disabled {
+            opacity: 0.6;
+            cursor: wait;
+        }
+
+        .message {
+            display: none;
+            padding: 12px;
+            margin-top: 15px;
+            border-radius: 7px;
+            font-size: 13px;
+            overflow-wrap: anywhere;
+        }
+
+        .message.success {
+            display: block;
+            background: #0c2117;
+            border: 1px solid #174d30;
+            color: #86efac;
+        }
+
+        .message.error {
+            display: block;
+            background: #2a1114;
+            border: 1px solid #7f1d1d;
+            color: #fca5a5;
+        }
+
+
+
+
+/* Subscription plan cards */
+.plans-section {
+    margin: 30px 0;
+}
+
+.plans-section h2 {
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+.plans-description {
+    color: #aab6c8;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.plan-card {
+    background: #17243a;
+    border: 1px solid #2d405c;
+    border-radius: 12px;
+    padding: 22px 18px;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.plan-card:hover {
+    border-color: #42d6c5;
+    transform: translateY(-3px);
+}
+
+.plan-card h3 {
+    color: #42d6c5;
+    margin: 0 0 12px;
+    font-size: 20px;
+}
+
+.plan-price {
+    color: #ffffff;
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 16px;
+}
+
+.plan-price small {
+    color: #aab6c8;
+    font-size: 13px;
+    font-weight: normal;
+}
+
+.plan-detail {
+    color: #c4cede;
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+@media (max-width: 480px) {
+    .plans-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <div class="brand">
+            <h1>FOCUS NOC MONITOR</h1>
+            <p>License & Activation Portal</p>
+        </div>
+
+        <div class="status">
+            <div class="status-dot"></div>
+            <div class="status-text">
+                Licensing Server Online
+            </div>
+        </div>
+
+        <div class="section">
+
+            <h2>Installation Information</h2>
+
+            <div class="info-grid">
+
+                <div class="info-box">
+                    <span class="label">Company</span>
+                    <span class="value">
+                        {% if license %}
+                            {{ license.company_name }}
+                        {% else %}
+                            No License Record
+                        {% endif %}
+                    </span>
+                </div>
+
+                <div class="info-box">
+                    <span class="label">Product</span>
+                    <span class="value">FOCUS NOC MONITOR</span>
+                </div>
+
+                <div class="info-box">
+                    <span class="label">Installation ID</span>
+                    <span class="value installation">
+                        {% if license %}
+                            {{ license.installation_id }}
+                        {% else %}
+                            NUC-PENDING
+                        {% endif %}
+                    </span>
+                </div>
+
+                <div class="info-box">
+                    <span class="label">License Status</span>
+                    <span class="value">
+                        {% if license %}
+                            {{ license.get_status_display }}
+                        {% else %}
+                            Awaiting Activation
+                        {% endif %}
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="section">
+
+            <h2>License Management</h2>
+
+            <div class="info-grid">
+
+                <div class="info-box">
+                    <span class="label">License Key</span>
+                    <span class="value">
+                        Not activated
+                    </span>
+                </div>
+
+                <div class="info-box">
+                    <span class="value">
+                        {% if license %}
+                            {{ license.expires_at }}
+                        {% else %}
+                            —
+                        {% endif %}
+                    </span>
+                    <span class="value">
+                        —
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+<div class="plans-section">
+    <h2>Choose Your Subscription Plan</h2>
+
+    <p class="plans-description">
+        Select the plan that suits your company. Each plan shows
+        the number of computers you can license and the subscription duration.
+    </p>
+
+    <div class="plans-grid">
+        {% for plan in subscription_plans %}
+        <div class="plan-card">
+            <h3>{{ plan.name }}</h3>
+
+            <div class="plan-price">
+                ₦{{ plan.price|floatformat:2 }}
+                <small>/ {{ plan.duration_days }} days</small>
+            </div>
+
+            <p class="plan-detail">
+                <strong>{{ plan.device_limit }}</strong>
+                licensed devices
+            </p>
+
+            <p class="plan-detail">
+                Subscription duration:
+                {{ plan.duration_days }} days
+            </p>
+        </div>
+        {% empty %}
+        <div class="plan-card">
+            <h3>No Plans Available</h3>
+            <p class="plan-detail">
+                Subscription plans are currently unavailable.
+                Please contact support.
+            </p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+<div class="request-form">
+    <h2>Request a License</h2>
+    <p style="color: #9ca8b7; font-size: 13px;">
+        Enter your details below. Your request will be sent
+        to the licensing administrator for review.
+    </p>
+
+    <form id="licenseRequestForm">
+        <div class="form-group">
+
+
+
+<div class="form-group">
+    <label for="plan_id">Choose Subscription Plan</label>
+    <select id="plan_id" name="plan_id" required>
+        <option value="">-- Select a plan --</option>
+        {% for plan in subscription_plans %}
+        <option value="{{ plan.id }}">
+            {{ plan.name }} — ₦{{ plan.price|floatformat:2 }}
+            ({{ plan.device_limit }} devices, {{ plan.duration_days }} days)
+        </option>
+        {% endfor %}
+    </select>
+</div>
+
+
+
+            <label for="company_name">Company Name</label>
+            <input
+                type="text"
+                id="company_name"
+                name="company_name"
+                placeholder="Enter your company name"
+                required
+                maxlength="150"
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter your email address"
+                required
+                maxlength="254"
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="installation_id">Installation ID</label>
+            <input
+                type="text"
+                id="installation_id"
+                name="installation_id"
+                value="{% if license %}{{ license.installation_id }}{% endif %}"
+                placeholder="Enter the ID shown in FOCUS NOC MONITOR"
+                required
+                maxlength="150"
+            >
+        </div>
+
+        <input
+            type="hidden"
+            id="product_name"
+            name="product_name"
+            value="FOCUS NOC MONITOR"
+        >
+
+        <button type="submit" class="submit-request" id="submitRequest">
+            Submit License Request
+        </button>
+
+        <div id="requestMessage" class="message" role="status"></div>
+    </form>
+</div>
+
+
+<div class="footer">
+    <div>FOCUS NOC MONITOR • License Management System</div>
+
+    <div style="margin-top: 10px;">
+        Need payment information or assistance?
+    </div>
+
+    <div style="margin-top: 6px;">
+        Contact:
+        <a href="tel:09020425819" style="color: #42d6c5; text-decoration: none;">
+            09020425819
+        </a>
+        <span> / </span>
+        <a href="tel:08136721641" style="color: #42d6c5; text-decoration: none;">
+            08136721641
+        </a>
+    </div>
+</div>
+
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("licenseRequestForm");
+    const submitButton = document.getElementById("submitRequest");
+    const messageBox = document.getElementById("requestMessage");
+
+    if (!form || !submitButton || !messageBox) {
+        return;
+    }
+
+    function showMessage(message, type) {
+        messageBox.replaceChildren();
+
+        const messageText = document.createElement("div");
+        messageText.textContent = message;
+        messageBox.appendChild(messageText);
+
+        if (type === "success") {
+            const contactInfo = document.createElement("div");
+            contactInfo.style.marginTop = "12px";
+
+            const contactLabel = document.createElement("strong");
+            contactLabel.textContent =
+                "Need payment information or assistance?";
+
+            const contactNumbers = document.createElement("div");
+            contactNumbers.style.marginTop = "6px";
+
+            const phone1 = document.createElement("a");
+            phone1.href = "tel:09020425819";
+            phone1.textContent = "09020425819";
+
+            const phone2 = document.createElement("a");
+            phone2.href = "tel:08136721641";
+            phone2.textContent = "08136721641";
+
+            contactNumbers.append(
+                "Call: ",
+                phone1,
+                " / ",
+                phone2
+            );
+
+            contactInfo.append(contactLabel, contactNumbers);
+            messageBox.appendChild(contactInfo);
+        }
+
+        messageBox.className = "message " + type;
+    }
+
+    form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const companyName = document
+            .getElementById("company_name").value.trim();
+
+        const email = document
+            .getElementById("email").value.trim();
+
+        const installationId = document
+            .getElementById("installation_id").value.trim();
+
+        const productName = document
+            .getElementById("product_name").value.trim();
+
+        const planId = document
+            .getElementById("plan_id").value;
+
+        if (!companyName || !email || !installationId || !planId) {
+            showMessage(
+                "Please complete all required fields and select a subscription plan.",
+                "error"
+            );
+            return;
+        }
+
+        submitButton.disabled = true;
+        submitButton.textContent = "Submitting...";
+
+        try {
+            const response = await fetch(
+                "{% url 'activation_request_api' %}",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        company_name: companyName,
+                        email: email,
+                        installation_id: installationId,
+                        product_name: productName,
+                        plan_id: planId
+                    })
+                }
+            );
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(
+                    data.error ||
+                    data.message ||
+                    "The request could not be submitted."
+                );
+            }
+
+            showMessage(
+                data.message ||
+                "Your request has been submitted successfully. Please wait for administrator approval.",
+                "success"
+            );
+
+            form.reset();
+
+        } catch (error) {
+            showMessage(
+                error.message ||
+                "Could not contact the licensing server. Please try again.",
+                "error"
+            );
+
+        } finally {
+            submitButton.disabled = false;
+            submitButton.textContent = "Submit License Request";
+        }
+    });
+});
+</script>
+
+</body>
+</html>

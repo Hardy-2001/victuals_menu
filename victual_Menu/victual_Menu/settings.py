@@ -72,7 +72,9 @@ INSTALLED_APPS = [
     'modern9',
     'modern10',
     'modern11',
-    'modern12'
+    'modern12',
+    'monitor_license',
+
 
 ]
 
