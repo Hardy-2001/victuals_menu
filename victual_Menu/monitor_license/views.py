@@ -33,7 +33,7 @@ def license_portal(request, installation_id=None, slug=None):
 
 #==========================stage two===============================
 
-def license_status_api(request, installation_id):
+def license_status_api(request, installation_id, slug=None):
     if request.method != "GET":
         return JsonResponse(
             {"error": "Only GET requests are allowed."},
@@ -77,7 +77,7 @@ def license_status_api(request, installation_id):
 
 
 @csrf_exempt
-def activation_request_api(request):
+def activation_request_api(request, slug=None):
     if request.method != "POST":
         return JsonResponse(
             {"error": "Only POST requests are allowed."},
