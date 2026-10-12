@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{{ active_tenant.business_name|upper }} — Insider Broadcasting Club</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <link href="{% static 'email_sender_app/css/style.css' %}" rel="stylesheet">
+</head>
+<body>
+
+    <!-- =========================================================================
+        🎛️ GLASS-MORPHIC SPLIT SECTION WEB TEMPLATE
+    ========================================================================== -->
+    <div class="split-view-container" style="background-color: #7b61ff;">
+
+        <!-- 💜 LEFT HERO ROW: Dynamic Messaging & Branding Info -->
+        <div class="hero-brand-column">
+            <div class="brand-text-wrapper">
+                <h1 class="campaign-header-title">{{ profile_config.hero_title }}</h1>
+                <p class="campaign-subtitle-copy">{{ profile_config.hero_subtitle }}</p>
+            </div>
+
+            <!-- 🖼️ DYNAMIC ADMIN-DRIVEN LIFESTYLE IMAGE BANNER SECTION -->
+            <div class="dynamic-banner-viewport">
+                {% if profile_config.landing_page_banner %}
+                    <img src="{{ profile_config.landing_page_banner.url }}" alt="Lifestyle Banner" class="admin-uploaded-graphic">
+                {% else %}
+                    <!-- Elegant visual graphic fallback layout if admin hasn't uploaded anything yet -->
+                    <div class="fallback-placeholder-graphic">
+                        <i class="fa-solid fa-images"></i> Upload Landing Image in Admin
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- 🤍 BOTTOM WHITE BOARD: Dynamic Layout Steps & Capture Form Container -->
+        <div class="bottom-form-canvas-board">
+            <div class="split-inner-matrix-grid">
+
+                <!-- Form Form Segment Card -->
+                <div class="dark-form-capture-card-box">
+                    <h3 class="form-callout-header">Fill out the form now</h3>
+
+                    {% if messages %}
+                        <div class="success-alert-strip">
+                            {% for message in messages %}
+                                <p><i class="fa-solid fa-circle-check"></i> {{ message }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="join_newsletter" value="1">
+
+                        <div class="capture-form-group">
+                            <label class="capture-field-label">Full name</label>
+                            <input type="text" name="subscriber_name" class="premium-input-box" placeholder="e.g. John Doe" required>
+                        </div>
+
+                        <div class="capture-form-group">
+                            <label class="capture-field-label">Email</label>
+                            <input type="email" name="subscriber_email" class="premium-input-box" placeholder="e.g. johndoe@gmail.com" required>
+                        </div>
+
+                        <button type="submit" class="premium-submit-trigger">SEND NOW</button>
+                    </form>
+                </div>
+
+                <!-- Next Steps Educational Sequence Rows -->
+                <div class="educational-steps-rack">
+                    <h4 class="steps-main-header">Show the next steps</h4>
+
+                    <div class="single-step-row-item">
+                        <div class="step-number-vector">1</div>
+                        <div class="step-text-description-copy">
+                            <strong>Fill out the form</strong>
+                        </div>
+                    </div>
+
+                    <div class="single-step-row-item">
+                        <div class="step-number-vector">2</div>
+                        <div class="step-text-description-copy">
+                            <strong>Get the latest articles and tips.</strong>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

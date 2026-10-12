@@ -1,0 +1,290 @@
+/* =========================================================================
+   🎨 DYNAMIC SPLIT-COLUMN RESPONSIVE LAYOUT ENGINE FOR LANDING PAGE
+   ========================================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #ffffff;
+    min-height: 100vh;
+}
+
+.split-view-container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 💜 UPPER / LEFT HALF: HERO COPY AND DYNAMIC ADMIN IMAGE GRAPHIC */
+.hero-brand-column {
+    padding: 60px 40px 0 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+}
+
+.brand-text-wrapper {
+    max-width: 700px;
+    margin-bottom: 30px;
+}
+
+.campaign-header-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 42px;
+    color: #ffffff;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+}
+
+.campaign-subtitle-copy {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.5;
+}
+
+/* 🖼️ DYNAMIC IMAGE ANCHOR CONTAINER FRAME */
+.dynamic-banner-viewport {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.admin-uploaded-graphic {
+    width: 100%;
+    height: auto;
+    max-height: 380px;
+    object-fit: contain;
+    display: block;
+}
+
+.fallback-placeholder-graphic {
+    width: 100%;
+    height: 250px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    font-weight: bold;
+    gap: 10px;
+}
+
+/* 🤍 LOWER / RIGHT HALF: WHITE ACCENT SUB-CANVAS MATRIX BOARD */
+.bottom-form-canvas-board {
+    background-color: #ffffff;
+    padding: 60px 40px;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.split-inner-matrix-grid {
+    width: 100%;
+    max-width: 1100px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+/* 🔵 INBOX FORM MODULE COMPONENT CARD BOX */
+.dark-form-capture-card-box {
+    background-color: #1e1e4f;
+    border-radius: 4px;
+    padding: 40px;
+    box-shadow: 0 15px 35px rgba(30, 30, 79, 0.25);
+}
+
+.form-callout-header {
+    font-size: 24px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 25px;
+}
+
+.success-alert-strip {
+    background: rgba(255, 255, 255, 0.1);
+    border-left: 4px solid #ff5722;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    color: #ffffff;
+    font-size: 13px;
+}
+
+.capture-form-group {
+    margin-bottom: 20px;
+}
+
+.capture-field-label {
+    display: block;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 6px;
+}
+
+.premium-input-box {
+    width: 100%;
+    height: 44px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: transparent !important;
+    border-radius: 4px;
+    padding: 0 15px;
+    color: #ffffff !important;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.premium-input-box:focus {
+    border-color: #ff5722;
+    background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.premium-submit-trigger {
+    width: 100%;
+    height: 50px;
+    background-color: #ff5722;
+    border: none;
+    border-radius: 4px;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.premium-submit-trigger:hover {
+    background-color: #e64a19;
+    transform: translateY(-2px);
+}
+
+/* 🎯 EDUCATIONAL PROGRESS BLUEPRINT STEPS LIST */
+.educational-steps-rack {
+    padding-left: 20px;
+}
+
+.steps-main-header {
+    font-size: 28px;
+    font-weight: 400;
+    color: #333333;
+    margin-bottom: 35px;
+}
+
+.single-step-row-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.step-number-vector {
+    width: 36px;
+    height: 36px;
+    background-color: #1e1e4f;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.step-text-description-copy {
+    font-size: 15px;
+    color: #555555;
+    line-height: 1.4;
+}
+
+/* =========================================================================
+   📱 HIGH-PERFORMANCE MOBILE RESPONSIVENESS MEDIA QUERIES
+   ========================================================================= */
+
+@media (max-width: 991px) {
+    /* 🟢 FORCE STACKING: Drops the side-by-side grids into an vertical layout scroll */
+    .split-view-container {
+        flex-direction: column !important;
+    }
+
+    .hero-brand-column {
+        width: 100% !important;
+        padding: 40px 20px 20px 20px !important;
+    }
+
+    .campaign-header-title {
+        font-size: 32px !important;
+    }
+
+    .admin-uploaded-graphic {
+        max-height: 280px !important;
+    }
+
+    .bottom-form-canvas-board {
+        width: 100% !important;
+        padding: 30px 16px !important;
+    }
+
+    /* 🟢 FLEX CARD WRAP: Fixes the clipping boxes underneath the banner */
+    .split-inner-matrix-grid {
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
+    }
+
+    .dark-form-capture-card-box {
+        padding: 30px 20px !important;
+        width: 100% !important;
+    }
+
+    .educational-steps-rack {
+        padding-left: 0 !important;
+    }
+
+    .steps-main-header {
+        font-size: 24px !important;
+        margin-bottom: 25px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .campaign-header-title {
+        font-size: 26px !important;
+    }
+
+    .form-callout-header {
+        font-size: 20px !important;
+    }
+
+    .premium-submit-trigger {
+        height: 46px !important;
+        font-size: 13px !important;
+    }
+
+    /* 🟢 FIX NUMBER OVALS: Prevents text lines from squishing your bullet points */
+    .step-number-vector {
+        min-width: 36px !important;
+        height: 36px !important;
+        flex-shrink: 0 !important;
+    }
+
+    .single-step-row-item {
+        align-items: flex-start !important;
+        gap: 15px !important;
+    }
+}

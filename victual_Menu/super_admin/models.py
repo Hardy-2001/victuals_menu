@@ -157,6 +157,7 @@ class DomainEngine(models.Model):
         ('modern11', '💇‍♀️ LIST_MODERN11 (Salon App)'),
         ('modern12', '💇‍♀️ LIST_MODERN12 (barber App)'),
         ('monitor_license', 'LIST_MONITORING (Monitor App)'),
+        ('email_sender_app', '✉️ EMAIL_SENDER_TEMPLATE (Newsletter App)'),
     ]
 
     slug_name = models.CharField(max_length=100, unique=True,

@@ -27,6 +27,7 @@ urlpatterns = [
     path('modern11/', include('modern11.urls')),
     path('modern12/', include('modern12.urls')),
     path('monitor_license/', include('monitor_license.urls')),
+    path('email_sender_app/', include('email_sender_app.urls')),
 
 
 

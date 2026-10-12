@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     'modern11',
     'modern12',
     'monitor_license',
+    'email_sender_app',
 
 
 ]
@@ -181,9 +182,17 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-# ==============================================================================
-## =============================================================================
+# =========================================================================
+# 📨 CORE DECOUPLED DEPLOYMENT SMTP ROUTER FALLBACK
+# =========================================================================
+# 🟢 DECOUPLED HARMONY: Hardcoded credentials successfully purged from settings.py!
+# Individual platform merchants manage their own credentials securely via the database profile panels.
+# This baseline safely outputs un-profiled system messages without locking background runner threads.
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'Corex Multi-Tenant Hub <noreply@corex.ng>'
+
+
 
 # ==============================================================================
 
