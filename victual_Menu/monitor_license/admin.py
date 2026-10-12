@@ -127,7 +127,7 @@ class LicenseRequestAdmin(admin.ModelAdmin):
                 with transaction.atomic():
                     license_request = (
                         LicenseRequest.objects
-                        .select_for_update()
+                        .select_for_update(of=('self',))
                         .select_related('plan')
                         .get(pk=request_id)
                     )
