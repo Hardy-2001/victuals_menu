@@ -29,7 +29,6 @@ class EmailSenderPlatformProfileAdmin(admin.ModelAdmin):
         }),
         ('🎨 Home Page Welcome Stage Accents', {
             'fields': ('hero_title', 'hero_subtitle', 'landing_page_banner')
-            # 🟢 INJECTED THE NEW BANNER FIELD UPLOADER HERE
         }),
         ('🔐 Dynamic Isolated SMTP Mailbox Gateway Settings', {
             'fields': ('smtp_server_host', 'smtp_server_port', 'smtp_account_username', 'smtp_account_password',
@@ -69,16 +68,24 @@ class BroadcastCampaignManifestAdmin(admin.ModelAdmin):
 
     def dispatch_action_trigger(self, obj):
         """🌐 RENDERS THE HIGH-CONTRAST CLICKABLE GREEN SEND ACTION ROUTING BUTTON"""
-        if not obj.id:
+        # 🟢 CRITICAL PRODUCTION FIX: Secure fallback conditions if object hasn't committed an active ID token row yet.
+        # This completely resolves the format_html error inside the Add views portal!
+        if not obj or not obj.id:
             return format_html(
-                '<span style="color: #666;">Save this campaign item first to unlock dispatch controls.</span>')
+                '<span style="color: #666666; font-style: italic;">Save this campaign item first to unlock dispatch controls.</span>{}',
+                ""
+            )
 
         if obj.delivery_status == 'completed':
             return format_html(
                 '<span style="color: #28a745; font-weight: bold;"><i class="fa-solid fa-check-double"></i> Sent out</span>{}',
-                "")
+                ""
+            )
         elif obj.delivery_status == 'processing':
-            return format_html('<span style="color: #ffc107; font-weight: bold;">Processing...</span>{}', "")
+            return format_html(
+                '<span style="color: #ffc107; font-weight: bold;">Processing...</span>{}',
+                ""
+            )
 
         dispatch_url = reverse('dispatch_broadcast_campaign', kwargs={'campaign_id': obj.id})
         return format_html(
